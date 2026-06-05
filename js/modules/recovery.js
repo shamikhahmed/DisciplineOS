@@ -1,119 +1,140 @@
+'use strict';
 const Recovery = (() => {
   let currentHabitId = null;
 
-  function render(params) {
-    if (params && params.habitId) currentHabitId = params.habitId;
-    const state = StateManager.get();
-    const habits = (state.habits || []).filter(h => h.active);
-    const habit = currentHabitId
-      ? habits.find(h => h.id === currentHabitId)
-      : habits[0];
-    const el = document.getElementById('screen-recovery');
-    if (!el) return;
+  function render(habitId) {
+    const screen = document.getElementById('screen-recovery');
+    if (!screen) return;
+    const habits = State.get('habits') || [];
 
-    if (!habit) {
-      el.innerHTML = '<div style="padding:40px;text-align:center;"><div class="t-body t-muted">No habit selected.</div></div>';
+    if (!habits.length) {
+      screen.innerHTML = `<div style="padding:40px 20px;text-align:center;color:var(--text3)">No habits tracked yet.<br><br>
+        <button class="btn btn-primary" onclick="Navigation.go('dashboard')" style="max-width:200px;margin:0 auto">Go Home</button></div>`;
       return;
     }
 
+    currentHabitId = habitId || (habits[0] && habits[0].id);
+    const habit = habits.find(h => h.id === currentHabitId) || habits[0];
+    if (!habit) return;
+
+    const hCfg = (window.HABITS_CONFIG || {})[habit.type] || {};
     const hrs = RecoveryEngine.hoursClean(habit.quitTime);
     const days = RecoveryEngine.daysClean(habit.quitTime);
-    const timeline = (typeof TIMELINES !== 'undefined' ? TIMELINES : {})[habit.type] || [];
-    const dopStage = DopamineEngine.getStage(habit.type, hrs);
-    const bodySystems = BodyEngine.getBodySystems(habit.type, hrs);
     const phase = RecoveryEngine.recoveryPhase(hrs);
-    const integrity = RelapseEngine.getIntegrityScore(habit);
-    const insight = RelapseEngine.getInsight(habit);
+    const dopStage = DopamineEngine.getStage(habit.type, hrs);
+    const dopProg = DopamineEngine.progressInStage(habit.type, hrs);
+    const timeline = (window.RECOVERY_TIMELINES || {})[habit.type] || [];
+    const systems = BodyEngine.getBodySystems(habit.type, hrs);
+    const relapses = (habit.relapses || []).length;
+    const integrityPct = relapses === 0 ? 100 : Math.max(0, Math.round(100 - (relapses / (days + 1)) * 100 * 7));
+    const currentM = RecoveryEngine.currentMilestone(habit.type, habit.quitTime);
 
-    el.innerHTML = `
-    <div style="padding-bottom:20px;">
-      <div style="padding:20px 20px 0;display:flex;align-items:center;gap:12px;">
-        <div style="font-size:2rem;">${habit.icon}</div>
-        <div>
-          <div class="t-heading">${habit.name}</div>
-          <div class="t-body t-muted">${days}d ${Math.floor(hrs % 24)}h clean</div>
-        </div>
-      </div>
-
-      <div style="margin:16px 20px;padding:16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);">
-        <div class="t-label t-dim" style="margin-bottom:6px;">CURRENT PHASE</div>
-        <div style="font-size:1.1rem;font-weight:700;color:${phase.color};">● ${phase.name}</div>
-        <p class="t-body t-muted" style="margin-top:6px;">${phase.description}</p>
-      </div>
-
-      <div style="margin:0 20px 16px;padding:16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);">
-        <div class="t-label t-dim" style="margin-bottom:8px;">DOPAMINE STAGE</div>
-        <div style="font-size:1rem;font-weight:700;color:${dopStage.color};">Stage ${dopStage.stage + 1}: ${dopStage.name}</div>
-        <p class="t-caption" style="margin-top:4px;">${dopStage.description}</p>
-        <div style="margin-top:10px;">
-          ${dopStage.symptoms.map(s => `<div class="t-caption" style="padding:3px 0;">• ${s}</div>`).join('')}
-        </div>
-      </div>
-
-      <div class="section-header"><span class="section-title">Body Recovery</span></div>
-      <div style="padding:0 20px;">
-        ${bodySystems.map(s => `
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);">
-          <span style="font-size:1.3rem;width:28px;">${s.icon}</span>
-          <div style="flex:1;">
-            <div style="font-size:0.85rem;font-weight:600;">${s.label}</div>
-            <div class="system-bar" style="margin-top:4px;">
-              <div class="system-bar-fill" style="width:${s.pct}%;background:${s.color};"></div>
-            </div>
-          </div>
-          <span style="font-size:0.8rem;font-weight:700;color:${s.color};">${s.pct}%</span>
-        </div>`).join('')}
-      </div>
-
-      <div class="section-header" style="margin-top:16px;"><span class="section-title">Recovery Timeline</span></div>
-      <div style="padding:0 20px;">
-        ${timeline.map((m, i) => {
-          const reached = hrs >= m.hours;
-          return `
-          <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);opacity:${reached ? 1 : 0.4};">
-            <div style="display:flex;flex-direction:column;align-items:center;">
-              <div style="width:28px;height:28px;border-radius:50%;background:${reached ? 'transparent' : 'var(--bg3)'};border:2px solid ${reached ? 'var(--orange)' : 'var(--border)'};display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">
-                ${reached ? (m.icon || '✓') : '○'}
-              </div>
-            </div>
-            <div style="flex:1;">
-              <div style="font-size:0.85rem;font-weight:700;color:${reached ? 'var(--text)' : 'var(--text3)'};">${m.title}</div>
-              <div class="t-caption" style="margin-top:2px;">${m.body}</div>
-              <div style="margin-top:4px;font-size:0.7rem;color:var(--text3);">${RecoveryEngine.formatDuration(m.hours)} after quitting</div>
-            </div>
-          </div>`;
+    const selectorHtml = habits.length > 1 ? `
+      <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 20px 16px">
+        ${habits.map(h => {
+          const hc = (window.HABITS_CONFIG||{})[h.type]||{};
+          return `<button onclick="Recovery.render('${h.id}')" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid ${h.id===currentHabitId?'var(--orange)':'var(--border)'};background:${h.id===currentHabitId?'rgba(255,107,53,0.1)':'transparent'};color:${h.id===currentHabitId?'var(--orange)':'var(--text3)'};font-size:0.78rem;font-weight:600;cursor:pointer">${hc.icon||''} ${hc.name||h.type}</button>`;
         }).join('')}
-      </div>
+      </div>` : '';
 
-      <div style="margin:20px;padding:16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);">
-        <div class="t-label t-dim" style="margin-bottom:8px;">RECOVERY INTEGRITY</div>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="font-size:2rem;font-weight:900;color:var(--orange);">${integrity.score}%</div>
+    const timelineHtml = timeline.map(m => {
+      const reached = hrs >= m.hours;
+      const isCurrent = currentM && currentM.hours === m.hours;
+      return `<div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start">
+        <div style="width:32px;height:32px;border-radius:50%;border:2px solid ${reached?'var(--green)':isCurrent?'var(--orange)':'var(--border)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;background:${reached?'rgba(6,214,160,0.1)':'transparent'}">
+          <span style="font-size:1rem">${reached?'✓':m.icon||'○'}</span>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:0.88rem;font-weight:700;color:${reached?'var(--text)':isCurrent?'var(--orange)':'var(--text3)'}">${m.title}</div>
+          <div style="font-size:0.75rem;color:var(--text3);margin-top:2px">${RecoveryEngine.formatDuration(m.hours)} ${reached?'— reached':''}</div>
+          ${reached||isCurrent?`<div style="font-size:0.78rem;color:var(--text2);margin-top:6px;line-height:1.5">${m.body}</div>`:''}
+          <div style="font-size:0.65rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-top:4px;color:${m.level==='scientific'?'var(--green)':'var(--gold)'}">${m.level}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    const systemsHtml = systems.map(s => {
+      const col = s.pct > 70 ? 'var(--green)' : s.pct > 40 ? 'var(--teal)' : 'var(--orange)';
+      return `<div class="system-row">
+        <span class="system-icon">${s.icon}</span>
+        <span class="system-label">${s.label}</span>
+        <div class="system-bar"><div class="system-fill" style="width:${s.pct}%;background:${col}"></div></div>
+        <span class="system-pct" style="color:${col}">${s.pct}%</span>
+      </div>`;
+    }).join('');
+
+    screen.innerHTML = `
+      <div style="padding:calc(env(safe-area-inset-top,20px) + 16px) 20px 16px;border-bottom:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-size:2rem">${hCfg.icon||'✨'}</span>
           <div>
-            <div class="t-caption">${integrity.cleanDays} clean days of ${integrity.totalDays} total</div>
-            <div class="t-caption">${integrity.relapses} relapses recorded</div>
+            <div class="t-title">${hCfg.name||habit.type}</div>
+            <div class="t-caption">${days}d ${Math.floor(hrs%24)}h clean</div>
           </div>
         </div>
-        ${insight ? `<div style="margin-top:10px;padding:8px;background:rgba(255,23,68,0.08);border-radius:6px;font-size:0.75rem;color:var(--text2);">⚠️ ${insight.message}</div>` : ''}
       </div>
 
-      <div style="padding:0 20px;">
-        <button class="btn btn-ghost btn-full" id="log-relapse-btn" style="border-color:var(--red);color:var(--red);">
-          Log Relapse
-        </button>
-      </div>
-    </div>`;
+      ${selectorHtml}
 
-    document.getElementById('log-relapse-btn')?.addEventListener('click', () => {
-      if (!window.confirm('Log a relapse for ' + habit.name + '? This will restart your current streak.')) return;
-      StateManager.update(s => {
-        const h = s.habits.find(x => x.id === habit.id);
-        if (h) RelapseEngine.logRelapse(h);
-      });
-      App.showToast('Relapse logged. You can do this.', 'info');
-      render({ habitId: currentHabitId });
-    });
+      <div style="padding:0 20px;margin-bottom:12px">
+        <div class="card" style="background:linear-gradient(135deg,${phase.color}18,transparent)">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <div style="width:8px;height:8px;border-radius:50%;background:${phase.color}"></div>
+            <span style="font-size:0.78rem;font-weight:700;color:${phase.color};text-transform:uppercase;letter-spacing:0.08em">${phase.name} Phase</span>
+          </div>
+          <div class="t-body">${phase.description}</div>
+        </div>
+      </div>
+
+      <div style="padding:0 20px;margin-bottom:12px">
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:0.78rem;font-weight:700;color:${dopStage.color};text-transform:uppercase;letter-spacing:0.06em">Dopamine: ${dopStage.name}</span>
+            <span style="font-size:0.75rem;color:var(--text3)">${dopProg}% through stage</span>
+          </div>
+          <div class="prog-bar" style="margin-bottom:12px"><div class="prog-fill" style="width:${dopProg}%;background:${dopStage.color}"></div></div>
+          <div class="t-body" style="margin-bottom:10px">${dopStage.description}</div>
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Symptoms</div>
+          ${dopStage.symptoms.map(s=>`<div style="font-size:0.78rem;color:var(--text2);margin-bottom:4px">· ${s}</div>`).join('')}
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin:10px 0 6px">What helps</div>
+          ${dopStage.tips.map(t=>`<div style="font-size:0.78rem;color:var(--text2);margin-bottom:4px">· ${t}</div>`).join('')}
+        </div>
+      </div>
+
+      <div class="section-header"><span class="section-title">Recovery Timeline</span></div>
+      <div style="padding:0 20px">${timelineHtml}</div>
+
+      <div class="section-header"><span class="section-title">Body Systems</span></div>
+      <div class="systems-list">${systemsHtml}</div>
+
+      <div style="padding:0 20px;margin-top:20px">
+        <div class="card-sm card" style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="t-label">Integrity Score</div>
+            <div style="font-size:1.5rem;font-weight:800;color:${integrityPct>70?'var(--green)':integrityPct>40?'var(--gold)':'var(--red)'}">${integrityPct}%</div>
+          </div>
+          <div style="text-align:right">
+            <div class="t-label">Relapses</div>
+            <div style="font-size:1.5rem;font-weight:800;color:var(--text)">${relapses}</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:20px">
+        <button class="btn btn-danger" onclick="Recovery._confirmRelapse('${habit.id}')">Log Relapse</button>
+      </div>
+      <div style="height:8px"></div>
+    `;
   }
 
-  return { render };
+  function _confirmRelapse(id) {
+    if (confirm('Log a relapse? This will reset your clean time for this habit.')) {
+      State.logRelapse(id);
+      if (window.App) App.showToast('Relapse logged. Your streak resets now. Keep going.', 'info');
+      render(id);
+    }
+  }
+
+  return { render, _confirmRelapse };
 })();
+window.Recovery = Recovery;

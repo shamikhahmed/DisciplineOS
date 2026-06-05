@@ -1,323 +1,227 @@
+'use strict';
 const Dashboard = (() => {
-  const QUOTES = [
-    "Discipline is choosing between what you want now and what you want most.",
-    "Every day you don't smoke is a day your body is healing itself.",
-    "The chains of habit are too light to be felt until they are too heavy to be broken.",
-    "You don't have to be great to start, but you have to start to be great.",
-    "Strength does not come from physical capacity. It comes from indomitable will.",
-    "The secret of getting ahead is getting started.",
-    "One day at a time. That's all it takes.",
-    "Your future self is watching you right now through your memories.",
-    "The pain you feel today is the strength you feel tomorrow.",
-    "Fall seven times, stand up eight.",
-  ];
-
   function render() {
-    const state = StateManager.get();
-    const habits = (state.habits || []).filter((h) => h.active);
-    const el = document.getElementById('screen-dashboard');
-    if (!el) return;
-
+    const screen = document.getElementById('screen-dashboard');
+    if (!screen) return;
+    const habits = State.get('habits') || [];
+    const settings = State.get('settings') || {};
+    const currency = settings.currency || 'USD';
     const score = RecoveryEngine.recoveryScore(habits);
-    const primaryHabit = habits[0];
-    const phase = primaryHabit
-      ? RecoveryEngine.recoveryPhase(RecoveryEngine.hoursClean(primaryHabit.quitTime))
-      : { name: 'Starting', color: '#ff6b2b', description: 'Begin your recovery journey.' };
+    const primaryHabit = habits[0] || null;
 
-    const totalDays = primaryHabit ? RecoveryEngine.daysClean(primaryHabit.quitTime) : 0;
-    const totalHours = primaryHabit ? Math.floor(RecoveryEngine.hoursClean(primaryHabit.quitTime)) : 0;
+    const scoreColor = score < 40 ? 'var(--orange)' : score < 70 ? 'var(--teal)' : 'var(--green)';
+    const scoreSize = 180;
+    const scoreR = (scoreSize - 14) / 2;
+    const scoreCirc = 2 * Math.PI * scoreR;
+    const scoreOffset = scoreCirc - (score / 100) * scoreCirc;
 
-    const rings = buildRingsData(habits, state);
-    const quote = QUOTES[Math.floor(Date.now() / 86400000) % QUOTES.length];
-    const xp = state.missions?.xp || 0;
-    const level = MissionEngine.xpToLevel(xp);
-    const rank = MissionEngine.getRank(level);
+    const phase = primaryHabit ? RecoveryEngine.recoveryPhase(RecoveryEngine.hoursClean(primaryHabit.quitTime)) : null;
+    const days = primaryHabit ? RecoveryEngine.daysClean(primaryHabit.quitTime) : 0;
+    const hours = primaryHabit ? Math.floor(RecoveryEngine.hoursClean(primaryHabit.quitTime) % 24) : 0;
 
-    el.innerHTML = `
-    <div style="padding-bottom:8px;">
-      <!-- Header -->
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 20px 0;">
-        <div>
-          <div class="t-label t-dim">RECOVERY OS</div>
-          <div class="t-heading" style="margin-top:4px;">
-            ${state.user?.name ? `Good ${getTimeOfDay()}, ${state.user.name}` : `Good ${getTimeOfDay()}`}
-          </div>
-        </div>
-        <div style="text-align:right;">
-          <div class="badge badge-gold">${rank.icon} ${rank.name}</div>
-          <div class="t-caption" style="margin-top:4px;">Lv.${level} · ${xp} XP</div>
-        </div>
-      </div>
+    const rings4 = buildRings4(habits, currency);
+    const feed = buildFeed(habits);
+    const habitCards = buildHabitCards(habits);
+    const bodySystems = buildBodySystems(primaryHabit);
+    const moneySaved = buildMoney(habits, currency);
+    const insight = RecoveryEngine.todayInsight();
 
-      <!-- Score Ring -->
+    const cravingLog = State.get('cravingLog') || [];
+
+    screen.innerHTML = `
       <div class="score-ring-wrap">
-        ${Charts.ringProgress(score, 'url(#scoreGrad)', 160, 14, `
-          <svg width="0" height="0"><defs>
-            <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ff6b2b"/>
-              <stop offset="100%" stop-color="#4fc3f7"/>
-            </linearGradient>
-          </defs></svg>
-          <div class="ring-label" style="inset:0;">
+        <div class="ring-wrap" style="width:${scoreSize}px;height:${scoreSize}px">
+          <svg width="${scoreSize}" height="${scoreSize}" viewBox="0 0 ${scoreSize} ${scoreSize}" style="transform:rotate(-90deg)">
+            <circle class="ring-track" cx="${scoreSize/2}" cy="${scoreSize/2}" r="${scoreR}" stroke-width="14"/>
+            <circle class="ring-fill" cx="${scoreSize/2}" cy="${scoreSize/2}" r="${scoreR}" stroke="${scoreColor}" stroke-width="14"
+              stroke-dasharray="${scoreCirc}" stroke-dashoffset="${scoreCirc}"
+              data-offset="${scoreOffset}"/>
+          </svg>
+          <div class="ring-center">
             <div class="score-val">${score}</div>
-            <div class="t-label t-dim">RECOVERY</div>
+            <div class="score-label">RECOVERY</div>
           </div>
-        `)}
-      </div>
-
-      <!-- 4 Recovery Rings -->
-      <div class="rings-row">
-        ${rings.map((r) => `
-          <div class="ring-cell">
-            ${Charts.ringProgress(r.pct, r.color, 64, 6)}
-            <div class="ring-val" style="color:${r.color}">${r.pct}%</div>
-            <div class="ring-name">${r.label}</div>
-          </div>
-        `).join('')}
-      </div>
-
-      <!-- Status Card -->
-      <div class="status-card">
-        <div class="phase-badge">● ${phase.name}</div>
-        <div style="display:flex;align-items:flex-end;gap:16px;">
-          <div>
-            <div class="day-counter" style="color:#f0f0f0;">
-              ${totalDays}<span style="font-size:1.5rem;color:#a0a0a0;">d</span>
-            </div>
-            <div class="day-label">
-              ${totalDays === 0 ? `${totalHours}h clean` : `${totalHours % 24}h ${Math.floor((Date.now() - (primaryHabit ? new Date(primaryHabit.quitTime).getTime() : Date.now())) / 60000) % 60}m`}
-            </div>
-          </div>
-          ${habits.length > 1 ? `
-          <div style="flex:1;text-align:right;">
-            <div class="t-label t-dim">${habits.length} HABITS</div>
-            <div class="t-caption">all tracked</div>
-          </div>` : ''}
         </div>
-        <p class="phase-desc">${phase.description}</p>
       </div>
 
-      <!-- Daily Missions -->
-      ${buildMissions(state, habits)}
-
-      <!-- Live Recovery Feed -->
-      ${habits.length > 0 ? `
-      <div class="section-header">
-        <span class="section-title">Recovery Feed</span>
-        <span class="section-action">Live</span>
-      </div>
-      <div class="feed-scroll">
-        ${habits.map((h) => buildFeedCard(h)).join('')}
-      </div>` : ''}
-
-      <!-- Habit Cards -->
-      ${habits.length > 0 ? `
-      <div class="section-header" style="margin-top:8px;">
-        <span class="section-title">Your Habits</span>
-        <span class="section-action" id="add-habit-btn">+ Add</span>
-      </div>
-      <div class="habit-cards">
-        ${habits.map((h) => buildHabitCard(h, state)).join('')}
-      </div>` : buildEmptyState()}
-
-      <!-- Quote -->
-      <div style="margin:20px;padding:20px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);">
-        <div class="t-caption" style="margin-bottom:8px;">TODAY'S REMINDER</div>
-        <p class="t-body t-muted" style="font-style:italic;line-height:1.6;">"${quote}"</p>
+      <div class="status-card">
+        ${phase ? `<div class="phase-pill">${phase.name}</div>` : ''}
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+          <span class="day-num">${days}</span><span class="day-unit">days</span>
+          <span class="day-unit" style="font-size:0.9rem;color:var(--text3)">${hours}h</span>
+        </div>
+        ${phase ? `<div class="t-caption">${phase.description}</div>` : '<div class="t-caption t-dim">Start tracking to see your recovery phase.</div>'}
       </div>
 
-      <!-- Quick Actions -->
-      <div class="section-header" style="margin-top:4px;">
-        <span class="section-title">Quick Actions</span>
-      </div>
-      <div class="quick-actions">
-        <button class="quick-action qa-emergency" id="qa-sos">
-          <div class="qa-icon">🚨</div>
-          Emergency
-        </button>
-        <button class="quick-action qa-checkin" id="qa-checkin">
-          <div class="qa-icon">✅</div>
-          Check In
-        </button>
-        <button class="quick-action qa-analytics" id="qa-analytics">
-          <div class="qa-icon">📊</div>
-          Analytics
-        </button>
-      </div>
-    </div>`;
+      ${rings4}
 
-    attachHandlers();
-    animateRings();
+      ${feed}
+
+      ${habitCards}
+
+      ${bodySystems}
+
+      <div class="craving-btn card-press" onclick="Navigation.go('emergency')">
+        <div style="font-size:1.1rem;font-weight:700;color:var(--teal)">I have a craving right now</div>
+        <div style="font-size:0.8rem;color:var(--text2);margin-top:4px">Tap to start the SOS protocol</div>
+      </div>
+
+      ${moneySaved}
+
+      ${insight ? `
+        <div class="insight-card" style="margin:0 20px 20px">
+          <div class="insight-emoji">${insight.emoji}</div>
+          <div>
+            <div class="insight-text">${insight.text}</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-top:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em">— ${insight.source}</div>
+          </div>
+        </div>
+      ` : ''}
+      <div style="height:16px"></div>
+    `;
+
+    setTimeout(() => Charts.animateRings(), 60);
   }
 
-  function buildRingsData(habits, state) {
-    const currency = state.settings?.currency || 'USD';
-    if (habits.length === 0) {
-      return [
-        { label: 'Physical', pct: 0, color: '#ff6b2b' },
-        { label: 'Mental',   pct: 0, color: '#4fc3f7' },
-        { label: 'Financial',pct: 0, color: '#00e676' },
-        { label: 'Time',     pct: 0, color: '#b39ddb' },
-      ];
-    }
-
+  function buildRings4(habits, currency) {
+    if (!habits.length) return '';
     const primary = habits[0];
-    const hrs = RecoveryEngine.hoursClean(primary.quitTime);
-
-    const bodySystems = BodyEngine.getBodySystems(primary.type, hrs);
-    const physicalPct = Math.round(bodySystems.reduce((a, s) => a + s.pct, 0) / bodySystems.length);
-
-    const dStage = DopamineEngine.getStage(primary.type, hrs);
-    const mentalPct = Math.round((dStage.stageIdx / (dStage.totalStages - 1)) * 100);
-
-    let financialPct = 0;
-    if (primary.config?.costPerDay > 0) {
-      const fin = FinanceEngine.calculate(primary.config, primary.quitTime);
-      financialPct = Math.min(100, Math.round((fin.savedTotal / (primary.config.costPerDay * 365)) * 100));
+    const h = RecoveryEngine.hoursClean(primary.quitTime);
+    const physical = BodyEngine.overallBodyScore(primary.type, h);
+    const mental = DopamineEngine.progressInStage(primary.type, h);
+    const timeScore = Math.min(100, Math.round((h / (8760)) * 100));
+    let financial = 0;
+    const fin = FinanceEngine.calculate(primary, currency);
+    if (fin.hasCost && fin.annualProjection > 0) {
+      financial = Math.min(100, Math.round((fin.savedTotal / (fin.annualProjection)) * 100 * 3));
     }
 
-    const timePct = Math.min(100, Math.round((hrs / 2160) * 100));
-
-    return [
-      { label: 'Physical', pct: physicalPct,   color: '#ff6b2b' },
-      { label: 'Mental',   pct: mentalPct,     color: '#4fc3f7' },
-      { label: 'Financial',pct: financialPct,  color: '#00e676' },
-      { label: 'Time',     pct: timePct,       color: '#b39ddb' },
+    const items = [
+      { label: 'Physical', val: physical, color: 'var(--green)' },
+      { label: 'Mental', val: mental, color: 'var(--purple)' },
+      { label: 'Financial', val: financial, color: 'var(--gold)' },
+      { label: 'Time', val: timeScore, color: 'var(--teal)' },
     ];
-  }
 
-  function buildMissions(state, habits) {
-    if (habits.length === 0) return '';
-    const today = new Date().toISOString().split('T')[0];
-    const habitTypes = habits.map((h) => h.type);
-    const missions = MissionEngine.getDailyMissions(habitTypes, today);
-    if (missions.length === 0) return '';
+    const rSize = 52;
+    const rR = (rSize - 6) / 2;
+    const rCirc = 2 * Math.PI * rR;
 
-    return `
-    <div class="section-header">
-      <span class="section-title">Daily Missions</span>
-      <span class="section-action">+XP</span>
-    </div>
-    <div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:10px;">
-      ${missions.map((m) => {
-        const done = MissionEngine.isMissionCompleted(m.id, state);
-        return `
-        <div class="card" style="padding:14px;display:flex;align-items:center;gap:12px;${done ? 'opacity:0.5;' : ''}">
-          <div style="font-size:1.4rem;width:36px;text-align:center;">${m.icon}</div>
-          <div style="flex:1;">
-            <div style="font-size:0.88rem;font-weight:600;${done ? 'text-decoration:line-through;' : ''}">${m.title}</div>
-            <div class="t-caption" style="margin-top:2px;">${m.description}</div>
+    return `<div class="rings-row">
+      ${items.map(item => {
+        const offset = rCirc - (item.val / 100) * rCirc;
+        return `<div class="ring-cell">
+          <div class="ring-wrap" style="width:${rSize}px;height:${rSize}px">
+            <svg width="${rSize}" height="${rSize}" viewBox="0 0 ${rSize} ${rSize}" style="transform:rotate(-90deg)">
+              <circle class="ring-track" cx="${rSize/2}" cy="${rSize/2}" r="${rR}" stroke-width="5"/>
+              <circle class="ring-fill" cx="${rSize/2}" cy="${rSize/2}" r="${rR}" stroke="${item.color}" stroke-width="5"
+                stroke-dasharray="${rCirc}" stroke-dashoffset="${rCirc}" data-offset="${offset}"/>
+            </svg>
+            <div class="ring-center"><span class="ring-cell-val" style="color:${item.color}">${item.val}%</span></div>
           </div>
-          <div style="text-align:right;flex-shrink:0;">
-            <div class="badge ${done ? 'badge-green' : 'badge-orange'}">${done ? '✓' : `+${m.xp}XP`}</div>
-            ${!done ? `<button class="btn btn-ghost btn-sm mission-complete-btn" data-id="${m.id}" style="margin-top:6px;">Done</button>` : ''}
-          </div>
+          <span class="ring-cell-name">${item.label}</span>
         </div>`;
       }).join('')}
     </div>`;
   }
 
-  function buildFeedCard(habit) {
-    const hrs = RecoveryEngine.hoursClean(habit.quitTime);
-    const milestone = RecoveryEngine.currentMilestone(habit.type, habit.quitTime);
-    if (!milestone) return '';
-    const levelClass = { scientific: 'scientific', reported: 'reported', personal: 'personal' }[milestone.level] || 'scientific';
-    const levelLabel = { scientific: '🟢 Scientific', reported: '🟡 Reported', personal: '🔵 Personal' }[milestone.level] || '🟢 Scientific';
-    return `
-    <div class="feed-card">
-      <div class="feed-icon">${milestone.icon}</div>
-      <div class="feed-title">${milestone.title}</div>
-      <div class="feed-body">${milestone.body.slice(0, 80)}...</div>
-      <div class="feed-level ${levelClass}">${levelLabel}</div>
+  function buildFeed(habits) {
+    if (!habits.length) return '';
+    const cards = habits.map(h => {
+      const curr = RecoveryEngine.currentMilestone(h.type, h.quitTime);
+      const next = RecoveryEngine.nextMilestone(h.type, h.quitTime);
+      const hCfg = (window.HABITS_CONFIG || {})[h.type] || {};
+      if (!curr) return '';
+      return `<div class="feed-card">
+        <div class="feed-icon">${curr.icon || hCfg.icon || '✨'}</div>
+        <div class="feed-milestone">${curr.title}</div>
+        <div class="feed-body">${curr.body.substring(0, 90)}…</div>
+        ${next ? `<div class="feed-level ${curr.level || ''}" style="margin-top:auto;font-size:0.65rem;font-weight:600;color:${curr.level==='scientific'?'var(--green)':'var(--gold)'};text-transform:uppercase;letter-spacing:0.06em">Next: ${next.title} in ${RecoveryEngine.timeUntilNext(h.type, h.quitTime)}</div>` : `<div style="font-size:0.65rem;color:var(--green);font-weight:700;margin-top:auto">COMPLETE ✓</div>`}
+      </div>`;
+    }).join('');
+
+    return `<div>
+      <div class="section-header"><span class="section-title">Live Recovery Feed</span></div>
+      <div class="feed-scroll">${cards}</div>
     </div>`;
   }
 
-  function buildHabitCard(habit, state) {
-    const hrs = RecoveryEngine.hoursClean(habit.quitTime);
-    const days = RecoveryEngine.daysClean(habit.quitTime);
-    const next = RecoveryEngine.nextMilestone(habit.type, habit.quitTime);
-    const pct = RecoveryEngine.progressToNext(habit.type, habit.quitTime);
-    const timeUntil = RecoveryEngine.timeUntilNext(habit.type, habit.quitTime);
-    const integrity = RelapseEngine.getIntegrityScore(habit);
-
-    return `
-    <div class="habit-card" data-habit-id="${habit.id}">
-      <div class="habit-icon">${habit.icon || '⭕'}</div>
-      <div class="habit-info">
-        <div class="habit-name">${habit.name}</div>
-        <div class="habit-days">${days}d ${Math.floor(hrs % 24)}h clean${integrity.relapses > 0 ? ` · ${integrity.relapses} relapses` : ''}</div>
-        ${next ? `<div class="habit-next">Next: ${next.title} in ${timeUntil}</div>` : '<div class="habit-next" style="color:#00e676">All milestones reached 🎯</div>'}
-        <div class="system-bar" style="margin-top:8px;">
-          <div class="system-bar-fill" style="width:${pct}%;background:var(--orange);"></div>
+  function buildHabitCards(habits) {
+    if (!habits.length) {
+      return `<div style="padding:0 20px;text-align:center;color:var(--text3);font-size:0.85rem;margin:20px 0">No habits tracked yet.</div>`;
+    }
+    const rSize = 44;
+    const rR = (rSize - 5) / 2;
+    const rCirc = 2 * Math.PI * rR;
+    const cards = habits.map(h => {
+      const hCfg = (window.HABITS_CONFIG || {})[h.type] || {};
+      const days = RecoveryEngine.daysClean(h.quitTime);
+      const hrs = RecoveryEngine.hoursClean(h.quitTime);
+      const next = RecoveryEngine.nextMilestone(h.type, h.quitTime);
+      const prog = RecoveryEngine.progressToNext(h.type, h.quitTime);
+      const score = BodyEngine.overallBodyScore(h.type, hrs);
+      const offset = rCirc - (score / 100) * rCirc;
+      const timeUntil = next ? `Next: ${next.title} in ${RecoveryEngine.timeUntilNext(h.type, h.quitTime)}` : 'All milestones reached';
+      return `<div class="habit-card card-press" onclick="Navigation.go('recovery',{habitId:'${h.id}'})">
+        <div style="position:relative;width:${rSize}px;height:${rSize}px;flex-shrink:0">
+          <svg width="${rSize}" height="${rSize}" viewBox="0 0 ${rSize} ${rSize}" style="transform:rotate(-90deg)">
+            <circle class="ring-track" cx="${rSize/2}" cy="${rSize/2}" r="${rR}" stroke-width="4.5"/>
+            <circle class="ring-fill" cx="${rSize/2}" cy="${rSize/2}" r="${rR}" stroke="${hCfg.color||'var(--orange)'}" stroke-width="4.5"
+              stroke-dasharray="${rCirc}" stroke-dashoffset="${rCirc}" data-offset="${offset}"/>
+          </svg>
+          <div class="ring-center"><span style="font-size:0.6rem;font-weight:700;color:${hCfg.color||'var(--orange)'}">${score}%</span></div>
         </div>
-      </div>
-      <div style="text-align:right;flex-shrink:0;">
-        ${Charts.ringProgress(pct, '#ff6b2b', 44, 4)}
-      </div>
+        <div class="habit-info">
+          <div class="habit-name">${hCfg.icon||''} ${hCfg.name||h.type}</div>
+          <div class="habit-days">${days}d ${Math.floor(hrs%24)}h clean</div>
+          <div class="habit-next">${timeUntil}</div>
+          <div class="prog-bar"><div class="prog-fill" style="width:${prog}%;background:${hCfg.color||'var(--orange)'}"></div></div>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>`;
+    }).join('');
+    return `<div>
+      <div class="section-header"><span class="section-title">Your Habits</span></div>
+      <div class="habit-cards">${cards}</div>
     </div>`;
   }
 
-  function buildEmptyState() {
-    return `
-    <div style="padding:40px 20px;text-align:center;">
-      <div style="font-size:3rem;margin-bottom:16px;">🎯</div>
-      <div class="t-heading" style="margin-bottom:8px;">No habits tracked yet</div>
-      <p class="t-body t-muted">Complete the setup to start tracking your recovery.</p>
+  function buildBodySystems(habit) {
+    if (!habit) return '';
+    const hrs = RecoveryEngine.hoursClean(habit.quitTime);
+    const systems = BodyEngine.getBodySystems(habit.type, hrs);
+    if (!systems.length) return '';
+    const rows = systems.map(s => {
+      const barColor = s.pct > 70 ? 'var(--green)' : s.pct > 40 ? 'var(--teal)' : 'var(--orange)';
+      return `<div class="system-row">
+        <span class="system-icon">${s.icon}</span>
+        <span class="system-label">${s.label}</span>
+        <div class="system-bar"><div class="system-fill" style="width:0%;background:${barColor}" data-width="${s.pct}%"></div></div>
+        <span class="system-pct" style="color:${barColor}">${s.pct}%</span>
+      </div>`;
+    }).join('');
+    return `<div>
+      <div class="section-header"><span class="section-title">Body Recovery</span></div>
+      <div class="systems-list">${rows}</div>
     </div>`;
   }
 
-  function attachHandlers() {
-    document.getElementById('qa-sos')?.addEventListener('click', () => Navigation.go('emergency'));
-    document.getElementById('qa-analytics')?.addEventListener('click', () => Navigation.go('analytics'));
-    document.getElementById('qa-checkin')?.addEventListener('click', handleCheckin);
-    document.getElementById('add-habit-btn')?.addEventListener('click', showAddHabitModal);
-
-    document.querySelectorAll('.mission-complete-btn').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const id = btn.dataset.id;
-        StateManager.update((s) => {
-          const result = MissionEngine.completeMission(id, s);
-          if (!result.alreadyDone) {
-            App.showToast(`Mission complete! +${result.xp} XP`, 'success');
-          }
-        });
-        render();
-      });
+  function buildMoney(habits, currency) {
+    const habitsWithCost = habits.filter(h => {
+      const cfg = window.HABITS_CONFIG && window.HABITS_CONFIG[h.type];
+      return cfg && cfg.computeCostPerDay(h.config || {}) > 0;
     });
-
-    document.querySelectorAll('.habit-card').forEach((card) => {
-      card.addEventListener('click', () => {
-        const habitId = card.dataset.habitId;
-        Navigation.go('recovery', { habitId });
-      });
-    });
-  }
-
-  function handleCheckin() {
-    StateManager.update((s) => {
-      if (!s.checkIns) s.checkIns = [];
-      s.checkIns.push({ timestamp: Date.now() });
-    });
-    App.showToast('Check-in recorded! Keep going.', 'success');
-  }
-
-  function showAddHabitModal() {
-    App.showToast('Restart onboarding to add habits', 'info');
-  }
-
-  function animateRings() {
-    document.querySelectorAll('.ring-progress').forEach((ring) => {
-      ring.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)';
-    });
-  }
-
-  function getTimeOfDay() {
-    const h = new Date().getHours();
-    if (h < 12) return 'morning';
-    if (h < 17) return 'afternoon';
-    return 'evening';
+    if (!habitsWithCost.length) return '';
+    const total = FinanceEngine.totalSaved(habitsWithCost, currency);
+    if (total < 0.01) return '';
+    const sym = FinanceEngine.CURRENCY_SYMBOLS[currency] || '$';
+    return `<div class="money-card" style="margin:0 20px 16px">
+      <div class="t-label" style="margin-bottom:6px">Money Saved</div>
+      <div class="money-amount">${sym}${total.toFixed(2)}</div>
+      <div class="t-caption" style="margin-top:4px">Since you quit</div>
+    </div>`;
   }
 
   return { render };
 })();
+window.Dashboard = Dashboard;

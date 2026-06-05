@@ -1,162 +1,122 @@
+'use strict';
 const Knowledge = (() => {
-  let searchQuery = '';
+  let searchTerm = '';
   let activeCategory = 'All';
-  let bookmarks = JSON.parse(localStorage.getItem('dos_bookmarks') || '[]');
+  let bookmarks = [];
 
-  const ALL_CATEGORIES = ['All', 'Dopamine', 'Smoking', 'Nicotine', 'Porn', 'Weed', 'Discipline', 'Focus', 'Sleep'];
+  function getBookmarks() {
+    try { return JSON.parse(localStorage.getItem('dos_bookmarks') || '[]'); } catch (e) { return []; }
+  }
+  function saveBookmarks(bm) {
+    try { localStorage.setItem('dos_bookmarks', JSON.stringify(bm)); } catch (e) {}
+  }
 
   function render() {
-    const el = document.getElementById('screen-knowledge');
-    if (!el) return;
+    const screen = document.getElementById('screen-knowledge');
+    if (!screen) return;
+    bookmarks = getBookmarks();
+    const db = window.KNOWLEDGE_DB || [];
+    const categories = ['All', ...new Set(db.map(a => a.category))];
 
-    const articles = filterArticles();
-
-    el.innerHTML = `
-    <div>
-      <div class="knowledge-header">
-        <div class="t-label t-dim">VAULT</div>
-        <h2 class="t-title" style="margin-top:4px;">Knowledge Vault</h2>
-        <p class="t-body t-muted" style="margin-top:4px;">${KNOWLEDGE_DB.length} evidence-based articles · 100% offline</p>
+    screen.innerHTML = `
+      <div style="padding:calc(env(safe-area-inset-top,20px)+16px) 20px 16px">
+        <div class="t-title">Knowledge Base</div>
+        <div class="t-caption" style="margin-top:4px">${db.length} articles · Science-backed recovery</div>
       </div>
-
-      <div class="search-bar">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="kb-search" placeholder="Search articles..." value="${searchQuery}">
-        ${searchQuery ? `<button id="kb-clear" style="color:var(--text3);font-size:0.8rem;">✕</button>` : ''}
+      <div class="kb-search">
+        <svg class="kb-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="kb-input" type="search" id="kb-search-input" placeholder="Search articles…" value="${searchTerm}"
+          oninput="Knowledge._search(this.value)" autocomplete="off" autocorrect="off">
       </div>
-
-      <div class="cat-filter">
-        ${ALL_CATEGORIES.map((c) => `
-          <div class="cat-chip${activeCategory === c ? ' active' : ''}" data-cat="${c}">${c}</div>
-        `).join('')}
+      <div class="cat-scroll">
+        ${categories.map(c => `<button class="cat-chip${c===activeCategory?' active':''}" onclick="Knowledge._setCategory('${c}')">${c}</button>`).join('')}
       </div>
-
-      <div class="article-list">
-        ${articles.length === 0 ? `
-          <div style="padding:40px;text-align:center;">
-            <div style="font-size:2.5rem;margin-bottom:12px;">📭</div>
-            <div class="t-body t-muted">No articles found</div>
-          </div>` :
-          articles.map((a) => buildArticleCard(a)).join('')
-        }
-      </div>
-      <div style="height:20px;"></div>
-    </div>
-
-    <div class="article-reader" id="article-reader">
-      <div class="reader-header">
-        <button class="btn btn-ghost btn-sm" id="reader-back">← Back</button>
-      </div>
-      <div class="reader-body" id="reader-body"></div>
-    </div>`;
-
-    attachHandlers();
+      <div id="kb-articles">${buildArticleList(db)}</div>
+      <div id="reader-overlay" class="reader-overlay"></div>
+    `;
   }
 
-  function buildArticleCard(a) {
-    const isBookmarked = bookmarks.includes(a.id);
-    return `
-    <div class="article-card" data-article-id="${a.id}">
-      <div class="a-meta">
-        <span class="a-cat">${a.category}</span>
-        <span class="a-time" style="margin-left:auto;">${a.readTime} min read</span>
-        <span style="font-size:0.85rem;margin-left:8px;color:${isBookmarked ? 'var(--gold)' : 'var(--text3)'};">
-          ${isBookmarked ? '★' : '☆'}
-        </span>
-      </div>
-      <div class="a-title">${a.title}</div>
-      <div class="a-preview">${stripMarkdown(a.content)}</div>
-      <div class="a-evidence">● ${a.evidenceLevel}</div>
-    </div>`;
-  }
-
-  function filterArticles() {
-    return (typeof KNOWLEDGE_DB !== 'undefined' ? KNOWLEDGE_DB : []).filter((a) => {
-      const matchesCat = activeCategory === 'All' || a.category === activeCategory;
-      const matchesSearch = !searchQuery ||
-        a.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        a.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        a.category.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCat && matchesSearch;
+  function buildArticleList(db) {
+    const filtered = db.filter(a => {
+      const matchCat = activeCategory === 'All' || a.category === activeCategory;
+      const matchSearch = !searchTerm || a.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        a.preview.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchCat && matchSearch;
     });
+    if (!filtered.length) return `<div style="padding:40px 20px;text-align:center;color:var(--text3)">No articles found.</div>`;
+    return filtered.map(a => `
+      <div class="article-card" onclick="Knowledge._openArticle('${a.id}')">
+        <div class="a-category">${a.category}</div>
+        <div class="a-title">${a.title}</div>
+        <div class="a-preview">${a.preview}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+          <div class="a-evidence">${a.evidence}</div>
+          <div style="font-size:1rem;cursor:pointer" onclick="event.stopPropagation();Knowledge._toggleBookmark('${a.id}')">${bookmarks.includes(a.id)?'🔖':'🏷️'}</div>
+        </div>
+      </div>
+    `).join('');
   }
 
-  function stripMarkdown(text) {
-    return text.replace(/#{1,6}\s/g, '').replace(/\*\*/g, '').replace(/\*/g, '').replace(/\n/g, ' ').slice(0, 140) + '...';
+  function _search(val) {
+    searchTerm = val;
+    const db = window.KNOWLEDGE_DB || [];
+    const el = document.getElementById('kb-articles');
+    if (el) el.innerHTML = buildArticleList(db);
   }
 
-  function openArticle(id) {
-    const article = (typeof KNOWLEDGE_DB !== 'undefined' ? KNOWLEDGE_DB : []).find((a) => a.id === id);
+  function _setCategory(cat) {
+    activeCategory = cat;
+    const db = window.KNOWLEDGE_DB || [];
+    const screen = document.getElementById('screen-knowledge');
+    if (!screen) return;
+    screen.querySelectorAll('.cat-chip').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim() === cat);
+    });
+    const el = document.getElementById('kb-articles');
+    if (el) el.innerHTML = buildArticleList(db);
+  }
+
+  function _openArticle(id) {
+    const db = window.KNOWLEDGE_DB || [];
+    const article = db.find(a => a.id === id);
     if (!article) return;
-
-    const reader = document.getElementById('article-reader');
-    const body = document.getElementById('reader-body');
-    if (!reader || !body) return;
-
-    body.innerHTML = `
-      <h2>${article.title}</h2>
-      <div style="display:flex;gap:8px;align-items:center;margin-bottom:20px;flex-wrap:wrap;">
-        <span class="badge badge-blue">${article.category}</span>
-        <span class="t-caption">${article.readTime} min read</span>
-        <span class="badge badge-green">${article.evidenceLevel}</span>
-        <span class="t-caption" style="margin-left:auto;cursor:pointer;" id="bookmark-btn">
-          ${bookmarks.includes(id) ? '★ Bookmarked' : '☆ Bookmark'}
-        </span>
+    bookmarks = getBookmarks();
+    const overlay = document.getElementById('reader-overlay');
+    if (!overlay) return;
+    overlay.innerHTML = `
+      <div class="reader-header">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <button onclick="Knowledge._closeArticle()" style="background:none;border:none;color:var(--teal);font-size:0.9rem;font-weight:600;cursor:pointer">← Back</button>
+          <button onclick="Knowledge._toggleBookmark('${article.id}')" style="background:none;border:none;font-size:1.2rem;cursor:pointer" id="reader-bookmark">${bookmarks.includes(id)?'🔖':'🏷️'}</button>
+        </div>
+        <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal);margin-top:10px">${article.category}</div>
+        <div style="font-size:1.2rem;font-weight:800;color:var(--text);margin-top:4px;line-height:1.3">${article.title}</div>
+        <div style="font-size:0.65rem;color:var(--green);font-weight:600;margin-top:6px">${article.evidence}</div>
       </div>
-      <div>${renderMarkdown(article.content)}</div>`;
-
-    reader.classList.add('open');
-
-    document.getElementById('bookmark-btn')?.addEventListener('click', () => {
-      if (bookmarks.includes(id)) {
-        bookmarks = bookmarks.filter((b) => b !== id);
-      } else {
-        bookmarks.push(id);
-      }
-      localStorage.setItem('dos_bookmarks', JSON.stringify(bookmarks));
-      document.getElementById('bookmark-btn').textContent = bookmarks.includes(id) ? '★ Bookmarked' : '☆ Bookmark';
-      App.showToast(bookmarks.includes(id) ? 'Article bookmarked' : 'Bookmark removed', 'info');
-    });
-
-    document.getElementById('reader-back')?.addEventListener('click', () => {
-      reader.classList.remove('open');
-    });
+      <div class="reader-content">${article.content}</div>
+    `;
+    requestAnimationFrame(() => overlay.classList.add('open'));
   }
 
-  function renderMarkdown(text) {
-    return text
-      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-      .replace(/^## (.+)$/gm, '<h2 style="font-size:1.1rem;margin:20px 0 8px;">$1</h2>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--text);">$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/\n/g, '<br>')
-      .replace(/^/, '<p>')
-      .replace(/$/, '</p>');
+  function _closeArticle() {
+    const overlay = document.getElementById('reader-overlay');
+    if (!overlay) return;
+    overlay.classList.remove('open');
   }
 
-  function attachHandlers() {
-    document.getElementById('kb-search')?.addEventListener('input', (e) => {
-      searchQuery = e.target.value;
-      render();
-    });
-
-    document.getElementById('kb-clear')?.addEventListener('click', () => {
-      searchQuery = '';
-      render();
-    });
-
-    document.querySelectorAll('.cat-chip').forEach((chip) => {
-      chip.addEventListener('click', () => {
-        activeCategory = chip.dataset.cat;
-        render();
-      });
-    });
-
-    document.querySelectorAll('.article-card').forEach((card) => {
-      card.addEventListener('click', () => openArticle(card.dataset.articleId));
-    });
+  function _toggleBookmark(id) {
+    bookmarks = getBookmarks();
+    const idx = bookmarks.indexOf(id);
+    if (idx === -1) bookmarks.push(id);
+    else bookmarks.splice(idx, 1);
+    saveBookmarks(bookmarks);
+    const btn = document.getElementById('reader-bookmark');
+    if (btn) btn.textContent = bookmarks.includes(id) ? '🔖' : '🏷️';
+    const db = window.KNOWLEDGE_DB || [];
+    const el = document.getElementById('kb-articles');
+    if (el) el.innerHTML = buildArticleList(db);
   }
 
-  return { render };
+  return { render, _search, _setCategory, _openArticle, _closeArticle, _toggleBookmark };
 })();
+window.Knowledge = Knowledge;

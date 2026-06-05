@@ -1,50 +1,53 @@
+'use strict';
 const FinanceEngine = (() => {
-  const CURRENCY_SYMBOLS = { PKR: '₨', USD: '$', GBP: '£', AED: 'AED', EUR: '€' };
+  const CURRENCY_SYMBOLS = { USD: '$', GBP: '£', AED: 'د.إ', PKR: '₨', EUR: '€' };
 
   const EQUIVALENTS = [
-    { label: 'gym memberships', cost: 30, unit: 'month' },
-    { label: 'premium coffees', cost: 5, unit: 'cup' },
-    { label: 'books', cost: 15, unit: 'book' },
-    { label: 'streaming months', cost: 12, unit: 'month' },
-    { label: 'weekend trips', cost: 200, unit: 'trip' },
-    { label: 'new shoes', cost: 80, unit: 'pair' },
-    { label: 'restaurant meals', cost: 25, unit: 'meal' },
-    { label: 'smartphone cases', cost: 20, unit: 'case' },
-    { label: 'new laptops', cost: 800, unit: 'laptop' },
-    { label: 'flight tickets', cost: 150, unit: 'ticket' },
+    { label: 'gym months', unitCost: 40 },
+    { label: 'restaurant meals', unitCost: 25 },
+    { label: 'books', unitCost: 12 },
+    { label: 'streaming months', unitCost: 15 },
+    { label: 'coffees', unitCost: 4 },
+    { label: 'cinema tickets', unitCost: 14 },
   ];
 
-  function calculate(config, quitTime) {
-    const { costPerDay = 0, currency = 'USD' } = config;
-    const hrs = Math.max(0, (Date.now() - new Date(quitTime).getTime()) / 3600000);
-    const days = hrs / 24;
+  function calculate(habit, currency) {
+    const cfg = window.HABITS_CONFIG;
+    const habCfg = cfg && cfg[habit.type];
+    const costPerDay = habCfg ? (habCfg.computeCostPerDay(habit.config || {}) || 0) : 0;
+    const h = Math.max(0, (Date.now() - new Date(habit.quitTime).getTime()) / 3600000);
+    const days = h / 24;
+    const sym = CURRENCY_SYMBOLS[currency || 'USD'] || '$';
+
+    function fmt(n) {
+      if (n >= 1000) return sym + (n / 1000).toFixed(1) + 'k';
+      return sym + n.toFixed(2);
+    }
 
     const savedTotal = costPerDay * days;
-    const savedToday = costPerDay * Math.min(1, days);
-    const savedWeek  = costPerDay * Math.min(7, days);
-    const savedMonth = costPerDay * Math.min(30, days);
-    const savedYear  = costPerDay * Math.min(365, days);
-
-    const symbol = CURRENCY_SYMBOLS[currency] || currency;
-    const fmt = (n) => `${symbol}${n.toFixed(2)}`;
-
-    const equivalents = EQUIVALENTS.map((e) => ({
-      count: Math.floor(savedTotal / e.cost),
+    const equivalents = EQUIVALENTS.map(e => ({
       label: e.label,
-      unit: e.unit,
-    })).filter((e) => e.count > 0).slice(0, 4);
+      count: Math.floor(savedTotal / e.unitCost),
+    })).filter(e => e.count >= 1).slice(0, 3);
 
-    const annualProjection = costPerDay * 365;
-
-    return { savedTotal, savedToday, savedWeek, savedMonth, savedYear, annualProjection, fmt, symbol, currency, equivalents };
+    return {
+      costPerDay,
+      savedTotal,
+      savedToday: costPerDay,
+      savedWeek: costPerDay * 7,
+      savedMonth: costPerDay * 30,
+      savedYear: costPerDay * 365,
+      annualProjection: costPerDay * 365,
+      fmt,
+      equivalents,
+      hasCost: costPerDay > 0,
+    };
   }
 
-  function formatMoney(amount, currency) {
-    const symbol = CURRENCY_SYMBOLS[currency] || currency;
-    if (amount >= 1000000) return `${symbol}${(amount / 1000000).toFixed(1)}M`;
-    if (amount >= 1000) return `${symbol}${(amount / 1000).toFixed(1)}K`;
-    return `${symbol}${amount.toFixed(2)}`;
+  function totalSaved(habits, currency) {
+    return habits.reduce((sum, h) => sum + calculate(h, currency).savedTotal, 0);
   }
 
-  return { calculate, formatMoney, CURRENCY_SYMBOLS };
+  return { calculate, totalSaved, CURRENCY_SYMBOLS };
 })();
+window.FinanceEngine = FinanceEngine;

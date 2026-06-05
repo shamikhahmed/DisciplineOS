@@ -1,304 +1,240 @@
+'use strict';
 const Profile = (() => {
   function render() {
-    const state = StateManager.get();
-    const user = state.user || {};
-    const habits = (state.habits || []).filter((h) => h.active);
-    const xp = state.missions?.xp || 0;
-    const level = MissionEngine.xpToLevel(xp);
-    const rank = MissionEngine.getRank(level);
-    const lvlProgress = MissionEngine.levelProgress(xp);
-    const missionStreak = MissionEngine.getMissionStreak(state);
-    const currency = state.settings?.currency || 'USD';
-    const totalDays = habits.reduce((sum, h) => sum + RecoveryEngine.daysClean(h.quitTime), 0);
-    const totalRelapses = habits.reduce((sum, h) => sum + (h.relapses || []).length, 0);
+    const screen = document.getElementById('screen-profile');
+    if (!screen) return;
+    const habits = State.get('habits') || [];
+    const user = State.get('user') || {};
+    const settings = State.get('settings') || {};
+    const currency = settings.currency || 'USD';
+    const cravingLog = State.get('cravingLog') || [];
+    const sym = FinanceEngine.CURRENCY_SYMBOLS[currency] || '$';
 
-    const el = document.getElementById('screen-profile');
-    if (!el) return;
+    const totalDays = habits.reduce((s, h) => s + RecoveryEngine.daysClean(h.quitTime), 0);
+    const totalSaved = FinanceEngine.totalSaved(habits, currency);
+    const cravingsSurvived = cravingLog.filter(c => c.survived).length;
+    const longest = State.longestStreak ? State.longestStreak() : 0;
 
-    el.innerHTML = `
-    <div>
-      <!-- Profile Header -->
+    const habitsHtml = habits.map(h => {
+      const hCfg = (window.HABITS_CONFIG || {})[h.type] || {};
+      const days = RecoveryEngine.daysClean(h.quitTime);
+      const hrs = RecoveryEngine.hoursClean(h.quitTime);
+      const relapses = (h.relapses || []).length;
+      const fin = FinanceEngine.calculate(h, currency);
+      return `<div class="card" style="margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <span style="font-size:1.4rem">${hCfg.icon||'✨'}</span>
+          <div class="t-heading">${hCfg.name||h.type}</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div><div class="t-label">Days Clean</div><div style="font-size:1.3rem;font-weight:800;color:var(--text)">${days}</div></div>
+          <div><div class="t-label">Relapses</div><div style="font-size:1.3rem;font-weight:800;color:var(--text)">${relapses}</div></div>
+          ${fin.hasCost?`<div><div class="t-label">Saved</div><div style="font-size:1.3rem;font-weight:800;color:var(--green)">${sym}${fin.savedTotal.toFixed(2)}</div></div>`:''}
+          <div><div class="t-label">Body Score</div><div style="font-size:1.3rem;font-weight:800;color:var(--teal)">${BodyEngine.overallBodyScore(h.type, hrs)}%</div></div>
+        </div>
+        <button class="btn btn-ghost" style="font-size:0.78rem;padding:10px 16px;width:100%" onclick="Profile._editHabit('${h.id}')">Edit Habit Config</button>
+      </div>`;
+    }).join('');
+
+    screen.innerHTML = `
       <div class="profile-header">
-        <div class="avatar-wrap">${user.name ? user.name.charAt(0).toUpperCase() : '⚡'}</div>
-        <div class="t-title">${user.name || 'Recovery Warrior'}</div>
-        ${user.age || user.country ? `<div class="t-caption" style="margin-top:4px;">${[user.age ? `Age ${user.age}` : '', user.country].filter(Boolean).join(' · ')}</div>` : ''}
-        <div class="rank-badge">${rank.icon} ${rank.name}</div>
+        <div class="t-display">${user.name ? user.name : 'Your Recovery'}</div>
+        <div class="t-caption" style="margin-top:4px">${habits.length} habit${habits.length!==1?'s':''} tracked</div>
       </div>
 
-      <!-- Stats Grid -->
-      <div class="stats-grid">
+      <div class="stat-grid">
         <div class="stat-cell">
-          <div class="sv t-orange">${level}</div>
-          <div class="sl">Level</div>
+          <div class="stat-val" style="color:var(--orange)">${totalDays}</div>
+          <div class="stat-label">Total Days</div>
         </div>
         <div class="stat-cell">
-          <div class="sv t-blue">${xp.toLocaleString()}</div>
-          <div class="sl">Total XP</div>
+          <div class="stat-val" style="color:var(--green)">${sym}${totalSaved.toFixed(0)}</div>
+          <div class="stat-label">Total Saved</div>
         </div>
         <div class="stat-cell">
-          <div class="sv t-green">${missionStreak}</div>
-          <div class="sl">Day Streak</div>
+          <div class="stat-val" style="color:var(--teal)">${cravingsSurvived}</div>
+          <div class="stat-label">Cravings Survived</div>
         </div>
         <div class="stat-cell">
-          <div class="sv">${totalDays}</div>
-          <div class="sl">Clean Days</div>
-        </div>
-        <div class="stat-cell">
-          <div class="sv">${habits.length}</div>
-          <div class="sl">Habits</div>
-        </div>
-        <div class="stat-cell">
-          <div class="sv" style="color:${totalRelapses === 0 ? 'var(--green)' : 'var(--gold)'};">${totalRelapses}</div>
-          <div class="sl">Relapses</div>
+          <div class="stat-val" style="color:var(--gold)">${longest}</div>
+          <div class="stat-label">Longest Streak</div>
         </div>
       </div>
 
-      <!-- XP Progress Bar -->
-      <div class="xp-bar-wrap">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <span class="t-label t-dim">XP TO LEVEL ${level + 1}</span>
-          <span class="t-caption">${lvlProgress.current} / ${lvlProgress.needed}</span>
-        </div>
-        <div class="xp-bar-bg">
-          <div class="xp-bar-fill" style="width:${lvlProgress.pct}%;"></div>
-        </div>
+      <div class="section-header"><span class="section-title">Your Habits</span></div>
+      <div style="padding:0 20px">${habitsHtml}</div>
+
+      <div class="section-header"><span class="section-title">Add Habit</span></div>
+      <div style="padding:0 20px 12px">
+        <button class="btn btn-ghost" style="width:100%;text-align:center" onclick="Profile._addHabit()">+ Add another habit</button>
       </div>
 
-      <!-- Per-Habit Stats -->
-      ${habits.length > 0 ? `
-      <div class="section-header">
-        <span class="section-title">Habit Stats</span>
-      </div>
-      <div style="padding:0 20px 20px;display:flex;flex-direction:column;gap:10px;">
-        ${habits.map((h) => buildHabitStat(h, currency)).join('')}
-      </div>` : ''}
-
-      <!-- Recovery Goals -->
-      ${user.goals?.length ? `
-      <div class="section-header">
-        <span class="section-title">Your Goals</span>
-      </div>
-      <div style="padding:0 20px 20px;display:flex;flex-wrap:wrap;gap:8px;">
-        ${user.goals.map((g) => `<div class="badge badge-orange">${g.replace(/_/g,' ')}</div>`).join('')}
-      </div>` : ''}
-
-      <!-- Settings -->
-      <div class="section-header">
-        <span class="section-title">Settings</span>
-      </div>
-      <div class="settings-section">
-        <div class="settings-item">
-          <div>
-            <div class="si-label">Currency</div>
-            <div class="si-desc">Used for financial tracking</div>
+      <div class="section-header"><span class="section-title">Settings</span></div>
+      <div style="padding:0 20px">
+        <div class="card" style="margin-bottom:10px">
+          <div class="ob-field">
+            <div class="ob-label">Name</div>
+            <input class="ob-input" type="text" id="p-name" placeholder="Your name" value="${user.name||''}" oninput="Profile._saveName(this.value)">
           </div>
-          <select id="currency-select" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:8px;font-size:0.8rem;">
-            <option value="USD" ${currency === 'USD' ? 'selected' : ''}>USD</option>
-            <option value="GBP" ${currency === 'GBP' ? 'selected' : ''}>GBP</option>
-            <option value="EUR" ${currency === 'EUR' ? 'selected' : ''}>EUR</option>
-            <option value="AED" ${currency === 'AED' ? 'selected' : ''}>AED</option>
-            <option value="PKR" ${currency === 'PKR' ? 'selected' : ''}>PKR</option>
-          </select>
-        </div>
-        <div class="settings-item">
-          <div>
-            <div class="si-label">Notifications</div>
-            <div class="si-desc">Daily check-in reminders</div>
+          <div class="ob-field" style="margin-bottom:0">
+            <div class="ob-label">Currency</div>
+            <select class="ob-select" id="p-currency" onchange="Profile._saveCurrency(this.value)">
+              ${['USD','GBP','AED','PKR','EUR'].map(c=>`<option value="${c}" ${currency===c?'selected':''}>${c}</option>`).join('')}
+            </select>
           </div>
-          <div class="toggle${state.settings?.notifications ? ' on' : ''}" id="notif-toggle"></div>
         </div>
       </div>
 
-      <!-- Data Actions -->
-      <div class="section-header">
-        <span class="section-title">Data</span>
-      </div>
-      <div class="settings-section">
-        <div class="settings-item">
-          <div>
-            <div class="si-label">Export Backup</div>
-            <div class="si-desc">Download your data as JSON</div>
-          </div>
-          <button class="btn btn-ghost btn-sm" id="export-btn">Export</button>
-        </div>
-        <div class="settings-item">
-          <div>
-            <div class="si-label">Import Backup</div>
-            <div class="si-desc">Restore from a backup file</div>
-          </div>
-          <button class="btn btn-ghost btn-sm" id="import-btn">Import</button>
-          <input type="file" id="import-file" accept=".json" style="display:none;">
-        </div>
-        <div class="settings-item" style="border-bottom:none;">
-          <div>
-            <div class="si-label" style="color:var(--red);">Reset Vault</div>
-            <div class="si-desc">Delete all data. Cannot be undone.</div>
-          </div>
-          <button class="btn btn-danger btn-sm" id="reset-btn">Reset</button>
-        </div>
+      <div style="padding:0 20px;margin-bottom:8px">
+        <button class="btn btn-ghost" style="width:100%;text-align:center;margin-bottom:8px" onclick="Profile._exportData()">Export Data (JSON)</button>
+        <label class="btn btn-ghost" style="width:100%;text-align:center;display:block;cursor:pointer">
+          Import Data
+          <input type="file" accept=".json" style="display:none" onchange="Profile._importData(event)">
+        </label>
       </div>
 
-      <!-- App Info -->
-      <div style="padding:20px;text-align:center;">
-        <div class="t-caption">DisciplineOS v1.0</div>
-        <div class="t-caption" style="margin-top:4px;">All data stored locally. No accounts. No servers.</div>
+      <div style="padding:0 20px 20px">
+        <button class="btn btn-danger" onclick="Profile._reset()">Reset All Data</button>
       </div>
-    </div>`;
+      <div style="height:8px"></div>
 
-    attachHandlers();
+      <div id="profile-modal" style="display:none"></div>
+    `;
   }
 
-  function buildHabitStat(habit, currency) {
-    const days = RecoveryEngine.daysClean(habit.quitTime);
-    const longest = RelapseEngine.getLongestStreak(habit);
-    const integrity = RelapseEngine.getIntegrityScore(habit);
-    let savings = '';
-    if (habit.config?.costPerDay > 0) {
-      const fin = FinanceEngine.calculate(habit.config, habit.quitTime);
-      savings = `<div class="badge badge-green" style="margin-top:6px;">Saved ${fin.fmt(fin.savedTotal)}</div>`;
-    }
-
-    return `
-    <div class="card-elevated" style="padding:14px;">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-        <span style="font-size:1.3rem;">${habit.icon || '⭕'}</span>
-        <span style="font-size:0.9rem;font-weight:600;">${habit.name}</span>
-        <span style="margin-left:auto;" class="badge ${integrity.score >= 70 ? 'badge-green' : 'badge-gold'}">${integrity.score}% Integrity</span>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center;">
-        <div style="padding:8px;background:var(--glass);border-radius:8px;">
-          <div style="font-size:1.1rem;font-weight:700;color:var(--orange);">${days}</div>
-          <div class="t-caption">Current</div>
-        </div>
-        <div style="padding:8px;background:var(--glass);border-radius:8px;">
-          <div style="font-size:1.1rem;font-weight:700;color:var(--blue);">${longest}</div>
-          <div class="t-caption">Best</div>
-        </div>
-        <div style="padding:8px;background:var(--glass);border-radius:8px;">
-          <div style="font-size:1.1rem;font-weight:700;color:${integrity.relapses === 0 ? 'var(--green)' : 'var(--gold)'};">${integrity.relapses}</div>
-          <div class="t-caption">Relapses</div>
-        </div>
-      </div>
-      ${savings}
-      ${habit.type === 'vape' && habit.config?.nicStrength ? `
-      <div style="margin-top:8px;font-size:0.75rem;color:var(--text2);">
-        ${[habit.config.deviceType, habit.config.deviceBrand].filter(Boolean).join(' ')}${habit.config.deviceType||habit.config.deviceBrand?' · ':''}${habit.config.nicStrength}mg ${habit.config.nicType||''}${habit.config.dailyPuffs ? ' · ' + habit.config.dailyPuffs + ' puffs/day' : ''}
-      </div>` : ''}
-      <button class="btn btn-ghost btn-sm" style="margin-top:10px;color:var(--red);" data-habit-id="${habit.id}" data-habit-name="${habit.name}" id="relapse-btn-${habit.id}">
-        Log Relapse
-      </button>
-    </div>`;
+  function _saveName(val) {
+    State.update(d => { d.user.name = val; });
   }
 
-  function attachHandlers() {
-    document.getElementById('currency-select')?.addEventListener('change', (e) => {
-      StateManager.update((s) => { s.settings.currency = e.target.value; });
-      App.showToast('Currency updated', 'success');
-    });
+  function _saveCurrency(val) {
+    State.update(d => { d.settings.currency = val; d.user.currency = val; });
+  }
 
-    document.getElementById('notif-toggle')?.addEventListener('click', (e) => {
-      const current = StateManager.get('settings')?.notifications;
-      StateManager.update((s) => { s.settings.notifications = !current; });
-      e.target.classList.toggle('on', !current);
-    });
+  function _exportData() {
+    const json = State.exportJSON();
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'disciplineos-backup.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
-    document.getElementById('export-btn')?.addEventListener('click', () => {
-      const data = StateManager.exportData();
-      const blob = new Blob([data], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `disciplineos-backup-${Date.now()}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      App.showToast('Backup exported', 'success');
-    });
-
-    document.getElementById('import-btn')?.addEventListener('click', () => {
-      document.getElementById('import-file')?.click();
-    });
-
-    document.getElementById('import-file')?.addEventListener('change', (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        const success = StateManager.importData(ev.target.result);
-        if (success) {
-          App.showToast('Data imported successfully', 'success');
-          setTimeout(() => render(), 300);
-        } else {
-          App.showToast('Invalid backup file', 'error');
-        }
-      };
-      reader.readAsText(file);
-    });
-
-    document.getElementById('reset-btn')?.addEventListener('click', () => {
-      const modal = document.getElementById('modal-overlay');
-      if (modal) {
-        modal.innerHTML = `
-        <div class="modal-sheet">
-          <div class="modal-handle"></div>
-          <h3 class="t-heading" style="margin-bottom:8px;color:var(--red);">Reset All Data?</h3>
-          <p class="t-body t-muted" style="margin-bottom:24px;">This will permanently delete all your recovery data, habits, and progress. This cannot be undone.</p>
-          <div style="display:flex;gap:10px;">
-            <button class="btn btn-ghost" style="flex:1" id="cancel-reset">Cancel</button>
-            <button class="btn btn-danger" style="flex:1" id="confirm-reset">Yes, Reset</button>
-          </div>
-        </div>`;
-        modal.classList.add('open');
-
-        document.getElementById('cancel-reset')?.addEventListener('click', () => modal.classList.remove('open'));
-        document.getElementById('confirm-reset')?.addEventListener('click', () => {
-          StateManager.reset();
-          modal.classList.remove('open');
-          window.location.reload();
-        });
+  function _importData(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      if (State.importJSON(ev.target.result)) {
+        App.showToast('Data imported successfully', 'success');
+        render();
+      } else {
+        App.showToast('Import failed — invalid file', 'error');
       }
-    });
-
-    document.querySelectorAll('[id^="relapse-btn-"]').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const habitId = btn.dataset.habitId;
-        const habitName = btn.dataset.habitName;
-        showRelapseModal(habitId, habitName);
-      });
-    });
+    };
+    reader.readAsText(file);
   }
 
-  function showRelapseModal(habitId, habitName) {
-    const modal = document.getElementById('modal-overlay');
+  function _reset() {
+    if (confirm('Reset ALL data? This cannot be undone.')) {
+      State.reset();
+      App.showToast('Data reset', 'info');
+      State.set('onboardingComplete', false);
+      document.getElementById('nav').style.display = 'none';
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      if (window.Onboarding) Onboarding.render();
+    }
+  }
+
+  function _editHabit(id) {
+    const habits = State.get('habits') || [];
+    const habit = habits.find(h => h.id === id);
+    if (!habit) return;
+    const hCfg = (window.HABITS_CONFIG || {})[habit.type];
+    if (!hCfg) return;
+    const modal = document.getElementById('profile-modal');
     if (!modal) return;
+    const cfg = habit.config || {};
+    modal.style.display = 'block';
     modal.innerHTML = `
-    <div class="modal-sheet">
-      <div class="modal-handle"></div>
-      <h3 class="t-heading" style="margin-bottom:4px;">Log Relapse</h3>
-      <p class="t-body t-muted" style="margin-bottom:16px;">${habitName} — Your streak resets but your recovery continues.</p>
-      <div class="field">
-        <label>Note (optional)</label>
-        <input type="text" id="relapse-note" placeholder="What triggered it?">
+      <div style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);display:flex;align-items:flex-end" onclick="if(event.target===this)Profile._closeModal()">
+        <div style="background:var(--bg3);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-height:80vh;overflow-y:auto">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+            <div class="t-heading">${hCfg.icon} ${hCfg.name}</div>
+            <button onclick="Profile._closeModal()" style="background:none;border:none;color:var(--text3);font-size:1.2rem;cursor:pointer">✕</button>
+          </div>
+          <div class="ob-field">
+            <div class="ob-label">Quit date</div>
+            <input class="ob-input" type="datetime-local" id="edit-quit" value="${new Date(habit.quitTime).toISOString().slice(0,16)}">
+          </div>
+          ${hCfg.configFields.filter(f=>f.type!=='hidden').map(f=>{
+            if(f.type==='select') return `<div class="ob-field"><div class="ob-label">${f.label}</div><select class="ob-select" id="edit_${f.id}" name="${f.id}">${(f.options||[]).map(o=>`<option value="${o}" ${cfg[f.id]===o?'selected':''}>${o}</option>`).join('')}</select></div>`;
+            return `<div class="ob-field"><div class="ob-label">${f.label}</div><input class="ob-input" type="${f.type==='text'?'text':'number'}" id="edit_${f.id}" name="${f.id}" value="${cfg[f.id]||''}" placeholder="${f.placeholder||''}"></div>`;
+          }).join('')}
+          <button class="btn btn-primary" onclick="Profile._saveEdit('${id}')">Save Changes</button>
+        </div>
       </div>
-      <div style="display:flex;gap:10px;margin-top:8px;">
-        <button class="btn btn-ghost" style="flex:1" id="cancel-relapse">Cancel</button>
-        <button class="btn btn-danger" style="flex:1" id="confirm-relapse">Log It</button>
-      </div>
-    </div>`;
-    modal.classList.add('open');
-
-    document.getElementById('cancel-relapse')?.addEventListener('click', () => modal.classList.remove('open'));
-    document.getElementById('confirm-relapse')?.addEventListener('click', () => {
-      const note = document.getElementById('relapse-note')?.value || '';
-      StateManager.update((s) => {
-        const habit = s.habits.find((h) => h.id === habitId);
-        if (habit) RelapseEngine.logRelapse(habit, note);
-      });
-      modal.classList.remove('open');
-      App.showToast('Relapse logged. Streak reset. Keep going.', 'info');
-      render();
-    });
+    `;
   }
 
-  return { render };
+  function _saveEdit(id) {
+    const habits = State.get('habits') || [];
+    const habit = habits.find(h => h.id === id);
+    if (!habit) return;
+    const hCfg = (window.HABITS_CONFIG || {})[habit.type];
+    const quitEl = document.getElementById('edit-quit');
+    const newQuit = quitEl ? new Date(quitEl.value).toISOString() : habit.quitTime;
+    const newCfg = {};
+    if (hCfg) {
+      hCfg.configFields.forEach(f => {
+        const el = document.getElementById('edit_' + f.id);
+        if (el) newCfg[f.id] = el.type === 'number' ? parseFloat(el.value) || 0 : el.value;
+      });
+    }
+    State.updateHabit(id, { quitTime: newQuit, config: newCfg });
+    _closeModal();
+    App.showToast('Habit updated', 'success');
+    render();
+  }
+
+  function _closeModal() {
+    const modal = document.getElementById('profile-modal');
+    if (modal) modal.style.display = 'none';
+  }
+
+  function _addHabit() {
+    const habits = window.HABITS_CONFIG || {};
+    const existing = (State.get('habits') || []).map(h => h.type);
+    const available = Object.entries(habits).filter(([k]) => !existing.includes(k));
+    if (!available.length) { App.showToast('All habits already tracked', 'info'); return; }
+    const modal = document.getElementById('profile-modal');
+    if (!modal) return;
+    modal.style.display = 'block';
+    modal.innerHTML = `
+      <div style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);display:flex;align-items:flex-end" onclick="if(event.target===this)Profile._closeModal()">
+        <div style="background:var(--bg3);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-height:70vh;overflow-y:auto">
+          <div class="t-heading" style="margin-bottom:16px">Add a Habit</div>
+          <div class="habit-grid">
+            ${available.map(([k,h])=>`
+              <div class="habit-chip" onclick="Profile._startAddHabit('${k}')">
+                <span class="habit-chip-icon">${h.icon}</span>
+                <span class="habit-chip-name">${h.name}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function _startAddHabit(type) {
+    _closeModal();
+    State.addHabit({ type, quitTime: new Date().toISOString(), config: {} });
+    App.showToast('Habit added', 'success');
+    render();
+  }
+
+  return { render, _saveName, _saveCurrency, _exportData, _importData, _reset, _editHabit, _saveEdit, _closeModal, _addHabit, _startAddHabit };
 })();
+window.Profile = Profile;

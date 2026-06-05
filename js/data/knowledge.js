@@ -1,780 +1,344 @@
+'use strict';
 const KNOWLEDGE_DB = [
   {
-    id: 'k01',
-    title: 'The Neuroscience of Addiction: Why Quitting Feels Impossible',
-    category: 'Dopamine',
-    readTime: 5,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## Why Your Brain Fights You When You Quit
-
-Addiction is not a moral failure. It is a neurological hijacking of the brain's reward system — one of the most powerful forces in human biology.
-
-### The Dopamine Highway
-
-Your brain has a system called the mesolimbic dopamine pathway, often called the "reward circuit." Under normal circumstances, this system releases dopamine in response to survival behaviors: eating, socializing, achieving goals. The feeling of pleasure and motivation you get from accomplishing something real is dopamine doing its job.
-
-Addictive substances and behaviors short-circuit this system. They trigger dopamine releases 2 to 10 times greater than any natural reward. The brain, sensing this massive flooding, begins compensating. It downregulates dopamine receptors — essentially deleting the receptors that receive pleasure signals.
-
-### The Tolerance Trap
-
-This downregulation is why you needed more over time. With fewer receptors available, you need more of the substance to feel the same effect. This is tolerance. But crucially, it also means that normal life — a good conversation, a meal, sunlight — no longer provides adequate dopamine stimulation. Life feels flat, gray, pointless. This is not depression in the clinical sense; it is your brain's receptors adapting to an artificial baseline.
-
-### What Recovery Looks Like
-
-When you stop, your brain doesn't immediately bounce back. The first weeks are the hardest because your receptor density has dropped but the substance is gone. You feel the worst of both worlds: no high, and diminished natural pleasure.
-
-But the brain is plastic. Neuroplasticity — the brain's ability to rewire itself — means recovery is real and measurable. Studies using PET scans show that dopamine receptor density begins recovering within weeks of abstinence and continues improving for months.
-
-The 90-day milestone is significant because research shows this is roughly the timeframe for substantial neural recalibration. After 90 days, most people report that ordinary life begins to feel rewarding again.
-
-### The Practical Takeaway
-
-Every craving is a lie your downregulated brain tells you. It says you need the substance to feel okay. But the truth is the opposite: every day you abstain, your receptor density climbs. Every day you choose discomfort, you're investing in a brain that will naturally feel pleasure again.
-
-The temporary misery of withdrawal is the price of a brain that works properly. Pay it. It ends.`
+    id: 'k1', category: 'Nicotine', title: 'Why Nicotine is So Hard to Quit',
+    preview: 'Nicotine hijacks the brain\'s dopamine system more efficiently than almost any other substance.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>The Neuroscience of Nicotine Addiction</h2>
+<p>Nicotine binds to acetylcholine receptors in the brain and triggers a release of dopamine — the neurotransmitter associated with pleasure, motivation, and reward. This dopamine release happens within 10-20 seconds of inhaling, making nicotine one of the most rapidly reinforcing substances known.</p>
+<h3>Why the Brain Adapts</h3>
+<p>With repeated use, the brain responds to the artificial dopamine floods by creating more nicotine receptors — a process called upregulation. This means you need more nicotine to get the same effect. When you stop, those excess receptors are left empty, causing withdrawal symptoms: irritability, anxiety, difficulty concentrating, and intense cravings.</p>
+<h3>The Psychological Layer</h3>
+<p>Beyond chemistry, smoking and vaping become deeply embedded in behavioural routines. Morning coffee, after meals, stress — these cues become neurologically linked to the habit. Breaking the chemical dependency is one thing; breaking the cue-routine-reward loop is another.</p>
+<h3>What Recovery Looks Like</h3>
+<p>Within 72 hours, nicotine is fully cleared from your bloodstream. The physical withdrawal is largely complete within 2-4 weeks. After that, what you're managing is psychological habit — and that is where most relapses occur. Environment restructuring, craving surfing, and replacement behaviours are the evidence-based tools for this phase.</p>
+`
   },
   {
-    id: 'k02',
-    title: 'How Smoking Destroys Your Lungs — And How They Heal',
-    category: 'Smoking',
-    readTime: 4,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## The Lung Recovery Story Nobody Tells You
-
-Most people know smoking is bad for lungs. Few understand the remarkable repair process that begins the moment you stop.
-
-### What Smoke Actually Does
-
-Cigarette smoke contains over 7,000 chemicals, at least 70 of which are known carcinogens. When you inhale, these chemicals do several things simultaneously:
-
-**Cilia destruction:** Your airways are lined with tiny hair-like structures called cilia. Their job is to sweep mucus, bacteria, and toxins upward toward your throat where they can be expelled. Smoking paralyzes and eventually destroys these cilia. This is why smokers develop "smoker's cough" — without cilia, mucus pools and must be coughed up manually.
-
-**Alveolar damage:** The alveoli are tiny air sacs where oxygen enters the blood. Smoke directly damages alveoli, reducing their elasticity and surface area. This is emphysema — and once alveoli are destroyed, they cannot regenerate.
-
-**Inflammatory cascade:** Smoking triggers constant lung inflammation. White blood cells flood the airways, causing damage that accumulates over years.
-
-### The Timeline of Repair
-
-Within 8 hours: Carbon monoxide — which binds to hemoglobin and displaces oxygen — begins clearing. Blood oxygen levels rise.
-
-Within 72 hours: Nicotine is fully metabolized. Bronchial tubes, which had been chronically constricted, begin to relax. Many former smokers notice easier breathing by day 3.
-
-Within 1-9 months: Cilia regrow. This is a milestone. As cilia recover, the natural mucus-clearance mechanism returns. The chronic cough may temporarily worsen — because cilia are now actively doing their job — before improving permanently.
-
-Within 1 year: Risk of coronary heart disease drops by 50% compared to a smoker.
-
-Within 10 years: Risk of lung cancer drops by 50%.
-
-### The Honest Caveat
-
-If you have advanced COPD or significant alveolar damage, those specific structures cannot regenerate. But the inflammatory processes stop, circulation improves, and the progression of damage halts immediately.
-
-Every cigarette not smoked is real, measurable healing. The repair process is automatic — your only job is to not interfere with it.`
+    id: 'k2', category: 'Vaping', title: 'Vaping vs Smoking: What\'s Actually Different',
+    preview: 'Vaping is less harmful than smoking — but not harmless. Here\'s what the science actually says.',
+    evidence: 'Emerging evidence',
+    content: `
+<h2>The Science of Vaping</h2>
+<p>Vaping eliminates combustion — which removes the tar, carbon monoxide, and most carcinogens in cigarette smoke. In that sense, switching from smoking to vaping reduces immediate respiratory risk significantly. This is why the NHS recognises vaping as a smoking cessation tool.</p>
+<h3>What Vaping Still Does</h3>
+<p>Vaping still delivers nicotine — often at higher concentrations than cigarettes, especially with nicotine salt (nic salt) formulations. Nic salts deliver nicotine to the brain 2.5x faster than freebase nicotine in cigarettes. The dependency is just as real, and often stronger.</p>
+<p>EVALI (e-cigarette or vaping product use-associated lung injury) emerged in 2019 as a serious concern, primarily linked to vitamin E acetate in illicit THC cartridges, but some cases involved nicotine vapes too.</p>
+<h3>Quitting Vaping</h3>
+<p>The withdrawal experience from vaping is clinically identical to smoking cessation. The same NRT (nicotine replacement therapy) strategies apply. Most people find the psychological habit (the hand-to-mouth action, the flavour, the ritual) as challenging as the chemical dependency.</p>
+`
   },
   {
-    id: 'k03',
-    title: 'Porn and the Brain: What the Research Actually Says',
-    category: 'Porn',
-    readTime: 6,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## The Science of Pornography's Effect on Brain Structure
-
-Research into pornography's neurological effects has advanced significantly over the past decade. Here is what peer-reviewed science actually demonstrates.
-
-### Structural Brain Changes
-
-A 2014 study published in JAMA Psychiatry by Kühn and Gallinat found that men who watched more pornography had less gray matter in the striatum — a key region of the brain's reward system — and showed reduced activation of this region in response to sexual imagery. The researchers interpreted this as evidence of tolerance: the brain adapts to overstimulation by reducing sensitivity.
-
-A separate 2014 study found that the more pornography men watched, the weaker the connection between the prefrontal cortex (responsible for decision-making and impulse control) and the ventral striatum (the reward center). Weaker connectivity means less ability to resist urges.
-
-### The Escalation Problem
-
-Pornography's digital format creates a condition that has no evolutionary analog: an infinite, novel, immediately accessible sexual stimulus. Your brain's reward circuit evolved to respond to novelty — each new encounter releases dopamine partly because it's new.
-
-Internet pornography exploits this by providing endless novelty with zero effort. The result is an accelerating need for novelty to achieve the same dopamine response — the same tolerance mechanism seen in substance addiction.
-
-### Social and Relational Effects
-
-Research consistently shows associations between heavy pornography use and: reduced satisfaction in real relationships, unrealistic expectations about partners, reduced empathy, increased objectification, and decreased motivation to pursue real-world relationships.
-
-None of this means these effects are permanent. The same neuroplasticity that allows addiction to form allows recovery.
-
-### The Recovery Evidence
-
-Studies using fMRI show that abstinence leads to measurable increases in prefrontal-striatal connectivity. The 90-day period cited in recovery communities appears in research as a meaningful benchmark for neural recalibration — though individual variation is significant.
-
-The most consistent finding across recovery accounts and emerging research is that the flatline period (weeks 2-5 for many people) is real, represents genuine neural adjustment, and is followed by improved natural reward sensitivity.`
+    id: 'k3', category: 'Vaping', title: 'Nicotine Salt vs Freebase: Why Nic Salts Are More Addictive',
+    preview: 'The chemistry behind why modern pod vapes are so much harder to quit than older vaping devices.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>The Nic Salt Revolution — and Its Cost</h2>
+<p>Traditional freebase nicotine in cigarettes and early vapes has a high pH, making it harsh at high concentrations. In 2015, Juul Labs introduced benzoic acid to nicotine, creating nicotine salt — a smoother formula that allows much higher nicotine concentrations (20-50mg/mL vs 3-6mg/mL in freebase vapes).</p>
+<h3>Why This Matters for Addiction</h3>
+<p>Nic salts deliver nicotine to the brain in approximately 6-7 seconds — significantly faster than cigarettes. The speed of delivery is a primary driver of addiction potential. The faster the dopamine hit, the stronger the conditioned response.</p>
+<p>A 50mg/mL pod can deliver the equivalent of a pack of cigarettes in nicotine within 200-300 puffs. Many vapers far exceed this.</p>
+<h3>Recovery</h3>
+<p>The neurological recovery from nic salt dependency follows the same timeline as smoking. However, the deep conditioning from faster delivery may make psychological triggers more intense. Expect strong cravings in specific contexts (car, after food, stress) for the first 4-6 weeks.</p>
+`
   },
   {
-    id: 'k04',
-    title: 'Cannabis and Motivation: The Science of Amotivational Syndrome',
-    category: 'Weed',
-    readTime: 4,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## Why Weed Kills Motivation (And When It Comes Back)
-
-The concept of "amotivational syndrome" — a state of apathy, reduced ambition, and diminished drive associated with heavy cannabis use — has been debated for decades. Recent neuroimaging research has clarified the mechanism.
-
-### How THC Disrupts Motivation
-
-THC, the primary psychoactive compound in cannabis, mimics a natural neurotransmitter called anandamide. Anandamide plays a key role in regulating dopamine — specifically in the nucleus accumbens, the brain's core reward and motivation center.
-
-When THC repeatedly floods these receptors, two things happen:
-
-1. **Receptor downregulation:** The brain reduces the number of cannabinoid receptors, meaning natural anandamide has less effect.
-2. **Dopamine suppression:** Heavy THC exposure suppresses dopamine release in the striatum. A 2013 PET scan study found heavy users had significantly lower dopamine synthesis capacity than controls.
-
-Less dopamine release means less motivation — the neural drive to pursue goals, complete tasks, and delay gratification depends on dopamine anticipation signals.
-
-### Sleep Architecture Destruction
-
-THC suppresses REM sleep. REM is not optional — it is when your brain consolidates memories, processes emotions, and performs essential maintenance. Chronic THC use essentially eliminates this phase.
-
-This explains the vivid, intense dreams many people experience in the first weeks of quitting: REM rebound. The brain overcompensates with exceptionally deep REM sleep after the suppression lifts.
-
-### Recovery Timeline
-
-Week 1-2: Sleep normalizes and intensifies. Appetite returns (hunger cues no longer masked by THC's effect on ghrelin signaling).
-
-Month 1: Working memory — the ability to hold information in mind while using it — measurably improves in multiple controlled studies.
-
-3 months: A 2012 study found that heavy users who abstained showed significant improvements in verbal memory, processing speed, and executive function at 28 days. Full recovery continues past 90 days.
-
-Your motivation will return. The flatness and apathy of early recovery are withdrawal, not your permanent state.`
+    id: 'k4', category: 'Dopamine', title: 'Dopamine: The Molecule You\'ve Been Abusing',
+    preview: 'Every addiction follows the same dopamine circuit. Understanding it changes how you fight it.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Your Brain's Reward System</h2>
+<p>Dopamine is a neurotransmitter primarily manufactured in the ventral tegmental area (VTA) and sent throughout the brain via the mesolimbic pathway. It is released in response to rewards — food, sex, social connection, achievement — and in anticipation of them.</p>
+<h3>How Addiction Hijacks This</h3>
+<p>Addictive substances and behaviours (nicotine, pornography, gambling, social media) trigger dopamine release at a magnitude far beyond what natural rewards produce. A cigarette might spike dopamine 200% above baseline. Cocaine spikes it 350%. Compared to food (100% above baseline), these are supernormal stimuli.</p>
+<p>The brain responds by downregulating — reducing receptor sensitivity and baseline dopamine production. This creates tolerance, and it means everyday life feels grey and unrewarding. This is the hallmark of addiction.</p>
+<h3>Recovery: The Timeline</h3>
+<p>Dopamine receptor sensitivity begins recovering within 2-4 weeks of abstinence. Most people notice significant improvement in baseline motivation and pleasure at 90 days. Full recovery can take 6-18 months depending on the substance and duration of use. Exercise accelerates this process significantly.</p>
+`
   },
   {
-    id: 'k05',
-    title: 'Sleep: The Master Recovery Lever',
-    category: 'Sleep',
-    readTime: 5,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## Why Sleep Is the Single Most Important Recovery Tool
-
-Every system discussed in this vault — dopamine, addiction, motivation, physical healing — is regulated and repaired primarily during sleep. If you optimize nothing else in your recovery, optimize sleep.
-
-### What Happens During Sleep
-
-**NREM Stage 3 (Deep Sleep):** Your brain clears metabolic waste products via the glymphatic system, which becomes 60% more active during sleep. This includes clearing beta-amyloid (linked to Alzheimer's) and other toxins that accumulate during waking hours. Your body releases growth hormone almost exclusively during this stage, driving cellular repair.
-
-**REM Sleep:** Memory consolidation occurs. Your brain replays experiences, transfers learning from short-term to long-term storage, and processes emotional experiences. REM sleep is also when your brain rehearses social-emotional scenarios, which is why poor REM sleep correlates with reduced empathy and emotional regulation.
-
-### Sleep and Addiction Recovery
-
-Sleep deprivation dramatically increases cravings. Research shows that one poor night's sleep increases the reward-related brain response to addictive cues by up to 60%. Conversely, adequate sleep reduces craving intensity and improves prefrontal cortex function — the area responsible for saying no.
-
-This is not metaphorical. Sleep literally gives you more willpower by restoring the neural substrate that willpower runs on.
-
-### Optimizing Sleep for Recovery
-
-**Consistent timing:** Sleep and wake at the same time daily, including weekends. Circadian disruption is itself a stressor that amplifies cravings.
-
-**Light exposure:** Bright light (ideally sunlight) within 30 minutes of waking sets your circadian clock. Blue-light exposure after 9pm suppresses melatonin.
-
-**Temperature:** Core body temperature must drop 1-2°F to initiate sleep. Cool your room to 65-67°F (18-19°C).
-
-**No alcohol or THC as sleep aids:** Both suppress REM sleep, producing worse sleep quality despite faster onset.
-
-The recovery process you're investing in happens largely while you sleep. Protect it.`
+    id: 'k5', category: 'Recovery', title: 'The 90-Day Rule: Why Three Months Changes Everything',
+    preview: 'The first 90 days of recovery are neurologically different from anything that comes after.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Why 90 Days Is the Turning Point</h2>
+<p>Recovery research consistently identifies 90 days as a threshold for neurological change. Within this window, the brain undergoes measurable structural and functional recovery — dopamine receptor sensitivity returns, prefrontal cortex function improves, and the default mode network (responsible for self-referential thought) rebalances.</p>
+<h3>What Changes at 90 Days</h3>
+<p>Studies using fMRI show that at 90 days, the brain scans of former addicts begin to resemble those of people who never used the substance. White matter integrity improves. Decision-making circuits strengthen. Impulsivity decreases.</p>
+<p>Behaviourally, most people report that at 90 days, cravings have significantly reduced in frequency and intensity. The automatic nature of the urge weakens substantially.</p>
+<h3>The Work After 90 Days</h3>
+<p>90 days is not a finish line — it is the point where recovery becomes significantly easier and the brain becomes an ally rather than an adversary. The years that follow involve consolidation, occasional cravings in high-stress periods, and the building of identity as someone who doesn't use.</p>
+`
   },
   {
-    id: 'k06',
-    title: 'Exercise as Medicine: How Movement Heals the Addicted Brain',
-    category: 'Discipline',
-    readTime: 4,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## The Neuroscience of Exercise as Addiction Treatment
-
-Exercise is the most scientifically validated, zero-cost, side-effect-free intervention available for addiction recovery. The evidence is overwhelming and the mechanisms are understood.
-
-### What Exercise Does to the Brain
-
-**BDNF — Brain-Derived Neurotrophic Factor:** Exercise triggers massive release of BDNF, sometimes called "Miracle-Gro for the brain." BDNF promotes neurogenesis (growth of new neurons), strengthens synaptic connections, and improves prefrontal cortex function. Studies show 30 minutes of aerobic exercise raises BDNF for up to 4 hours.
-
-**Dopamine, Serotonin, Norepinephrine:** Exercise releases all three simultaneously. This is why the post-exercise mood lift is real and measurable. For people in dopamine recovery, exercise provides a natural, healthy dopamine surge that doesn't downregulate receptors.
-
-**Endocannabinoid System:** The "runner's high" is caused by endocannabinoids — the same system THC hijacks. Exercise activates this system naturally, providing relief without the downregulation penalty.
-
-### Craving Interruption
-
-Multiple studies demonstrate that a single 10-minute bout of aerobic exercise reduces craving intensity significantly and for up to 50 minutes afterward. Exercise activates the same neural circuits that cravings target, providing competing stimulation that displaces the craving.
-
-This is why "do pushups when you feel a craving" is not just folk advice — it is mechanistically sound.
-
-### The Dose
-
-Research suggests 30-60 minutes of moderate-to-vigorous aerobic exercise, 3-5 days per week, produces clinically significant reductions in addiction severity. But even 10 minutes matters acutely.
-
-The best exercise for recovery is any exercise you will actually do consistently. Start there.`
+    id: 'k6', category: 'Weed', title: 'Cannabis Withdrawal: What No One Warns You About',
+    preview: 'Cannabis withdrawal is real, clinically recognised, and often underestimated.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Cannabis Use Disorder and Withdrawal</h2>
+<p>The idea that cannabis is "not addictive" is outdated. The DSM-5 formally recognises Cannabis Use Disorder, and physical withdrawal is listed as a diagnostic criterion since 2013.</p>
+<h3>Withdrawal Symptoms</h3>
+<p>Peak withdrawal occurs at 2-3 days after cessation and includes: irritability, anxiety, sleep disturbance, decreased appetite, restlessness, and depressed mood. These symptoms are most intense in people who used daily for extended periods.</p>
+<h3>The Sleep Factor</h3>
+<p>Cannabis suppresses REM sleep. After quitting, REM rebound occurs — vivid, intense dreams are extremely common. Some find this disturbing; it is in fact a sign of neural recovery. Full sleep normalisation typically takes 3-4 weeks.</p>
+<h3>Modern Potency</h3>
+<p>THC concentrations in cannabis have tripled since the 1990s. This means today's withdrawal is significantly more intense than research from 20 years ago suggested. High-potency daily users should prepare for a more challenging first week than older literature indicates.</p>
+`
   },
   {
-    id: 'k07',
-    title: 'Discipline Psychology: Building Identity Over Willpower',
-    category: 'Discipline',
-    readTime: 5,
-    evidenceLevel: 'Research-based',
-    content: `## Why Willpower Fails and Identity Wins
-
-Most people approach behavior change as a willpower problem. "I just need more discipline." But research in behavioral psychology reveals that willpower is finite, unreliable, and the wrong target.
-
-### The Ego Depletion Problem
-
-Studies show that willpower operates like a muscle that fatigues. The more decisions you make, the more mental energy you expend resisting temptations, the weaker subsequent resistance becomes. This is called ego depletion.
-
-This is why people who are perfectly disciplined all day often relapse at 11pm. It's not weakness — it's neurobiology. The prefrontal cortex, which governs willpower, has been gradually exhausted by the day's demands.
-
-### Identity as Infrastructure
-
-James Clear's synthesis of behavioral research in "Atomic Habits" captures the key insight: lasting behavior change requires identity change, not goal change.
-
-Goal-based change: "I want to quit smoking."
-Identity-based change: "I am someone who does not smoke."
-
-These feel similar but operate completely differently. A goal is an outcome you pursue. An identity is a self-concept you protect. When faced with a craving, "I'm trying not to smoke" is far weaker than "I don't smoke — that's not who I am."
-
-Each recovery day is not just a day without the substance. It is a vote cast for the identity you are building.
-
-### Environment Design
-
-Research consistently shows that environment is more powerful than intention. People who change their behavior successfully change their environments first.
-
-Remove triggers. Rearrange your space. Make the bad behavior harder to access and the replacement behavior easier. The same decision made in a low-temptation environment requires a fraction of the willpower it requires in a high-temptation environment.
-
-### The 2-Minute Rule
-
-If starting feels too hard, commit to 2 minutes. Almost anything can be started for 2 minutes. Starting is the hardest part — once begun, momentum carries you further.
-
-You are not building discipline. You are building systems and identity. Discipline emerges from those.`
+    id: 'k7', category: 'Porn', title: 'Porn and the Brain: The Evidence',
+    preview: 'What brain scans of heavy porn users actually show — and what reverses it.',
+    evidence: 'Emerging evidence',
+    content: `
+<h2>Pornography and Neural Adaptation</h2>
+<p>Multiple neuroimaging studies have found that heavy pornography use correlates with structural changes in the brain similar to those seen in substance addiction: reduced grey matter in the prefrontal cortex, hyperactivation of the reward circuit in response to pornographic cues, and reduced dopamine D2 receptor binding.</p>
+<h3>The Escalation Pattern</h3>
+<p>Because the brain habituates to repeated stimuli, many users report escalation — needing increasingly novel or extreme content to achieve the same arousal response. This is classic tolerance, the hallmark of addiction.</p>
+<h3>Recovery Evidence</h3>
+<p>The research on recovery from pornography use is still emerging, but neuroplasticity evidence is clear: the brain can and does rewire. Most users report significant improvements in focus, motivation, mood, and real-world intimate relationships at the 90-day mark. The brain's reward response to normal stimuli returns gradually.</p>
+<h3>A Note on Evidence</h3>
+<p>The pornography addiction field has more debate than nicotine. Some researchers dispute the addiction framing. What is agreed: heavy use is correlated with negative outcomes, and reduced use is correlated with positive ones.</p>
+`
   },
   {
-    id: 'k08',
-    title: 'The Relapse Science: Why It Happens and What It Means',
-    category: 'Discipline',
-    readTime: 4,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## Relapse Is Not Failure — But It Is Data
-
-Most people in recovery experience relapse. Research on addiction recovery shows that relapse rates for most substances are similar to relapse rates for other chronic conditions like diabetes and hypertension — 40 to 60 percent over the long term. Understanding this changes how you interpret a setback.
-
-### The Abstinence Violation Effect
-
-One of the most dangerous psychological phenomena in recovery is the Abstinence Violation Effect (AVE), described by Marlatt and Gordon. When someone with an "all or nothing" mindset relapses, they experience intense shame and cognitive dissonance that leads to the conclusion: "I've already failed, so I might as well continue."
-
-This thinking pattern — not the relapse itself — is responsible for turning a single slip into a full return to addiction.
-
-### What Relapse Actually Means
-
-A relapse means: a craving was stronger than the resistance available in that moment, in that environment, with those resources. That's it. It is data about a vulnerability, not a referendum on your character.
-
-Useful questions after a relapse:
-- What time was it?
-- What was happening emotionally?
-- What triggered the thought?
-- What could I have done differently?
-
-Pattern recognition from relapse data is more valuable than shame.
-
-### Recovery Is Not Linear
-
-Brain imaging studies show that craving patterns and dopamine receptor density continue improving even through relapses. Neural recovery is cumulative. Every clean period contributes to the overall trajectory.
-
-The goal is not a perfect streak — it is a life where your clean days significantly outnumber your relapse days, with both the duration and frequency of relapses decreasing over time.
-
-Your streak may reset. Your recovery doesn't.`
+    id: 'k8', category: 'Sleep', title: 'How Every Addiction Destroys Your Sleep',
+    preview: 'Every substance and behavioural addiction disrupts sleep architecture in measurable ways.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Sleep and Addiction</h2>
+<p>Sleep architecture consists of four stages — N1, N2, N3 (deep sleep), and REM — cycling approximately every 90 minutes. Addictive substances disrupt these cycles in specific, predictable ways.</p>
+<h3>Nicotine</h3>
+<p>Nicotine is a stimulant. It reduces total sleep time, delays sleep onset, and fragments sleep by causing arousal as nicotine levels drop during the night. Smokers and vapers report significantly poorer sleep quality than non-users.</p>
+<h3>Cannabis</h3>
+<p>THC suppresses REM sleep, reducing dreaming. While this can initially feel like "better sleep" (fewer dreams, faster onset), it deprives the brain of the repair, emotional processing, and memory consolidation that REM provides.</p>
+<h3>Social Media and Screens</h3>
+<p>Blue light from screens suppresses melatonin production. Combined with the dopaminergic stimulation of social media, night-time screen use delays sleep onset by 30-90 minutes and reduces sleep quality.</p>
+<h3>Recovery</h3>
+<p>In most cases, sleep quality substantially improves within 2-4 weeks of quitting the addictive behaviour. This is one of the earliest and most motivating benefits of recovery.</p>
+`
   },
   {
-    id: 'k09',
-    title: 'Social Media and Attention: The Stolen Mind',
-    category: 'Focus',
-    readTime: 4,
-    evidenceLevel: 'Research-based',
-    content: `## How Infinite Scroll Is Rewiring Your Attention
-
-Social media platforms are engineered by teams of behavioral scientists and machine learning systems with a single optimization target: maximizing engagement time. Understanding this architecture is the first step to reclaiming your mind.
-
-### Variable Reward Schedules
-
-B.F. Skinner discovered that variable reward schedules — where rewards arrive unpredictably — produce the strongest and most compulsive behavior patterns. Slot machines use this principle. So does every major social media platform.
-
-The pull-to-refresh gesture is a slot machine lever. Sometimes you get new content (reward), sometimes you don't. This unpredictability drives compulsive checking behavior at the neurological level.
-
-### Attention Fragmentation
-
-Cal Newport's research, supported by cognitive science studies, shows that attention residue is real: when you switch tasks, a portion of your cognitive resources remains "stuck" on the previous task. Checking social media 15 times per day fragments your attention into 15 unfinished loops.
-
-Research shows it takes an average of 23 minutes to fully return to deep focus after an interruption. If you check your phone every 15 minutes, you are never in deep focus.
-
-### The Social Comparison Machine
-
-Social comparison is a natural human cognitive process — we calibrate our status, performance, and wellbeing relative to others. Social media weaponizes this by showing a curated highlight reel of others' best moments against your internal experience of your full life, including its mundane and difficult parts.
-
-Studies consistently link heavy social media use with increased depression, anxiety, loneliness, and FOMO — despite the platforms being ostensibly about connection.
-
-### Recovery
-
-Attention, like muscle, can be rebuilt. The intervention is simple but difficult: sustained periods without interruption. Start with 25-minute blocks of single-tasking. Your tolerance will increase. The capacity for deep focus is not lost — it is suppressed and recoverable.`
+    id: 'k9', category: 'Cravings', title: 'Urge Surfing: The Technique That Beats Cravings',
+    preview: 'A mindfulness-based technique with clinical evidence for craving reduction.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>What Is Urge Surfing?</h2>
+<p>Urge surfing is a mindfulness technique developed by psychologist Alan Marlatt as part of Mindfulness-Based Relapse Prevention (MBRP). The premise is simple but powerful: instead of fighting or giving in to a craving, you observe it like a wave — letting it rise, peak, and fall without acting on it.</p>
+<h3>The Science</h3>
+<p>Cravings are not constant — they have a predictable lifecycle. They typically build to a peak at 3-5 minutes and then naturally subside, regardless of whether you act on them. Most people have never experienced this because they give in before the peak.</p>
+<h3>The Technique</h3>
+<p>When a craving hits: pause. Notice where in your body you feel it. Describe it to yourself without judgement — its intensity, location, quality. Watch it intensify, and then watch it pass. You are not your craving. You are the observer of it.</p>
+<h3>Evidence</h3>
+<p>Randomised controlled trials show urge surfing reduces craving intensity by up to 40% compared to control groups. With practice, cravings become shorter and less intense. The technique literally rewires the fear/craving response.</p>
+`
   },
   {
-    id: 'k10',
-    title: 'Nicotine: The Perfect Addiction Molecule',
-    category: 'Nicotine',
-    readTime: 4,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## Why Nicotine Is So Hard to Quit: A Molecular Explanation
-
-Nicotine's addictive properties are not accidental. Understanding how it works at the molecular level demystifies why withdrawal is so difficult and why recovery follows the pattern it does.
-
-### Nicotinic Acetylcholine Receptors
-
-Nicotine mimics acetylcholine — a major neurotransmitter involved in attention, learning, memory, and muscle control. It binds to nicotinic acetylcholine receptors (nAChRs) throughout the brain and body, but especially in the mesolimbic dopamine system.
-
-When nicotine binds to these receptors, it triggers dopamine release in the nucleus accumbens — the brain's reward center. This happens within 10 seconds of inhaling, making cigarettes one of the fastest-acting delivery systems for any drug.
-
-### The Sensitization and Upregulation Paradox
-
-Unlike most other addictive substances which downregulate their target receptors, chronic nicotine exposure actually upregulates nAChRs — the brain grows more receptors. This seems counterintuitive but creates a powerful trap.
-
-More receptors mean greater sensitivity to nicotine's absence. When nicotine is not present, more receptors are available and unoccupied, creating a stronger withdrawal signal. This is why smokers often describe needing a cigarette immediately after waking — overnight abstinence leaves those receptors fully unsatisfied.
-
-### The Mood Modulation Illusion
-
-Smokers report that cigarettes both calm anxiety and improve alertness. Both are true and both are illusions. The anxiety relief comes from reversing nicotine withdrawal — the anxiety wouldn't exist at that intensity without nicotine dependency. The alertness comes from the same mechanism.
-
-Research shows that ex-smokers' baseline stress and anxiety levels are lower than current smokers — once the withdrawal is complete and receptors normalize.
-
-### Receptor Normalization
-
-nAChR upregulation begins reversing within days of quitting. Most receptors return to baseline within 6-12 weeks, explaining the gradual reduction in craving intensity over that timeline.`
+    id: 'k10', category: 'Finance', title: 'The Real Cost of Your Habit',
+    preview: 'What your habit actually costs over 1, 5, and 10 years — and what that money could buy.',
+    evidence: 'Calculation',
+    content: `
+<h2>The Financial Reality</h2>
+<p>Most people dramatically underestimate the long-term cost of their habit because they think in daily amounts. The compounding reality is stark.</p>
+<h3>Smoking: UK Averages</h3>
+<p>At 10 cigarettes per day and £12 per pack: £6/day, £2,190/year, £10,950 over 5 years, £21,900 over 10 years. That's a car, a deposit on a flat, or a decade of gym membership and holidays.</p>
+<h3>Vaping</h3>
+<p>Pod systems: 2 pods per week at £4/pod = £8/week, £416/year. Box mods with juice: £15-30/week, £780-1,560/year. Plus devices, coils, replacements.</p>
+<h3>Shisha</h3>
+<p>Three sessions per week at £15/session = £45/week, £2,340/year. In bars and lounges, this can be £50-100/session — £7,800+/year.</p>
+<h3>The Opportunity Cost</h3>
+<p>The savings from quitting, invested at 7% annual return (historical stock market average), grow significantly. £2,000/year saved for 10 years at 7% return = approximately £27,600.</p>
+`
   },
   {
-    id: 'k11',
-    title: 'The Gut-Brain Axis: Why Diet Affects Recovery',
-    category: 'Focus',
-    readTime: 4,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## Your Gut Is Your Second Brain — And It Matters for Recovery
-
-The gut-brain axis is a bidirectional communication highway between your digestive system and your central nervous system. Research over the past decade has revealed that your gut microbiome — the trillions of bacteria that live in your intestines — directly influences brain chemistry, mood, craving, and recovery.
-
-### The Serotonin Connection
-
-Approximately 90% of your body's serotonin is produced in the gut, not the brain. Serotonin regulates mood, impulse control, and craving suppression. A disrupted gut microbiome — caused by poor diet, substance use, stress, or antibiotics — impairs serotonin production and regulation.
-
-This means that what you eat directly affects your ability to resist cravings. Not metaphorically — mechanistically.
-
-### Sugar and the Craving Loop
-
-Sugar feeds specific gut bacteria (particularly Lactobacillus and certain Firmicutes species) that send signals along the vagus nerve to the brain requesting more sugar. A high-sugar diet creates a gut microbiome that actively increases sugar cravings. Conversely, two to four weeks of low-sugar eating significantly alters the microbiome composition, reducing craving signals.
-
-### Recovery Nutrition Principles
-
-**Omega-3 fatty acids:** Found in fatty fish, walnuts, and flaxseed. Omega-3s increase BDNF, reduce inflammation, and support dopamine receptor sensitivity. Multiple studies link omega-3 supplementation with reduced addiction severity.
-
-**Fermented foods:** Yogurt, kimchi, sauerkraut, kefir. Introduce beneficial bacteria that support serotonin production.
-
-**Fiber:** Feeds beneficial bacteria. Diverse plant foods create microbiome diversity, which correlates with better mental health outcomes.
-
-**Hydration:** Even mild dehydration (1-2% body weight) impairs cognitive function and increases fatigue — both of which amplify cravings.
-
-Recovery is not just about your brain. It is about the entire biological system that houses it.`
+    id: 'k11', category: 'Nicotine', title: 'Nicotine Replacement Therapy: What Works',
+    preview: 'NRT doubles your chances of quitting. Here\'s what the evidence shows for each type.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>The Evidence for NRT</h2>
+<p>Nicotine Replacement Therapy works by reducing withdrawal symptoms without the harmful chemicals in smoke or vapour. Meta-analyses show NRT approximately doubles the likelihood of successful quit attempts compared to willpower alone.</p>
+<h3>Forms of NRT</h3>
+<p><strong>Patches:</strong> Slow release, 24-hour, reduces background cravings well. Less effective for acute cravings. Best for steady smokers.</p>
+<p><strong>Gum/Lozenges:</strong> Fast-acting, handles acute cravings. Technique matters — chew then park, don't chew continuously.</p>
+<p><strong>Mouth spray:</strong> Fastest NRT (nicotine in 60 seconds). Best for acute, intense cravings.</p>
+<h3>Combination Therapy</h3>
+<p>Combining a patch (background) with a fast-acting form (gum/spray) for acute cravings is significantly more effective than either alone. This is the recommended approach for heavy users.</p>
+`
   },
   {
-    id: 'k12',
-    title: 'Stress and Relapse: The Cortisol Connection',
-    category: 'Discipline',
-    readTime: 3,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## Why Stress Triggers Relapse and How to Break the Loop
-
-Stress is the number one relapse trigger across virtually every form of addiction. Understanding the neurological mechanism explains why, and points toward targeted interventions.
-
-### Cortisol and the Reward Circuit
-
-When you experience stress, your adrenal glands release cortisol. Cortisol does many things — it mobilizes energy, sharpens focus in the short term, and activates the immune system. But it also directly affects the mesolimbic dopamine system.
-
-Acute stress increases dopamine release in the nucleus accumbens — the same pathway activated by addictive substances. This is why people instinctively reach for comfort behaviors under stress. The brain is literally using the same reward pathway.
-
-Chronic stress, however, downregulates dopamine receptors — exactly what addiction does. Chronically stressed people and people in active addiction share reduced reward sensitivity, which is why stress makes cravings more intense: the reward system is already compromised and seeking stimulation.
-
-### The Predictive Pattern
-
-Research shows that most relapses are preceded by identifiable stress signatures. Time of day, emotional state, social context, and physical fatigue form patterns. Identifying your personal pattern is protective.
-
-Common high-risk windows: evenings (decision fatigue + low social connection), Friday/Saturday (routine disruption + social pressure), following conflict (emotional distress driving comfort-seeking).
-
-### Evidence-Based Stress Interventions
-
-**Exercise:** Reduces cortisol by up to 25% after a single session. Long-term exercise restructures the HPA axis response to stress.
-
-**Cold exposure:** Brief cold water immersion activates the sympathetic system and then produces a rebound parasympathetic response, reducing cortisol and producing norepinephrine (a mood stabilizer).
-
-**Mindfulness:** 8 weeks of mindfulness practice produces measurable reductions in amygdala reactivity to stress cues — the brain physically changes.
-
-**Sleep:** Cortisol regulation depends on sleep. Poor sleep creates a chronically elevated cortisol baseline.
-
-Your stress response is trainable. Each intervention you practice reshapes the system.`
+    id: 'k12', category: 'Recovery', title: 'The Habit Loop: How to Break It',
+    preview: 'Charles Duhigg\'s habit loop model and how to use it to break any addiction.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Cue → Routine → Reward</h2>
+<p>Every habit — good or bad — follows a three-part neurological loop identified by MIT researchers and popularised by Charles Duhigg: a cue that triggers the brain, a routine or behaviour, and a reward that tells the brain the loop was worth remembering.</p>
+<h3>Identifying Your Loop</h3>
+<p>For most addictions: the cue might be stress, boredom, a specific time of day, a place, or an emotion. The routine is using the substance. The reward is the relief, stimulation, or escape.</p>
+<h3>Breaking the Loop</h3>
+<p>The most effective strategy is not eliminating the loop, but replacing the routine while keeping the cue and reward. Craving stress relief at 3pm? Keep the cue (3pm break). Keep the reward (relaxation). Replace smoking with a 5-minute walk. The brain accepts this substitution much more readily than pure abstinence.</p>
+<h3>Environment Architecture</h3>
+<p>Changing your physical environment disrupts cues powerfully. If you always smoked in your car, the car is a cue. Changing the car's smell, moving where you sit, or taking public transport temporarily removes the cue entirely.</p>
+`
   },
   {
-    id: 'k13',
-    title: 'The 90-Day Rule: Science Behind the Reset',
-    category: 'Dopamine',
-    readTime: 3,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## Why 90 Days Is a Meaningful Benchmark
-
-The 90-day recovery milestone appears across communities for different habits — NoFap, smoking cessation, alcohol recovery, drug rehabilitation. Is this arbitrary? The neuroscience suggests it isn't.
-
-### Neural Recalibration Timeline
-
-Research using PET and fMRI imaging has tracked receptor density and neural connectivity during abstinence from various addictive substances. While individual variation is significant, several patterns emerge consistently:
-
-**0-30 days:** Acute withdrawal. Receptor sensitivity at its lowest. Cravings most intense. Sleep and mood disrupted.
-
-**30-60 days:** Receptor upregulation beginning. Acute withdrawal mostly resolved. Psychological cravings remain but peak intensity declining. Many report improved sleep and some return of natural pleasure.
-
-**60-90 days:** Significant receptor density recovery measurable on imaging. Prefrontal cortex connectivity to reward circuits strengthening. Many report substantial reduction in craving frequency and intensity.
-
-**90+ days:** For most people, the neural architecture has substantially recalibrated. The new baseline is being established. This is when recovery begins to feel stable rather than effortful.
-
-### Why "Substantially" Not "Completely"
-
-Full dopamine receptor density recovery for some substances takes longer than 90 days — in some cases 6-12 months. And the neural pathways associated with addiction-related memories do not disappear; they become less dominant as new pathways strengthen.
-
-This is why people in long-term recovery describe the change as the sober path becoming easier and more automatic, not the addicted path disappearing. You are building a new highway, not demolishing the old road.
-
-### The Psychological Compound Effect
-
-Beyond neuroscience, 90 days accumulates identity evidence. Each day, week, and month adds data that you are someone who can resist. This identity evidence becomes its own resource.
-
-The 90-day milestone is both biologically significant and psychologically meaningful.`
+    id: 'k13', category: 'Recovery', title: 'Relapse: What the Research Says',
+    preview: 'Relapse is part of recovery for most people. Here\'s how to make it a stepping stone, not a full stop.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Relapse Is Normal</h2>
+<p>Studies consistently show that 40-60% of people in recovery relapse at some point. This is not failure — it is the statistical reality of changing deeply ingrained neurological patterns. The average person makes several quit attempts before achieving long-term abstinence.</p>
+<h3>The Abstinence Violation Effect</h3>
+<p>The most dangerous aspect of relapse is not the relapse itself but the psychological response to it — what researchers call the Abstinence Violation Effect (AVE). This is the "I've already ruined it, I might as well give up" thinking that turns a single lapse into a full return to use.</p>
+<h3>What to Do After a Relapse</h3>
+<p>Log it. Analyse the trigger — what cue preceded it? What emotional state were you in? What time was it? This data is valuable. Recommit immediately. The days of recovery you had before the relapse are not lost — your body kept healing during every clean hour.</p>
+<h3>Pattern Recognition</h3>
+<p>Multiple relapses reveal patterns. Friday nights. High-stress periods. Certain social environments. Identifying these patterns is not discouraging — it is the intelligence that makes the next attempt smarter.</p>
+`
   },
   {
-    id: 'k14',
-    title: 'Breathing Techniques for Craving Control',
-    category: 'Focus',
-    readTime: 3,
-    evidenceLevel: 'Research-based',
-    content: `## How Deliberate Breathing Rewires Your Stress Response
-
-Breathing is unique among physiological processes: it is the only automatic body function you can also consciously control. This bridge between voluntary and involuntary systems makes it a direct lever on your nervous system state.
-
-### The Autonomic Switch
-
-Your autonomic nervous system has two modes: sympathetic (fight-or-flight, activated by stress and cravings) and parasympathetic (rest-and-digest, associated with calm and regulation). Most cravings are sympathetic state events — arousal, urgency, fixation.
-
-Deliberate slow exhalation activates the parasympathetic system through the vagus nerve. Long exhales signal to your brain that you are safe, physiologically downgrading the urgency of the craving.
-
-### Evidence-Based Techniques
-
-**4-7-8 Breathing (Relaxation Response):**
-Inhale for 4 counts. Hold for 7 counts. Exhale for 8 counts. The extended exhale is the key — it triggers parasympathetic response. Research shows 4 cycles measurably reduce heart rate and cortisol.
-
-**Box Breathing (Used by Navy SEALs):**
-Inhale 4 counts. Hold 4 counts. Exhale 4 counts. Hold 4 counts. Repeat. Used in high-stress situations to maintain cognitive function and reduce anxiety.
-
-**Wim Hof Method (Energizing):**
-30 deep, fast breaths. Hold after exhale for as long as comfortable. Deep inhale and hold 15 seconds. This method raises blood pH (alkalosis) and triggers adrenaline release without external stimulus — useful for replacing the energizing effect of stimulants.
-
-### When to Use Each
-
-Cravings driving anxiety: 4-7-8. Extended exhale prioritizes calm.
-Cravings driving flat affect or fatigue: Wim Hof or energizing protocols.
-Acute stress needing maintained function: Box breathing.
-
-The 5-minute investment in breathing when a craving hits changes the entire trajectory of the next hour.`
+    id: 'k14', category: 'Dopamine', title: 'How to Rebuild Your Dopamine System Naturally',
+    preview: 'Practical interventions with strong evidence for restoring dopamine sensitivity.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Natural Dopamine Restoration</h2>
+<p>After heavy addiction, the brain's dopamine system is depleted: fewer receptors, lower baseline production, blunted response to everyday rewards. Recovery is possible, but it requires active lifestyle choices — the brain doesn't restore itself in the presence of a sedentary, stimulus-rich environment.</p>
+<h3>Exercise — The Most Powerful Tool</h3>
+<p>Aerobic exercise increases dopamine synthesis and receptor density. Crucially, unlike drugs, it does this without downregulation — each session improves baseline capacity rather than depleting it. 20-30 minutes of moderate-intensity exercise produces measurable dopamine effects within hours.</p>
+<h3>Cold Exposure</h3>
+<p>Cold water immersion (cold showers, ice baths) increases dopamine by approximately 250% above baseline, with a sustained effect lasting several hours. This is among the largest dopamine increases of any non-pharmacological intervention.</p>
+<h3>Sleep</h3>
+<p>Dopamine production requires adequate sleep. Deep sleep is when the brain synthesises dopamine precursors and clears metabolic waste. Every clean night of good sleep accelerates recovery.</p>
+<h3>Diet</h3>
+<p>Tyrosine (dopamine precursor) is found in eggs, dairy, meat, legumes, and nuts. Omega-3 fatty acids support dopamine receptor health. Magnesium deficiency is linked to reduced dopamine function.</p>
+`
   },
   {
-    id: 'k15',
-    title: 'Financial Recovery: The Hidden Cost Calculator',
-    category: 'Discipline',
-    readTime: 3,
-    evidenceLevel: 'Factual',
-    content: `## The Money Mathematics of Quitting
-
-One of the most immediately tangible benefits of quitting any substance habit is financial. But the true cost of addiction extends far beyond the purchase price.
-
-### Direct Costs
-
-A pack-a-day smoker in the UK spends approximately £4,000 per year on cigarettes. In the US, the average is $2,200-$3,000. In Pakistan, 20 cigarettes per day at PKR 600 per pack equals PKR 219,000 per year (approximately $780 USD).
-
-A daily cannabis user spending £10/day accumulates £3,650 per year.
-
-Pornography subscriptions, webcam services, and related digital products add up to hundreds or thousands annually for heavy users.
-
-### Opportunity Costs
-
-These calculations understate the true cost. The money not spent on a habit could have been invested. £3,000 invested annually at a conservative 7% return becomes £42,000 in 10 years, £195,000 in 25 years.
-
-The cigarette money spent over 10 years could have been a significant down payment. Over 30 years, it is retirement security.
-
-### Health Costs
-
-Smokers incur significantly higher lifetime healthcare costs. A 2021 study estimated average lifetime healthcare cost differential of $200,000 between smokers and non-smokers in the US.
-
-Lost productivity from health problems, reduced earning capacity from cognitive impairment in addiction — the economic cost of any serious habit habit extends into every domain of life.
-
-### The Recovery Dividend
-
-Every day you don't spend money on the habit, you are not just saving money — you are investing in compound returns across financial, health, social, and cognitive dimensions simultaneously.
-
-The Finance section of DisciplineOS tracks this in real time. Watch it grow. Use it as motivation.`
+    id: 'k15', category: 'Social Media', title: 'Social Media and the Attention Economy',
+    preview: 'How social media apps are engineered to create addiction — and how to take back control.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Designed for Addiction</h2>
+<p>Social media platforms are optimised for one metric: time on platform. To maximise this, they apply the same behavioural conditioning principles used in slot machines — variable reward schedules. You scroll to find something rewarding, but the reward comes unpredictably, which is the most powerful conditioning schedule known in psychology.</p>
+<h3>The Neurological Effects</h3>
+<p>Each scroll is a small dopamine hit — curiosity, novelty, social validation. Hundreds of these per day condition the brain to expect rapid, low-effort stimulation. Over time, sustained concentration becomes difficult. The ability to tolerate boredom atrophies.</p>
+<h3>The Evidence for Harm</h3>
+<p>Multiple large studies link heavy social media use with increased anxiety, depression, loneliness, and sleep disruption. Adolescents are disproportionately affected. Adults show measurable attention and mood impacts with 2+ hours of daily use.</p>
+<h3>Recovery</h3>
+<p>Studies show measurable mood improvement within 1 week of reduced social media use. Attention span improves within 1 month. The key is deliberate use — checking with intent at specific times — rather than reflexive scrolling.</p>
+`
   },
   {
-    id: 'k16',
-    title: 'Dopamine Fasting: Resetting Your Baseline',
-    category: 'Dopamine',
-    readTime: 3,
-    evidenceLevel: 'Research-based',
-    content: `## Recalibrating Your Reward Sensitivity
-
-Dopamine fasting — deliberately reducing stimulation to reset reward system sensitivity — has gained popularity. The neuroscience behind it is sound, though the popular version is often misrepresented.
-
-### What Dopamine Fasting Is Not
-
-Dopamine is released continuously. You cannot and should not try to stop dopamine release entirely. Eating, socializing, thinking — all produce dopamine. The goal is not zero dopamine.
-
-### What It Actually Is
-
-The practice is about reducing high-intensity, rapidly-delivered dopamine triggers that have desensitized your reward system. Specifically: social media, pornography, processed sugar, video games, binge entertainment.
-
-These activities share a characteristic: they deliver intense reward with zero effort and zero delay. Natural rewards — achieving a goal, building a relationship, exercising — require effort and delay and produce more moderate dopamine releases.
-
-When high-intensity instant rewards dominate your life, they recalibrate your baseline upward. Normal life feels boring, effortful activities feel pointless, and motivation collapses because the brain's reward prediction system expects constant high stimulation.
-
-### The Recalibration Process
-
-By reducing high-intensity stimuli, your brain gradually lowers its reward threshold. Natural rewards become satisfying again. Boredom — which used to trigger immediate phone-reaching — becomes tolerable and then useful as a creativity and motivation driver.
-
-The research basis for this comes from studies on reward sensitivity in addiction, not from a formal "dopamine fasting" literature. But the principle — reduce artificial overstimulation to restore natural reward sensitivity — is well-supported.
-
-Duration: Meaningful shifts in reward sensitivity occur within 2-4 weeks of reducing high-stimulation activities. The Emergency Protocol in DisciplineOS is a tool for exactly this.`
+    id: 'k16', category: 'Cravings', title: 'The 4-7-8 Breathing Technique',
+    preview: 'A simple breathing exercise that activates your parasympathetic nervous system within seconds.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>4-7-8 Breathing</h2>
+<p>The 4-7-8 technique was popularised by Dr Andrew Weil and is based on pranayama breathing from yoga tradition. It activates the parasympathetic nervous system — the body's "rest and digest" state — which directly counteracts the fight-or-flight stress response that drives cravings.</p>
+<h3>How to Do It</h3>
+<p><strong>Inhale</strong> through your nose for 4 seconds. <strong>Hold</strong> your breath for 7 seconds. <strong>Exhale</strong> completely through your mouth for 8 seconds. Repeat 4 cycles.</p>
+<h3>Why It Works</h3>
+<p>The extended exhale activates the vagus nerve, triggering parasympathetic response. Heart rate slows. Cortisol drops. The physiological stress state that makes cravings feel urgent is directly interrupted. This is not relaxation theatre — it is neurological intervention.</p>
+<h3>The Evidence</h3>
+<p>Controlled breathing techniques show robust evidence for reducing acute anxiety, stress, and craving intensity. They are now a standard component of addiction treatment protocols.</p>
+`
   },
   {
-    id: 'k17',
-    title: 'Accountability and Recovery: The Social Brain',
-    category: 'Discipline',
-    readTime: 3,
-    evidenceLevel: 'Research-based',
-    content: `## Why You Need Other People to Recover
-
-Human brains did not evolve for solo operation. We are profoundly social animals, and our reward and stress systems are wired to respond to social context. This has direct implications for recovery.
-
-### Social Monitoring Effect
-
-Research shows that people behave differently when they believe they are being observed — even when the observer is a friend who supports them unconditionally. The mere awareness of accountability changes behavior.
-
-Studies on goal achievement consistently show that sharing goals with others increases completion rates. In addiction recovery, having an accountability partner is one of the most reliably effective non-pharmacological interventions.
-
-### The Shame Paradox
-
-Here is the paradox: shame — the feeling that you are fundamentally flawed — drives more relapse than it prevents. But accountability — the feeling that someone cares whether you succeed — drives recovery. These are opposites.
-
-The harmful pattern: hiding relapse → increasing shame → increasing isolation → increased relapse risk.
-
-The recovery pattern: disclosing struggle → receiving support → decreasing shame → reduced relapse risk.
-
-The research is consistent: connection is protective. Isolation is the most dangerous state for someone in recovery.
-
-### Community Leverage
-
-12-step programs work not because of the 12 steps specifically but because of the community mechanism: regular meetings, shared vulnerability, mentorship relationships, and the social accountability structure. These social factors explain the outcomes.
-
-You don't need a formal program. You need at least one person who knows you are in recovery and genuinely supports your progress.
-
-The most evidence-based thing you can do for long-term recovery — beyond everything in this vault — is tell someone what you're doing and ask them to check in.`
+    id: 'k17', category: 'Shisha', title: 'Shisha: The Most Underestimated Harm',
+    preview: 'Shisha is widely perceived as safer than cigarettes. The data says otherwise.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>The Shisha Myth</h2>
+<p>The water pipe (shisha, hookah, narghile) is widely perceived as safer than cigarettes because the smoke passes through water. This is a misconception with serious health consequences.</p>
+<h3>The Smoke Volume Problem</h3>
+<p>A typical 45-60 minute shisha session involves 200 puffs. A cigarette involves approximately 8-12 puffs. The total smoke volume from one shisha session is equivalent to 100-200 cigarettes.</p>
+<h3>What the Water Doesn't Filter</h3>
+<p>While water cools the smoke, it does not significantly filter nicotine, carbon monoxide, heavy metals (lead, arsenic, cadmium from charcoal), or cancer-causing chemicals. CO levels in shisha smoke are significantly higher than in cigarette smoke due to the charcoal combustion.</p>
+<h3>The Secondhand Smoke Problem</h3>
+<p>Shisha sessions are social — everyone in the room is exposed to secondhand smoke for the entire session. CO levels in shisha lounges often exceed WHO safety limits.</p>
+<h3>Recovery</h3>
+<p>Despite the higher per-session exposure, the recovery trajectory for shisha users who quit is broadly similar to ex-smokers. Cardiovascular risk halves within 1 year.</p>
+`
   },
   {
-    id: 'k18',
-    title: 'The Science of Habit Formation',
-    category: 'Discipline',
-    readTime: 4,
-    evidenceLevel: 'Peer-reviewed',
-    content: `## How Habits Form and How to Build Better Ones
-
-A habit is a behavior that has been encoded in the basal ganglia — a brain region that automates frequently repeated sequences — so that it can be executed with minimal conscious effort. Understanding this mechanism is essential for both breaking bad habits and building good ones.
-
-### The Habit Loop
-
-Charles Duhigg, synthesizing research from MIT's Ann Graybiel lab, identified the three-part habit loop: Cue → Routine → Reward.
-
-**Cue:** A trigger that initiates the behavior. Can be a time of day, emotional state, location, preceding action, or other person.
-
-**Routine:** The behavior itself.
-
-**Reward:** The outcome that reinforces the neural pathway.
-
-Addiction hijacks this system by providing an extremely strong, predictable reward for a routine. The cue-routine-reward loop becomes deeply encoded in the basal ganglia.
-
-### Habit Change Strategy
-
-You cannot delete a habit — you can only replace it. The basal ganglia pathways persist even during extended abstinence (this is why cravings can resurface after years). The strategy is to keep the cue and reward while replacing the routine.
-
-Cue: stress at 5pm.
-Old routine: smoke.
-New routine: walk, exercise, breathe.
-Reward: stress reduction (real, not imagined).
-
-### Building New Habits: Implementation Intentions
-
-Research by Peter Gollwitzer shows that specifying exactly when, where, and how you will perform a new behavior increases follow-through by up to 300%. This is called an implementation intention.
-
-"I will exercise" → 38% follow-through.
-"I will exercise at 6am at the gym near my office on Monday, Wednesday, and Friday" → up to 91% follow-through.
-
-Specificity is the mechanism. The brain does not execute vague intentions.
-
-### The Automaticity Timeline
-
-Research suggests simple behaviors take an average of 66 days to become automatic (the "21 days" figure is a myth from outdated research). Complex behaviors involving significant environmental interaction can take longer.
-
-You are not building habits — you are building hardware. It takes time, and it is permanent once built.`
+    id: 'k18', category: 'Recovery', title: 'Building Your Recovery Environment',
+    preview: 'The environment you live in determines more of your recovery success than willpower does.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Environment as Architecture</h2>
+<p>Behavioural research consistently shows that environment — physical, social, and digital — is a more powerful determinant of behaviour than conscious willpower. This is not an excuse; it is intelligence you can use.</p>
+<h3>Physical Environment</h3>
+<p>Remove all paraphernalia. The sight of a lighter, a vape, an ashtray, or a grinder is a cue. Clean your space. Change what you can — rearrange furniture, open windows, use different mugs, drive different routes.</p>
+<h3>Social Environment</h3>
+<p>Social contagion is real: you are more likely to use if people around you use. This doesn't require cutting people off — but it does require having direct conversations about your recovery, or avoiding specific situations temporarily.</p>
+<h3>Digital Environment</h3>
+<p>Unfollow accounts that feature your habit. Use app blockers during high-risk times. Set your phone to greyscale — it reduces the visual reward of apps significantly.</p>
+<h3>The 20-Second Rule</h3>
+<p>Adding 20 seconds of friction to a bad habit reduces its occurrence dramatically. Removing 20 seconds of friction from a good habit increases it. Architecture your environment so the good choice is the easy choice.</p>
+`
   },
   {
-    id: 'k19',
-    title: 'Cold Exposure: The Recovery Accelerant',
-    category: 'Focus',
-    readTime: 3,
-    evidenceLevel: 'Research-based',
-    content: `## Cold Therapy and Its Role in Addiction Recovery
-
-Cold water immersion and cold showers have moved from biohacking territory into legitimately evidence-based practice. The mechanisms are well-characterized and the applications to addiction recovery are direct.
-
-### Neurochemical Effects of Cold Exposure
-
-A 2022 study published in PLOS ONE found that a 20-second cold shower triggered a 250% increase in norepinephrine and a 530% increase in dopamine in study participants, with the dopamine increase sustained for up to two hours.
-
-Unlike drug-induced dopamine surges, cold exposure dopamine does not appear to downregulate receptors — the response remains consistent with repeated exposure. This makes it one of the few dopamine-stimulating interventions that is safe for someone in dopamine recovery.
-
-Norepinephrine has anti-depressant effects and is the primary target of many antidepressant medications. Cold exposure produces this pharmacologically relevant concentration increase without medication.
-
-### Cortisol and Stress Resilience
-
-Cold exposure activates the sympathetic nervous system (stress response). With repeated exposure, the body and brain adapt — they develop greater tolerance for uncomfortable sympathetic arousal generally.
-
-This stress inoculation appears to transfer: regular cold exposure practitioners show reduced physiological stress responses to other stressors. For addiction recovery, where stress is the primary relapse trigger, this has direct value.
-
-### Practical Application
-
-Cold showers: End your shower by turning to cold for 30-90 seconds. The reluctance to start is the exercise.
-
-Cold face immersion: Submerging your face in cold water activates the dive reflex — immediate parasympathetic response. Useful for acute craving interruption.
-
-Gradual exposure: Start with 15 seconds and extend over weeks.
-
-The discomfort is the dose. Tolerating cold discomfort is practice for tolerating craving discomfort.`
+    id: 'k19', category: 'Nicotine', title: 'The Vaping Lung Health Crisis: What We Know',
+    preview: 'EVALI, popcorn lung, and the long-term respiratory effects of vaping — current evidence.',
+    evidence: 'Emerging evidence',
+    content: `
+<h2>Vaping and Lung Health</h2>
+<p>The 2019 EVALI (E-cigarette or Vaping product use-Associated Lung Injury) outbreak hospitalised over 2,800 people in the US and caused 68 deaths. While most cases were linked to vitamin E acetate in illicit THC cartridges, the outbreak demonstrated that inhaled aerosols can cause acute, severe lung injury.</p>
+<h3>Diacetyl and Popcorn Lung</h3>
+<p>Some e-liquid flavours contain diacetyl — a buttery flavour compound linked to bronchiolitis obliterans ("popcorn lung"), an irreversible lung condition. Reputable manufacturers have removed diacetyl, but regulation is inconsistent, especially in unregulated markets.</p>
+<h3>Long-Term Effects</h3>
+<p>Vaping has existed for approximately 15 years. Long-term data (20-30 years) simply doesn't exist yet. What we know: vaping causes airway inflammation, measurable decreases in lung function in some users, and exposure to formaldehyde at high wattages.</p>
+<h3>Recovery</h3>
+<p>Most airway inflammation from vaping resolves within weeks to months of cessation. Lung function measurably improves within 6-12 months. The earlier you stop, the more complete the recovery.</p>
+`
   },
   {
-    id: 'k20',
-    title: 'Religion, Spirituality, and Recovery: What the Research Shows',
-    category: 'Discipline',
-    readTime: 3,
-    evidenceLevel: 'Research-based',
-    content: `## The Evidence-Based Case for Spirituality in Recovery
-
-For many people, faith and spiritual practice are central to their recovery. Research into this connection reveals meaningful mechanisms, not just correlation.
-
-### What the Data Shows
-
-Multiple large-scale studies have found that religious and spiritual engagement is associated with significantly better addiction recovery outcomes. A 2019 analysis in the American Journal of Psychiatry found that people with higher religious or spiritual salience were 65% more likely to be in remission 10 years after drug addiction treatment.
-
-A Harvard School of Public Health study found that people who attended religious services more than once per week had a 90% reduced risk of drug death compared to those who never attended. The association held even when controlling for social support, suggesting spiritual practice itself has independent protective effect.
-
-### Mechanisms
-
-**Meaning and purpose:** Recovery requires replacing the identity and community associated with addiction with something else. For many people, religious and spiritual frameworks provide a compelling alternative identity and community.
-
-**Present-moment practice:** Prayer, meditation, dhikr, and similar practices activate the prefrontal cortex and reduce default mode network rumination — the same neural changes produced by secular mindfulness.
-
-**Moral framework:** Having a clear framework for right behavior — especially one with transcendent stakes — provides a decision-making reference point during temptation that is external to momentary desire.
-
-**Community:** Religious communities often provide social support, accountability, and belonging that directly counter the isolation that drives relapse.
-
-### Integration
-
-Whether you practice a specific faith tradition or a secular spiritual practice, the protective elements are: regular contemplative practice, community connection, a sense of transcendent meaning, and a moral framework. Incorporate these into your recovery.
-
-DisciplineOS supports your recovery. Your faith amplifies it.`
+    id: 'k20', category: 'Weed', title: 'Cannabis and Mental Health: The Current Evidence',
+    preview: 'What the research shows about cannabis, anxiety, depression, and psychosis risk.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Cannabis and the Mind</h2>
+<p>Cannabis has complex effects on mental health that depend on frequency of use, potency, age of onset, and individual genetic vulnerability. The relationship is not simple.</p>
+<h3>Anxiety and Depression</h3>
+<p>While cannabis can temporarily reduce anxiety (this is why many use it), regular use is associated with increased baseline anxiety and depression over time. The mechanism is dopaminergic: chronic THC exposure reduces dopamine synthesis and receptor sensitivity, contributing to anhedonia and anxiety disorders.</p>
+<h3>Psychosis Risk</h3>
+<p>High-potency cannabis (>10% THC) significantly increases the risk of psychotic episodes, particularly in those with genetic predisposition. The Lancet Psychiatry found daily high-potency cannabis users are 5 times more likely to develop psychosis than non-users.</p>
+<h3>The Motivation Myth</h3>
+<p>"Amotivational syndrome" — the stereotyped cannabis-related loss of drive — has been studied extensively. Chronic heavy users show measurable reductions in dopamine synthesis in the striatum, directly impairing motivation and reward. This reverses with abstinence.</p>
+<h3>Recovery</h3>
+<p>Mental health outcomes substantially improve with cannabis cessation. Anxiety and depression symptoms typically improve within 4-6 weeks. In those with cannabis-induced psychosis, full recovery is common with abstinence.</p>
+`
   },
   {
-    id: 'k21',
-    title: 'Vaping and Lung Health: What the Science Actually Shows',
-    category: 'Nicotine',
-    readTime: 5,
-    evidenceLevel: 'Peer-reviewed',
-    content: `Vaping is often marketed as a "safe" alternative to smoking. The science tells a more complicated story.
-
-## EVALI: Vaping-Associated Lung Injury
-
-In 2019, the US experienced an outbreak of e-cigarette or vaping product use-associated lung injury (EVALI), with over 2,800 hospitalisations and 68 confirmed deaths. While vitamin E acetate — an additive found in illicit THC cartridges — was identified as a primary culprit, the outbreak revealed a fundamental truth: inhaling heated aerosol into lungs has consequences that take years to fully manifest.
-
-## What You're Inhaling
-
-When you vape, you inhale an aerosol — not harmless water vapour. The aerosol contains:
-
-**Propylene glycol and vegetable glycerin (PG/VG):** These carrier fluids are generally recognised as safe when eaten, but their effects when chronically inhaled into lung tissue are not yet fully understood. Studies show they cause airway inflammation and can impair ciliary function — the very cilia responsible for clearing debris from your airways.
-
-**Heavy metal particles:** Independent laboratory testing of popular vape devices has found nickel, tin, and lead in the aerosol, leached from heating coils. These accumulate in lung tissue over time.
-
-**Diacetyl:** A flavouring chemical linked to "popcorn lung" (bronchiolitis obliterans), a severe, irreversible airway scarring disease. Despite being banned in some products, diacetyl and similar diketones remain in many flavoured e-liquids, particularly butter, custard, and caramel flavours.
-
-**Volatile organic compounds:** Including formaldehyde, acetaldehyde, and acrolein — compounds with known carcinogenic and inflammatory properties.
-
-## Vaping vs. Smoking
-
-Vaping is almost certainly less harmful than smoking conventional cigarettes, which combust at temperatures above 600°C and deliver thousands of toxic compounds. But "less harmful" is not the same as "safe."
-
-Research from the Respiratory Health division of University of California found that vape users show measurable airway inflammation on bronchoscopy — indistinguishable in character from early cigarette-related changes, just typically milder in magnitude. Long-term data (20+ years) simply doesn't exist yet.
-
-## What Recovery Looks Like
-
-When you stop vaping:
-
-- **72 hours:** Physical nicotine withdrawal peaks and begins subsiding
-- **2–4 weeks:** Airway inflammation measurably decreases
-- **1–3 months:** Cilia begin recovering normal function; you may cough more as they clear accumulated debris
-- **6–12 months:** Lung function and vascular health approaching that of a non-vaper
-
-Your lungs are designed to heal. Give them the chance.`
+    id: 'k21', category: 'Recovery', title: 'The Neuroscience of Willpower',
+    preview: 'Willpower is a finite resource — but it can be trained. Here\'s how.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Ego Depletion and the Glucose Model</h2>
+<p>Early willpower research by Roy Baumeister proposed the "ego depletion" model — willpower is a finite resource that gets used up. While some aspects of this model have been contested, the practical insight holds: making multiple decisions or resisting multiple urges in a day depletes cognitive resources available for later decisions.</p>
+<h3>The Prefrontal Cortex</h3>
+<p>Willpower resides primarily in the prefrontal cortex (PFC) — the region responsible for rational decision-making, impulse control, and long-term thinking. Stress, sleep deprivation, and addiction all compromise PFC function, making resistance harder.</p>
+<h3>Building Willpower</h3>
+<p>The PFC responds to training like a muscle. Each time you resist an impulse — regardless of magnitude — you strengthen the neural circuits of self-regulation. Starting with small wins (making your bed, closing apps on time) builds toward larger ones.</p>
+<h3>Minimising Willpower Requirements</h3>
+<p>The smarter approach is to reduce the number of willpower battles through environment design. If your vape isn't in the house, you don't need willpower to not vape at home. Decision architecture beats willpower every time.</p>
+`
   },
   {
-    id: 'k22',
-    title: 'Nicotine Salts: Why Modern Vapes Are More Addictive Than Cigarettes',
-    category: 'Nicotine',
-    readTime: 4,
-    evidenceLevel: 'Peer-reviewed',
-    content: `The vaping industry quietly engineered one of the most effective nicotine delivery systems ever created — and packaged it in pastel colours with mango flavouring.
-
-## The Chemistry of Nicotine Salts
-
-Traditional cigarettes and early e-cigarettes use freebase nicotine — the pure, unmodified alkaloid form. Freebase nicotine at high concentrations (above ~20mg/mL) produces a harsh throat hit that limits how much users can comfortably inhale.
-
-In 2015, Juul Labs filed a patent for a nicotine salt formulation. The innovation: adding benzoic acid to nicotine creates a salt compound that is absorbed at a lower pH, travels through the bloodstream far more rapidly, and reaches the brain in 6–8 seconds — comparable to a cigarette puff, and faster than any previous vaping product.
-
-Critically, nicotine salts smooth the throat hit almost entirely. This allows concentrations of 25–59mg/mL to be inhaled comfortably — three to five times the nicotine concentration of a standard cigarette, delivered as fast or faster.
-
-## Why This Matters for Addiction
-
-The addictive potential of any drug is determined not just by its absolute dose but by the speed of delivery. Faster delivery = stronger conditioning = deeper addiction. This is the same principle that explains why crack cocaine is more addictive than powder cocaine despite being the same molecule — the freebase form reaches the brain in seconds rather than minutes.
-
-A 2019 study published in Tobacco Control found that JUUL pods produced blood nicotine concentrations nearly identical to cigarettes, with a similarly rapid rise curve. For a population of users who had never previously smoked, this represented unprecedented nicotine exposure with no prior tolerance.
-
-## The Adolescent Crisis
-
-The prefrontal cortex — the brain's decision-making and impulse control centre — does not fully mature until age 25. Nicotine exposure during adolescence permanently alters the development of this region, increasing vulnerability to addiction across all substances, not just nicotine.
-
-A Stanford Medicine study found that high school students who regularly used JUUL were 16 times more likely to become cigarette smokers than non-vaping peers. The product designed and marketed as a "smoking cessation tool" was, in practice, creating new nicotine addicts from people who had never smoked.
-
-## Recovery Implications
-
-If you were using nicotine salt products, understand:
-
-1. **Your nicotine dependency may be deeper than you realise.** High-salt-nic users often report withdrawal symptoms more severe than former cigarette smokers.
-
-2. **The speed of delivery created strong conditioning.** Certain environments, times of day, and emotional states became deeply associated with the nicotine hit. This is why situational cravings persist long after physical withdrawal resolves.
-
-3. **Your brain will recalibrate.** Nicotine receptor density normalises within 3–6 months of abstinence. The cravings that feel permanent are, neurologically, temporary adaptations. They will pass.
-
-You were not weak. You were using a product specifically engineered to be as addictive as possible.`
+    id: 'k22', category: 'Caffeine', title: 'Caffeine Dependency: The Most Accepted Addiction',
+    preview: 'Caffeine is the world\'s most widely used psychoactive drug. Here\'s the full picture.',
+    evidence: 'High-quality evidence',
+    content: `
+<h2>Caffeine: The Socially Acceptable Addiction</h2>
+<p>Caffeine is consumed by approximately 80% of the world's adult population daily. It is the most widely consumed psychoactive substance on earth. Its mechanism is well understood: caffeine blocks adenosine receptors in the brain, preventing the buildup of tiredness signal and increasing alertness.</p>
+<h3>Tolerance and Dependency</h3>
+<p>With regular use, the brain upregulates adenosine receptors to compensate — creating tolerance. Without caffeine, excess adenosine floods these new receptors, causing profound fatigue, headaches, and irritability. This is physical dependency.</p>
+<h3>The Withdrawal Curve</h3>
+<p>Withdrawal begins within 12-24 hours of last use. Headaches peak at 20-51 hours and resolve within 2-9 days. Sleep quality dramatically improves within the first week without caffeine.</p>
+<h3>The Case for Reduction</h3>
+<p>Beyond dependency, excess caffeine is associated with: anxiety, heart palpitations, elevated blood pressure, acid reflux, and disrupted sleep (caffeine's half-life is 5-7 hours — an afternoon coffee is still 50% active at midnight).</p>
+<h3>Cutting Down</h3>
+<p>A gradual taper (reducing by 10% per week) eliminates withdrawal symptoms almost entirely. Cold turkey, while faster, involves significant discomfort.</p>
+`
   },
 ];
-
-if (typeof module !== 'undefined') module.exports = KNOWLEDGE_DB;
+window.KNOWLEDGE_DB = KNOWLEDGE_DB;

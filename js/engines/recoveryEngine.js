@@ -1,12 +1,5 @@
+'use strict';
 const RecoveryEngine = (() => {
-  const PHASES = [
-    { name: 'Withdrawal',     hours: [0, 72],    color: '#ff1744', description: 'Your body is clearing the substance. Symptoms peak and then decline.' },
-    { name: 'Adjustment',     hours: [72, 336],  color: '#ff6b2b', description: 'Acute withdrawal has passed. Brain chemistry is recalibrating.' },
-    { name: 'Recalibration',  hours: [336, 1344],color: '#ffd700', description: 'Neural pathways are restructuring. New habits are forming.' },
-    { name: 'Stabilization',  hours: [1344, 4320],color: '#4fc3f7', description: 'Your new baseline is establishing. Life feels more normal.' },
-    { name: 'Optimization',   hours: [4320, Infinity], color: '#00e676', description: 'You have reclaimed your full self. You are building upward.' },
-  ];
-
   function hoursClean(quitTime) {
     return Math.max(0, (Date.now() - new Date(quitTime).getTime()) / 3600000);
   }
@@ -16,70 +9,80 @@ const RecoveryEngine = (() => {
   }
 
   function recoveryPhase(hours) {
-    for (const phase of PHASES) {
-      if (hours >= phase.hours[0] && hours < phase.hours[1]) return phase;
-    }
-    return PHASES[PHASES.length - 1];
+    if (hours < 72) return { name: 'Withdrawal', color: '#FF3B30', description: 'Your body is clearing the substance. Cravings are most intense now. This is temporary.' };
+    if (hours < 336) return { name: 'Adjustment', color: '#FF6B35', description: 'Physical withdrawal easing. Your brain is starting to recalibrate its reward system.' };
+    if (hours < 1344) return { name: 'Recalibration', color: '#FFD60A', description: 'Dopamine receptors recovering sensitivity. Everyday rewards becoming meaningful again.' };
+    if (hours < 4320) return { name: 'Stabilisation', color: '#4ECDC4', description: 'Neural pathways rewiring. Cravings less frequent and less intense. Momentum building.' };
+    return { name: 'Optimisation', color: '#06D6A0', description: 'You have done the hard work. Your recovery is self-sustaining. This is your new baseline.' };
+  }
+
+  function getTimeline(habitType) {
+    return (window.RECOVERY_TIMELINES && window.RECOVERY_TIMELINES[habitType]) || [];
   }
 
   function currentMilestone(habitType, quitTime) {
-    const timeline = (typeof TIMELINES !== 'undefined' ? TIMELINES : {})[habitType] || [];
-    const hrs = hoursClean(quitTime);
+    const h = hoursClean(quitTime);
+    const tl = getTimeline(habitType);
     let last = null;
-    for (const m of timeline) {
-      if (hrs >= m.hours) last = m;
-      else break;
+    for (const m of tl) {
+      if (h >= m.hours) last = m;
     }
-    return last;
+    return last || tl[0] || null;
   }
 
   function nextMilestone(habitType, quitTime) {
-    const timeline = (typeof TIMELINES !== 'undefined' ? TIMELINES : {})[habitType] || [];
-    const hrs = hoursClean(quitTime);
-    return timeline.find((m) => m.hours > hrs) || null;
+    const h = hoursClean(quitTime);
+    const tl = getTimeline(habitType);
+    return tl.find(m => m.hours > h) || null;
   }
 
   function progressToNext(habitType, quitTime) {
-    const timeline = (typeof TIMELINES !== 'undefined' ? TIMELINES : {})[habitType] || [];
-    const hrs = hoursClean(quitTime);
-    const nextIdx = timeline.findIndex((m) => m.hours > hrs);
-    if (nextIdx <= 0) return nextIdx === -1 ? 100 : 0;
-    const prev = timeline[nextIdx - 1].hours;
-    const next = timeline[nextIdx].hours;
-    return Math.min(100, Math.round(((hrs - prev) / (next - prev)) * 100));
+    const h = hoursClean(quitTime);
+    const tl = getTimeline(habitType);
+    const nextIdx = tl.findIndex(m => m.hours > h);
+    if (nextIdx === -1) return 100;
+    if (nextIdx === 0) return Math.min(100, (h / tl[0].hours) * 100);
+    const prev = tl[nextIdx - 1];
+    const next = tl[nextIdx];
+    return Math.min(100, ((h - prev.hours) / (next.hours - prev.hours)) * 100);
+  }
+
+  function timeUntilNext(habitType, quitTime) {
+    const next = nextMilestone(habitType, quitTime);
+    if (!next) return 'Complete';
+    const h = hoursClean(quitTime);
+    const remaining = next.hours - h;
+    return formatDuration(remaining);
   }
 
   function recoveryScore(habits) {
     if (!habits || habits.length === 0) return 0;
     let total = 0;
-    for (const h of habits) {
-      if (!h.active) continue;
-      const hrs = hoursClean(h.quitTime);
-      const days = daysClean(h.quitTime);
-      const relapses = (h.relapses || []).length;
-      const baseScore = Math.min(100, (hrs / 8760) * 100);
-      const relapsePenalty = Math.min(40, relapses * 8);
-      const streakBonus = Math.min(20, days / 5);
-      total += Math.max(0, baseScore - relapsePenalty + streakBonus);
+    for (const habit of habits) {
+      const h = hoursClean(habit.quitTime);
+      const relapses = (habit.relapses || []).length;
+      const base = Math.min(100, Math.log10(Math.max(1, h) + 1) * 38);
+      const penalty = Math.min(50, relapses * 8);
+      total += Math.max(0, base - penalty);
     }
-    return Math.round(total / habits.filter((h) => h.active).length);
+    return Math.round(total / habits.length);
   }
 
   function formatDuration(hours) {
     if (hours < 1) return `${Math.round(hours * 60)}m`;
-    if (hours < 24) return `${Math.floor(hours)}h`;
-    if (hours < 168) return `${Math.floor(hours / 24)}d`;
-    if (hours < 720) return `${Math.floor(hours / 168)}w`;
-    if (hours < 8760) return `${Math.floor(hours / 720)}mo`;
-    return `${Math.floor(hours / 8760)}y`;
+    if (hours < 24) return `${Math.round(hours)}h`;
+    if (hours < 168) return `${Math.round(hours / 24)}d`;
+    if (hours < 720) return `${Math.round(hours / 168)}w`;
+    return `${Math.round(hours / 720)}mo`;
   }
 
-  function timeUntilNext(habitType, quitTime) {
-    const next = nextMilestone(habitType, quitTime);
-    if (!next) return null;
-    const hrs = hoursClean(quitTime);
-    return formatDuration(next.hours - hrs);
+  function todayInsight() {
+    const insights = window.DAILY_INSIGHTS || [];
+    if (!insights.length) return null;
+    const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+    return insights[dayOfYear % insights.length];
   }
 
-  return { hoursClean, daysClean, recoveryPhase, currentMilestone, nextMilestone, progressToNext, recoveryScore, timeUntilNext, formatDuration };
+  return { hoursClean, daysClean, recoveryPhase, currentMilestone, nextMilestone, progressToNext, timeUntilNext, recoveryScore, formatDuration, todayInsight };
 })();
+window.RecoveryEngine = RecoveryEngine;

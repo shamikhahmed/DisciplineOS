@@ -1,67 +1,72 @@
+'use strict';
 const DopamineEngine = (() => {
   const STAGES = [
     {
-      stage: 0, name: 'Withdrawal', color: '#ff1744',
-      description: 'Dopamine receptors are at their lowest density. Your brain is adapting to the absence of the substance.',
-      symptoms: ['Intense cravings', 'Irritability', 'Low energy', 'Difficulty concentrating', 'Sleep disruption'],
-      tips: ['Ride the waves — cravings peak at 20 minutes then pass', 'Cold water, exercise, and deep breathing are your tools', 'This phase is temporary and will end'],
+      stage: 0, name: 'Flood', color: '#FF3B30',
+      description: 'Your dopamine system is overwhelmed. Baseline reward capacity is critically low.',
+      symptoms: ['Everything feels grey or boring', 'Intense cravings', 'Irritability and mood swings', 'Low energy and motivation'],
+      tips: ['Survive each hour — this will pass', 'Exercise even briefly — it forces dopamine production', 'Cold water on your face to break the state', 'Do not make major decisions right now'],
     },
     {
-      stage: 1, name: 'Adaptation', color: '#ff6b2b',
-      description: 'Acute withdrawal is easing. Your brain is beginning to upregulate receptor density. The hardest part is behind you.',
-      symptoms: ['Variable mood', 'Occasional flatness', 'Improved but imperfect sleep', 'Fluctuating motivation'],
-      tips: ['Establish routine — it reduces cognitive load', 'Exercise daily to supplement natural dopamine', 'Small wins build momentum'],
+      stage: 1, name: 'Crash', color: '#FF6B35',
+      description: 'Dopamine is bottoming out. This is the flatline. It is temporary and a sign of healing.',
+      symptoms: ['Anhedonia — nothing feels good', 'Fatigue and brain fog', 'Poor sleep', 'Social withdrawal urge'],
+      tips: ['This stage is where most people relapse — know that', 'Protein and healthy fats support dopamine synthesis', 'Sunlight exposure in the morning helps reset rhythms', 'Force social interaction even when you don\'t want it'],
     },
     {
-      stage: 2, name: 'Rebalancing', color: '#ffd700',
-      description: 'Significant receptor recovery underway. Natural rewards are beginning to feel satisfying again.',
-      symptoms: ['More stable mood', 'Improved energy', 'Better sleep', 'Occasional strong cravings still possible'],
-      tips: ['Build new rewarding habits to anchor the recovery', 'Track your progress — you\'ve come far', 'Social connection strengthens recovery'],
+      stage: 2, name: 'Rebuilding', color: '#FFD60A',
+      description: 'Receptors are recovering sensitivity. Small things are starting to feel rewarding again.',
+      symptoms: ['Variable mood — good days and bad days', 'Some cravings still', 'Sleep improving', 'Occasional moments of genuine pleasure'],
+      tips: ['Stack wins — small achievements matter now', 'Introduce exercise as a primary dopamine strategy', 'Start re-engaging with hobbies you abandoned', 'Track your progress — the data is motivating'],
     },
     {
-      stage: 3, name: 'Stabilization', color: '#4fc3f7',
-      description: 'Your dopamine system is approaching its natural baseline. Life is beginning to feel genuinely satisfying.',
-      symptoms: ['Stable mood', 'Good energy', 'Strong motivation', 'Rare cravings'],
-      tips: ['Protect your new baseline — stress and poor sleep can temporarily destabilize', 'You are establishing a new identity', 'Help someone else who is earlier in their journey'],
+      stage: 3, name: 'Recalibrating', color: '#4ECDC4',
+      description: 'Dopamine baseline stabilising. Motivation and pleasure are returning to normal function.',
+      symptoms: ['Consistent mood most days', 'Cravings rare and manageable', 'Deeper sleep', 'Growing sense of purpose'],
+      tips: ['You\'re over the hardest part — protect this momentum', 'Identify what triggered past relapses and plan for it', 'Deepen good habits that support dopamine naturally', 'Start thinking about goals — you have capacity now'],
     },
     {
-      stage: 4, name: 'Optimization', color: '#00e676',
-      description: 'Full dopamine receptor density restored. Your reward system is clean, sensitive, and powerful.',
-      symptoms: ['High intrinsic motivation', 'Deep satisfaction from real accomplishments', 'Strong emotional regulation', 'Natural pleasure from ordinary life'],
-      tips: ['Maintain the lifestyle that got you here', 'You are an example of what discipline achieves', 'Keep growing — the best is still ahead'],
+      stage: 4, name: 'Optimised', color: '#06D6A0',
+      description: 'Dopamine system fully recalibrated. Normal rewards feel genuinely rewarding. This is baseline.',
+      symptoms: ['Stable, positive mood baseline', 'Strong motivation', 'Quality sleep', 'Real-world engagement is fulfilling'],
+      tips: ['Maintain the environment that got you here', 'High-stress periods can temporarily weaken this — plan ahead', 'Help someone else in early recovery', 'You\'ve done something genuinely hard'],
     },
   ];
 
   const STAGE_THRESHOLDS = {
-    porn:         [0, 72,  336,  1344, 4320],
-    smoking:      [0, 72,  504,  2160, 8760],
-    vape:         [0, 72,  504,  2160, 8760],
-    weed:         [0, 72,  336,  1344, 4320],
-    social_media: [0, 24,  168,  720,  2160],
-    sugar:        [0, 72,  336,  1344, 4320],
-    caffeine:     [0, 48,  168,  720,  2160],
+    smoking:          [0, 48, 168, 720, 2160],
+    vape:             [0, 48, 168, 720, 2160],
+    nicotine_pouches: [0, 48, 168, 720, 2160],
+    shisha:           [0, 48, 168, 720, 2160],
+    weed:             [0, 72, 336, 1440, 4320],
+    porn:             [0, 72, 336, 720, 2160],
+    social_media:     [0, 24, 168, 720, 2160],
+    gaming:           [0, 24, 168, 720, 2160],
+    sugar:            [0, 24, 168, 720, 2160],
+    caffeine:         [0, 12, 72, 336, 720],
   };
 
   function getStage(habitType, hoursClean) {
     const thresholds = STAGE_THRESHOLDS[habitType] || STAGE_THRESHOLDS.smoking;
-    let stageIdx = 0;
-    for (let i = thresholds.length - 1; i >= 0; i--) {
-      if (hoursClean >= thresholds[i]) { stageIdx = i; break; }
+    let idx = 0;
+    for (let i = 0; i < thresholds.length; i++) {
+      if (hoursClean >= thresholds[i]) idx = i;
     }
-    return { ...STAGES[Math.min(stageIdx, STAGES.length - 1)], stageIdx, totalStages: STAGES.length };
+    return { ...STAGES[idx], thresholdHours: thresholds[idx] };
   }
 
   function progressInStage(habitType, hoursClean) {
     const thresholds = STAGE_THRESHOLDS[habitType] || STAGE_THRESHOLDS.smoking;
-    let stageIdx = 0;
-    for (let i = thresholds.length - 1; i >= 0; i--) {
-      if (hoursClean >= thresholds[i]) { stageIdx = i; break; }
+    let idx = 0;
+    for (let i = 0; i < thresholds.length; i++) {
+      if (hoursClean >= thresholds[i]) idx = i;
     }
-    if (stageIdx >= thresholds.length - 1) return 100;
-    const start = thresholds[stageIdx];
-    const end = thresholds[stageIdx + 1];
-    return Math.round(((hoursClean - start) / (end - start)) * 100);
+    if (idx >= thresholds.length - 1) return 100;
+    const start = thresholds[idx];
+    const end = thresholds[idx + 1];
+    return Math.round(Math.min(100, ((hoursClean - start) / (end - start)) * 100));
   }
 
-  return { getStage, progressInStage, STAGES };
+  return { getStage, progressInStage };
 })();
+window.DopamineEngine = DopamineEngine;
