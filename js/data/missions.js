@@ -73,6 +73,24 @@ const MISSIONS_DB = {
     { id: 'su_08', habitType: 'sugar', title: 'Plan tomorrow\'s meals', description: 'Failing to plan is planning to fail. Write out what you\'ll eat tomorrow.', xp: 25, icon: '📋', duration: 10 },
   ],
 
+  vape: [
+    { id: 'vp_01', habitType: 'vape', title: 'Drink 3 glasses of water', description: 'Water flushes nicotine metabolites and reduces oral cravings. Do it now.', xp: 20, icon: '💧', duration: 5 },
+    { id: 'vp_02', habitType: 'vape', title: 'Chew sugar-free gum for 10 minutes', description: 'Satisfies the oral fixation without nicotine. Keep a pack in your pocket.', xp: 15, icon: '🟩', duration: 10 },
+    { id: 'vp_03', habitType: 'vape', title: '20 deep breaths through your nose', description: 'Remind your lungs what clean air feels like. Slow, deliberate, deliberate.', xp: 20, icon: '🌬️', duration: 3 },
+    { id: 'vp_04', habitType: 'vape', title: 'Walk outside for 15 minutes', description: 'Change your environment and breathe fresh air. Cravings cannot follow you out the door.', xp: 30, icon: '🚶', duration: 15 },
+    { id: 'vp_05', habitType: 'vape', title: 'Do 25 push-ups right now', description: 'Physical exertion releases dopamine naturally. Convert the craving into strength.', xp: 35, icon: '💪', duration: 3 },
+    { id: 'vp_06', habitType: 'vape', title: 'Research your device health effects', description: 'Read one article about what your specific device type was doing to your lungs.', xp: 25, icon: '🔬', duration: 10 },
+    { id: 'vp_07', habitType: 'vape', title: 'Calculate weekly spend avoided', description: 'Work out exactly how much you have saved since quitting. Write the number down.', xp: 20, icon: '💰', duration: 5 },
+    { id: 'vp_08', habitType: 'vape', title: 'Do 4-7-8 breathing (5 cycles)', description: 'Inhale 4 seconds. Hold 7 seconds. Exhale 8 seconds. Your body craves air, not vapor.', xp: 25, icon: '🧘', duration: 5 },
+    { id: 'vp_09', habitType: 'vape', title: 'Eat a piece of fruit', description: 'Natural sugar satisfies the nicotine oral craving pathway safely and without consequence.', xp: 15, icon: '🍎', duration: 5 },
+    { id: 'vp_10', habitType: 'vape', title: 'Meditate for 5 minutes', description: 'Sit still. Close your eyes. You are stronger than a device you used to carry in your pocket.', xp: 30, icon: '🧘', duration: 5 },
+    { id: 'vp_11', habitType: 'vape', title: 'Remove vape paraphernalia from sight', description: 'Put devices, pods, and liquids out of sight or dispose of them. Remove every visual trigger.', xp: 40, icon: '🗑️', duration: 5 },
+    { id: 'vp_12', habitType: 'vape', title: 'Tell someone you quit', description: 'Accountability is the most evidence-backed recovery tool. Tell one person right now.', xp: 35, icon: '📢', duration: 5 },
+    { id: 'vp_13', habitType: 'vape', title: 'Do 50 calf raises', description: 'Improves circulation damaged by nicotine vasoconstriction. Stand up and do them now.', xp: 25, icon: '🦵', duration: 3 },
+    { id: 'vp_14', habitType: 'vape', title: 'Read one article in the Knowledge Vault', description: 'Understanding the science of why you quit reinforces the identity shift away from vaping.', xp: 30, icon: '📖', duration: 10 },
+    { id: 'vp_15', habitType: 'vape', title: 'Write down 3 reasons you quit vaping', description: 'Identity-based recovery. Write your three reasons, then read them aloud to yourself.', xp: 35, icon: '✍️', duration: 5 },
+  ],
+
   caffeine: [
     { id: 'ca_01', habitType: 'caffeine', title: 'Drink a full glass of water', description: 'Dehydration mimics fatigue. Hydrate first before reaching for anything.', xp: 15, icon: '💧', duration: 2 },
     { id: 'ca_02', habitType: 'caffeine', title: 'Take a 20-minute power nap', description: 'A NASA study showed 20-min naps beat 200mg caffeine for alertness.', xp: 20, icon: '😴', duration: 20 },

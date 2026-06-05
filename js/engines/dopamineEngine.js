@@ -35,6 +35,7 @@ const DopamineEngine = (() => {
   const STAGE_THRESHOLDS = {
     porn:         [0, 72,  336,  1344, 4320],
     smoking:      [0, 72,  504,  2160, 8760],
+    vape:         [0, 72,  504,  2160, 8760],
     weed:         [0, 72,  336,  1344, 4320],
     social_media: [0, 24,  168,  720,  2160],
     sugar:        [0, 72,  336,  1344, 4320],

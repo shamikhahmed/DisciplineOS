@@ -1,6 +1,7 @@
 const Onboarding = (() => {
   const HABITS_LIST = [
     { type: 'smoking',      name: 'Smoking',      icon: '🚬' },
+    { type: 'vape',         name: 'Vaping',       icon: '💨' },
     { type: 'porn',         name: 'Porn',         icon: '📵' },
     { type: 'weed',         name: 'Weed',         icon: '🌿' },
     { type: 'social_media', name: 'Social Media', icon: '📱' },
@@ -192,6 +193,49 @@ const Onboarding = (() => {
       const habit = HABITS_LIST.find((h) => h.type === type);
       const d = habitDetails[type] || {};
       const currency = userData.currency || 'USD';
+      const vapeExtra = type === 'vape' ? `
+        <div class="field">
+          <label>Device Type</label>
+          <select id="device-type-vape">
+            <option value="">Select...</option>
+            <option value="Pod System" ${(d.deviceType||'')==='Pod System'?'selected':''}>Pod System</option>
+            <option value="Box Mod" ${(d.deviceType||'')==='Box Mod'?'selected':''}>Box Mod</option>
+            <option value="Disposable" ${(d.deviceType||'')==='Disposable'?'selected':''}>Disposable</option>
+            <option value="Pen" ${(d.deviceType||'')==='Pen'?'selected':''}>Pen</option>
+            <option value="Other" ${(d.deviceType||'')==='Other'?'selected':''}>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Device Brand / Name (optional)</label>
+          <input type="text" id="device-brand-vape" placeholder="e.g. Vuse, Juul, Smok, Voopoo..." value="${d.deviceBrand||''}">
+        </div>
+        <div class="field" id="wattage-field-vape" style="display:none;">
+          <label>Output Wattage (W)</label>
+          <input type="number" id="wattage-vape" placeholder="e.g. 40" min="1" max="300" value="${d.wattage||''}">
+        </div>
+        <div class="field">
+          <label>Nicotine Type</label>
+          <select id="nic-type-vape">
+            <option value="Freebase Nicotine" ${(d.nicType||'Freebase Nicotine')==='Freebase Nicotine'?'selected':''}>Freebase Nicotine</option>
+            <option value="Nicotine Salt" ${(d.nicType||'')==='Nicotine Salt'?'selected':''}>Nicotine Salt (Nic Salt)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Nicotine Strength (mg/mL)</label>
+          <input type="number" id="nic-strength-vape" placeholder="3, 6, 12, 20, 50..." min="0" step="0.5" value="${d.nicStrength||''}">
+        </div>
+        <div class="field">
+          <label>Estimated Daily Puffs</label>
+          <input type="number" id="daily-puffs-vape" placeholder="e.g. 200" min="0" value="${d.dailyPuffs||''}">
+        </div>
+        <div class="field">
+          <label>Pods or Coils Per Week</label>
+          <input type="number" id="pods-week-vape" placeholder="e.g. 2" min="0" value="${d.podsPerWeek||''}">
+        </div>
+        <div class="field">
+          <label>Favourite Flavour (optional)</label>
+          <input type="text" id="flavour-vape" placeholder="e.g. mango, mint, tobacco..." value="${d.flavour||''}">
+        </div>` : '';
       return `
       <div style="margin-bottom:24px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
@@ -202,6 +246,7 @@ const Onboarding = (() => {
           <label>When did you quit? (or start tracking)</label>
           <input type="datetime-local" id="quit-${type}" value="${d.quitTime || new Date().toISOString().slice(0,16)}">
         </div>
+        ${vapeExtra}
         <div class="field">
           <label>Daily cost (${currency})</label>
           <input type="number" id="cost-${type}" placeholder="0.00" min="0" step="0.01" value="${d.costPerDay || ''}">
@@ -310,6 +355,16 @@ const Onboarding = (() => {
         el.classList.toggle('selected', selectedTriggers.includes(t));
       });
     });
+
+    const deviceTypeSelect = document.getElementById('device-type-vape');
+    const wattageField = document.getElementById('wattage-field-vape');
+    if (deviceTypeSelect && wattageField) {
+      const toggleWattage = () => {
+        wattageField.style.display = ['Box Mod', 'Pen'].includes(deviceTypeSelect.value) ? '' : 'none';
+      };
+      toggleWattage();
+      deviceTypeSelect.addEventListener('change', toggleWattage);
+    }
   }
 
   function saveCurrentStep() {
@@ -326,6 +381,16 @@ const Onboarding = (() => {
           quitTime:   document.getElementById(`quit-${type}`)?.value || new Date().toISOString(),
           costPerDay: parseFloat(document.getElementById(`cost-${type}`)?.value) || 0,
         };
+        if (type === 'vape') {
+          habitDetails[type].deviceType  = document.getElementById('device-type-vape')?.value || '';
+          habitDetails[type].deviceBrand = document.getElementById('device-brand-vape')?.value || '';
+          habitDetails[type].wattage     = parseFloat(document.getElementById('wattage-vape')?.value) || 0;
+          habitDetails[type].nicType     = document.getElementById('nic-type-vape')?.value || 'Freebase Nicotine';
+          habitDetails[type].nicStrength = parseFloat(document.getElementById('nic-strength-vape')?.value) || 0;
+          habitDetails[type].dailyPuffs  = parseInt(document.getElementById('daily-puffs-vape')?.value) || 0;
+          habitDetails[type].podsPerWeek = parseInt(document.getElementById('pods-week-vape')?.value) || 0;
+          habitDetails[type].flavour     = document.getElementById('flavour-vape')?.value || '';
+        }
       }
     }
   }
@@ -368,7 +433,18 @@ const Onboarding = (() => {
           name: habit.name,
           icon: habit.icon,
           quitTime: d.quitTime ? new Date(d.quitTime).toISOString() : new Date().toISOString(),
-          config: { costPerDay: d.costPerDay || 0, currency: userData.currency || 'USD' },
+          config: type === 'vape' ? {
+            costPerDay:  d.costPerDay  || 0,
+            currency:    userData.currency || 'USD',
+            deviceType:  d.deviceType  || '',
+            deviceBrand: d.deviceBrand || '',
+            wattage:     d.wattage     || 0,
+            nicType:     d.nicType     || 'Freebase Nicotine',
+            nicStrength: d.nicStrength || 0,
+            dailyPuffs:  d.dailyPuffs  || 0,
+            podsPerWeek: d.podsPerWeek || 0,
+            flavour:     d.flavour     || '',
+          } : { costPerDay: d.costPerDay || 0, currency: userData.currency || 'USD' },
           relapses: [],
           active: true,
           createdAt: Date.now(),

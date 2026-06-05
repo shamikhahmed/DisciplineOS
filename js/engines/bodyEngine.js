@@ -40,6 +40,13 @@ const BodyEngine = (() => {
       { system: 'brain',       icon: '🧠', label: 'Mental Clarity',  curve: [[0,45],[96,58],[168,68],[336,78],[720,88]] },
       { system: 'anxiety',     icon: '🧘', label: 'Calm Baseline',   curve: [[0,35],[96,52],[168,65],[336,78]] },
     ],
+    vape: [
+      { system: 'lungs',       icon: '🫁', label: 'Lung & Airway',   curve: [[0,25],[72,38],[168,52],[720,68],[2160,80],[8760,90]] },
+      { system: 'heart',       icon: '❤️', label: 'Cardiovascular',  curve: [[0,40],[24,52],[72,62],[168,72],[720,82],[4320,90]] },
+      { system: 'brain',       icon: '🧠', label: 'Dopamine System', curve: [[0,22],[72,32],[168,45],[720,62],[2160,80],[4320,92]] },
+      { system: 'throat',      icon: '🗣️', label: 'Airways',         curve: [[0,30],[168,48],[720,65],[2160,80],[8760,90]] },
+      { system: 'energy',      icon: '⚡', label: 'Natural Energy',  curve: [[0,35],[72,48],[168,60],[720,75],[2160,88]] },
+    ],
   };
 
   function interpolate(curve, hours) {

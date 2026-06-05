@@ -694,6 +694,87 @@ Whether you practice a specific faith tradition or a secular spiritual practice,
 
 DisciplineOS supports your recovery. Your faith amplifies it.`
   },
+  {
+    id: 'k21',
+    title: 'Vaping and Lung Health: What the Science Actually Shows',
+    category: 'Nicotine',
+    readTime: 5,
+    evidenceLevel: 'Peer-reviewed',
+    content: `Vaping is often marketed as a "safe" alternative to smoking. The science tells a more complicated story.
+
+## EVALI: Vaping-Associated Lung Injury
+
+In 2019, the US experienced an outbreak of e-cigarette or vaping product use-associated lung injury (EVALI), with over 2,800 hospitalisations and 68 confirmed deaths. While vitamin E acetate — an additive found in illicit THC cartridges — was identified as a primary culprit, the outbreak revealed a fundamental truth: inhaling heated aerosol into lungs has consequences that take years to fully manifest.
+
+## What You're Inhaling
+
+When you vape, you inhale an aerosol — not harmless water vapour. The aerosol contains:
+
+**Propylene glycol and vegetable glycerin (PG/VG):** These carrier fluids are generally recognised as safe when eaten, but their effects when chronically inhaled into lung tissue are not yet fully understood. Studies show they cause airway inflammation and can impair ciliary function — the very cilia responsible for clearing debris from your airways.
+
+**Heavy metal particles:** Independent laboratory testing of popular vape devices has found nickel, tin, and lead in the aerosol, leached from heating coils. These accumulate in lung tissue over time.
+
+**Diacetyl:** A flavouring chemical linked to "popcorn lung" (bronchiolitis obliterans), a severe, irreversible airway scarring disease. Despite being banned in some products, diacetyl and similar diketones remain in many flavoured e-liquids, particularly butter, custard, and caramel flavours.
+
+**Volatile organic compounds:** Including formaldehyde, acetaldehyde, and acrolein — compounds with known carcinogenic and inflammatory properties.
+
+## Vaping vs. Smoking
+
+Vaping is almost certainly less harmful than smoking conventional cigarettes, which combust at temperatures above 600°C and deliver thousands of toxic compounds. But "less harmful" is not the same as "safe."
+
+Research from the Respiratory Health division of University of California found that vape users show measurable airway inflammation on bronchoscopy — indistinguishable in character from early cigarette-related changes, just typically milder in magnitude. Long-term data (20+ years) simply doesn't exist yet.
+
+## What Recovery Looks Like
+
+When you stop vaping:
+
+- **72 hours:** Physical nicotine withdrawal peaks and begins subsiding
+- **2–4 weeks:** Airway inflammation measurably decreases
+- **1–3 months:** Cilia begin recovering normal function; you may cough more as they clear accumulated debris
+- **6–12 months:** Lung function and vascular health approaching that of a non-vaper
+
+Your lungs are designed to heal. Give them the chance.`
+  },
+  {
+    id: 'k22',
+    title: 'Nicotine Salts: Why Modern Vapes Are More Addictive Than Cigarettes',
+    category: 'Nicotine',
+    readTime: 4,
+    evidenceLevel: 'Peer-reviewed',
+    content: `The vaping industry quietly engineered one of the most effective nicotine delivery systems ever created — and packaged it in pastel colours with mango flavouring.
+
+## The Chemistry of Nicotine Salts
+
+Traditional cigarettes and early e-cigarettes use freebase nicotine — the pure, unmodified alkaloid form. Freebase nicotine at high concentrations (above ~20mg/mL) produces a harsh throat hit that limits how much users can comfortably inhale.
+
+In 2015, Juul Labs filed a patent for a nicotine salt formulation. The innovation: adding benzoic acid to nicotine creates a salt compound that is absorbed at a lower pH, travels through the bloodstream far more rapidly, and reaches the brain in 6–8 seconds — comparable to a cigarette puff, and faster than any previous vaping product.
+
+Critically, nicotine salts smooth the throat hit almost entirely. This allows concentrations of 25–59mg/mL to be inhaled comfortably — three to five times the nicotine concentration of a standard cigarette, delivered as fast or faster.
+
+## Why This Matters for Addiction
+
+The addictive potential of any drug is determined not just by its absolute dose but by the speed of delivery. Faster delivery = stronger conditioning = deeper addiction. This is the same principle that explains why crack cocaine is more addictive than powder cocaine despite being the same molecule — the freebase form reaches the brain in seconds rather than minutes.
+
+A 2019 study published in Tobacco Control found that JUUL pods produced blood nicotine concentrations nearly identical to cigarettes, with a similarly rapid rise curve. For a population of users who had never previously smoked, this represented unprecedented nicotine exposure with no prior tolerance.
+
+## The Adolescent Crisis
+
+The prefrontal cortex — the brain's decision-making and impulse control centre — does not fully mature until age 25. Nicotine exposure during adolescence permanently alters the development of this region, increasing vulnerability to addiction across all substances, not just nicotine.
+
+A Stanford Medicine study found that high school students who regularly used JUUL were 16 times more likely to become cigarette smokers than non-vaping peers. The product designed and marketed as a "smoking cessation tool" was, in practice, creating new nicotine addicts from people who had never smoked.
+
+## Recovery Implications
+
+If you were using nicotine salt products, understand:
+
+1. **Your nicotine dependency may be deeper than you realise.** High-salt-nic users often report withdrawal symptoms more severe than former cigarette smokers.
+
+2. **The speed of delivery created strong conditioning.** Certain environments, times of day, and emotional states became deeply associated with the nicotine hit. This is why situational cravings persist long after physical withdrawal resolves.
+
+3. **Your brain will recalibrate.** Nicotine receptor density normalises within 3–6 months of abstinence. The cravings that feel permanent are, neurologically, temporary adaptations. They will pass.
+
+You were not weak. You were using a product specifically engineered to be as addictive as possible.`
+  },
 ];
 
 if (typeof module !== 'undefined') module.exports = KNOWLEDGE_DB;

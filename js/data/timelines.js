@@ -56,6 +56,22 @@ const TIMELINES = {
     { hours: 336,  title: "Sleep Architecture Improves", body: "Deep sleep quality increases significantly. Natural energy feels more stable and consistent throughout the day.", system: "Brain", level: "scientific", icon: "💤" },
     { hours: 720,  title: "Baseline Reset Complete", body: "Adenosine receptors fully recalibrated. You are no longer dependent on caffeine to feel awake. Natural alertness restored.", system: "Brain", level: "scientific", icon: "⚡" },
   ],
+
+  vape: [
+    { hours: 0.33, title: "Nicotine Levels Begin Dropping", body: "Blood nicotine starts to fall within 20 minutes. Heart rate and blood pressure begin to normalize toward healthy baseline.", system: "Cardiovascular", level: "scientific", icon: "❤️" },
+    { hours: 8,    title: "Carbon Monoxide Reduces", body: "CO levels drop significantly — especially relevant for high-power devices and heated aerosol. Oxygen delivery to tissues improving.", system: "Lungs", level: "scientific", icon: "🫁" },
+    { hours: 12,   title: "Intense Cravings Peak", body: "Nicotine withdrawal reaches its first peak. Irritability and anxiety are normal physiological responses. This will pass.", system: "Brain", level: "scientific", icon: "🧠" },
+    { hours: 24,   title: "Nicotine Cleared", body: "Nicotine itself has been fully metabolized from your bloodstream. What remains is cotinine and the psychological habit pattern.", system: "Brain", level: "scientific", icon: "✨" },
+    { hours: 48,   title: "Cotinine Eliminated", body: "Nicotine's primary metabolite is gone. Taste and smell sensitivity beginning to return. Your body is genuinely clean.", system: "Nervous System", level: "scientific", icon: "👃" },
+    { hours: 72,   title: "Withdrawal Peak Passes", body: "Most intense physical withdrawal is behind you. Lung cilia beginning to recover and clear accumulated aerosol residue.", system: "Lungs", level: "scientific", icon: "💪" },
+    { hours: 168,  title: "Lung Cilia Recovering", body: "Airways clearing as cilia regain function. You may cough more than usual — this is your lungs actively cleaning themselves.", system: "Lungs", level: "scientific", icon: "🫁" },
+    { hours: 336,  title: "Circulation Improving", body: "Blood flow and cardiovascular function measurably improved. Nicotine-induced vasoconstriction reversing. Energy levels rising.", system: "Cardiovascular", level: "scientific", icon: "🩸" },
+    { hours: 720,  title: "Dopamine Baseline Shifting", body: "Brain reward system recalibrating to natural stimuli. Nicotine-hijacked dopamine pathways weakening. Natural pleasures returning.", system: "Brain", level: "scientific", icon: "🧬" },
+    { hours: 1440, title: "Lung Inflammation Reducing", body: "Airways less inflamed. Breathing measurably easier. Risk factors associated with vaping-induced lung injury beginning to decline.", system: "Lungs", level: "scientific", icon: "🌬️" },
+    { hours: 2160, title: "Neural Pathways Rewiring", body: "Craving frequency and intensity significantly reduced. New neural baseline forming without nicotine dependency reinforcement.", system: "Brain", level: "scientific", icon: "🧠" },
+    { hours: 4320, title: "Half Year Clean", body: "Vascular health substantially improved. Risk of nicotine-related cardiovascular disease dropping measurably. Lung function gains consolidating.", system: "Cardiovascular", level: "scientific", icon: "🏆" },
+    { hours: 8760, title: "One Year Milestone", body: "Full nicotine receptor normalization achieved. Heart disease risk approaching that of a non-vaper. A full year of clean breathing.", system: "Cardiovascular", level: "scientific", icon: "🎯" },
+  ],
 };
 
 if (typeof module !== 'undefined') module.exports = TIMELINES;

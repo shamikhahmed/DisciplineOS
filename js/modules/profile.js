@@ -180,6 +180,10 @@ const Profile = (() => {
         </div>
       </div>
       ${savings}
+      ${habit.type === 'vape' && habit.config?.nicStrength ? `
+      <div style="margin-top:8px;font-size:0.75rem;color:var(--text2);">
+        ${[habit.config.deviceType, habit.config.deviceBrand].filter(Boolean).join(' ')}${habit.config.deviceType||habit.config.deviceBrand?' · ':''}${habit.config.nicStrength}mg ${habit.config.nicType||''}${habit.config.dailyPuffs ? ' · ' + habit.config.dailyPuffs + ' puffs/day' : ''}
+      </div>` : ''}
       <button class="btn btn-ghost btn-sm" style="margin-top:10px;color:var(--red);" data-habit-id="${habit.id}" data-habit-name="${habit.name}" id="relapse-btn-${habit.id}">
         Log Relapse
       </button>
