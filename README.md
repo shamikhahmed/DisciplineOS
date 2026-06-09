@@ -74,6 +74,14 @@ Vanilla JS PWA · orange accent `#FF6B35` · offline-first · localStorage
 - **Journal** — daily entries
 - **You (Profile)** — medicines, routines, habits, settings, export/import
 
+## Documentation
+
+| Resource | Path |
+|----------|------|
+| User guide | [docs/GUIDE.md](docs/GUIDE.md) |
+| Presentation | [docs/PRESENTATION.md](docs/PRESENTATION.md) |
+| Landing page | [landing.html](landing.html) |
+
 ---
 
 Built by Shamikh Ahmed.
