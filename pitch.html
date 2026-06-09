@@ -2,109 +2,1870 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>DisciplineOS — Pitch Deck</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--accent:#FF6B35;--accent2:#4ECDC4;--muted:rgba(255,255,255,.55);--dim:rgba(255,255,255,.25)}
-html{scroll-behavior:smooth}
-body{font-family:Inter,-apple-system,sans-serif;background:#000;color:#fff;overflow-x:hidden}
-.slide{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:72px 40px;position:relative;text-align:center}
-@media(max-width:600px){.slide{padding:64px 22px}}
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s}
-.reveal.visible{opacity:1;transform:none}
-#nav-dots{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:8px}
-.nav-dot{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.25);cursor:pointer}
-.nav-dot.active{background:#fff;transform:scale(1.3)}
-#export-btn{position:fixed;top:16px;right:16px;z-index:100;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:8px 16px;border-radius:99px;font-size:12px;cursor:pointer;font-family:inherit}
-h1{font-size:clamp(3rem,12vw,7rem);font-weight:900;letter-spacing:-.05em;line-height:1}
-h2{font-size:clamp(1.6rem,4.5vw,2.8rem);font-weight:800;letter-spacing:-.03em;margin-bottom:1rem}
-.sub{color:var(--muted);font-size:clamp(1rem,2.2vw,1.2rem);max-width:560px;line-height:1.6;margin:0 auto 2rem}
-.badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:99px;padding:10px 18px;font-size:.85rem;font-weight:600}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:720px;width:100%;margin-top:2rem;text-align:left}
-@media(max-width:600px){.cards{grid-template-columns:1fr}}
-.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:20px}
-.card h3{font-size:1rem;margin-bottom:.4rem}
-.card p{font-size:.85rem;color:var(--muted);line-height:1.55}
-.btn-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:2rem}
-.btn{padding:16px 28px;border-radius:99px;font-weight:700;font-size:.95rem;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
-.btn-p{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 8px 28px color-mix(in srgb,var(--accent) 40%,transparent)}
-.btn-s{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#fff}
-#s1{background:radial-gradient(ellipse 70% 60% at 50% 40%,color-mix(in srgb,var(--accent) 25%,transparent),#000)}
-#s2{background:#0a0a0a}
-#s3{background:radial-gradient(ellipse 80% 60% at 30% 70%,color-mix(in srgb,var(--accent2) 20%,transparent),#050505)}
-#s4{background:#000}
-#s5{background:radial-gradient(ellipse 70% 50% at 50% 50%,color-mix(in srgb,var(--accent) 18%,transparent),#000)}
-@media print{#nav-dots,#export-btn{display:none!important}.slide{page-break-after:always;min-height:100vh}.reveal{opacity:1!important;transform:none!important}}
+/* ── Reset & Base ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #080808;
+  --bg2: #0F0F0F;
+  --bg3: #161616;
+  --bg4: #1C1C1E;
+  --glass: rgba(255,255,255,0.04);
+  --glass2: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.13);
+  --orange: #FF6B35;
+  --teal: #4ECDC4;
+  --green: #06D6A0;
+  --red: #FF3B30;
+  --blue: #0A84FF;
+  --gold: #FFD60A;
+  --purple: #BF5AF2;
+  --text: #F7F7F7;
+  --text2: #AEAEB2;
+  --text3: #636366;
+  --muted: rgba(247,247,247,.55);
+  --dim: rgba(247,247,247,.25);
+  --r: 20px;
+  --r-sm: 12px;
+  --r-lg: 28px;
+  font-size: 16px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: rgba(255,107,53,.35); }
+
+/* ── Section Base ─────────────────────────────────────────────── */
+.slide {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 80px 48px;
+}
+@media(max-width:600px){ .slide { padding: 64px 24px; } }
+
+.reveal { opacity: 0; transform: translateY(48px) scale(0.97); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-left { opacity: 0; transform: translateX(-60px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+.reveal-left.visible { opacity: 1; transform: none; }
+.reveal-right { opacity: 0; transform: translateX(60px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+.reveal-right.visible { opacity: 1; transform: none; }
+.reveal-scale { opacity: 0; transform: scale(0.8); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+.delay-1 { transition-delay: .1s; }
+.delay-2 { transition-delay: .2s; }
+.delay-3 { transition-delay: .35s; }
+.delay-4 { transition-delay: .5s; }
+.delay-5 { transition-delay: .65s; }
+.delay-6 { transition-delay: .8s; }
+
+.section-title {
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+.section-sub {
+  max-width: 580px;
+  color: var(--text2);
+  font-size: clamp(.9rem, 2vw, 1.1rem);
+  line-height: 1.7;
+  margin: 0 auto 2.5rem;
+}
+.accent { color: var(--orange); }
+.teal { color: var(--teal); }
+.green { color: var(--green); }
+
+/* ── Fixed UI ─────────────────────────────────────────────────── */
+#nav-dots {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.25);
+  cursor: pointer;
+  transition: all .3s;
+  border: none;
+}
+.nav-dot.active { background: var(--orange); transform: scale(1.4); box-shadow: 0 0 12px rgba(255,107,53,.5); }
+.nav-dot:hover { background: rgba(255,107,53,.6); }
+
+#export-btn {
+  position: fixed;
+  top: 20px; right: 20px;
+  z-index: 1000;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,107,53,.25);
+  color: var(--text);
+  padding: 10px 18px;
+  border-radius: 100px;
+  font-size: .8rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  letter-spacing: .04em;
+  transition: background .2s, border-color .2s;
+  font-family: inherit;
+}
+#export-btn:hover { background: rgba(255,107,53,.12); border-color: rgba(255,107,53,.45); }
+
+@media(max-width:600px){
+  #nav-dots { right: 10px; }
+  .nav-dot { width: 6px; height: 6px; }
+  #export-btn { display: none; }
+}
+
+/* ── SECTION 1 — OPENER ───────────────────────────────────────── */
+#s1 {
+  background: var(--bg);
+  text-align: center;
+  flex-direction: column;
+}
+#s1-gradient {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(255,107,53,.18) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 40% at 70% 20%, rgba(78,205,196,.12) 0%, transparent 60%),
+              radial-gradient(ellipse 40% 40% at 20% 80%, rgba(6,214,160,.08) 0%, transparent 60%);
+  animation: gradshift 8s ease-in-out infinite alternate;
+}
+@keyframes gradshift {
+  0%   { opacity: .7; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+#canvas-particles { position: absolute; inset: 0; z-index: 1; }
+.s1-content { position: relative; z-index: 2; }
+.s1-logo-icon { font-size: clamp(4rem, 10vw, 7rem); animation: float 4s ease-in-out infinite; display: block; }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+.s1-logo-text {
+  font-size: clamp(3.5rem, 13vw, 9rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--text) 20%, var(--orange) 55%, var(--teal) 85%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: .1em 0 .3em;
+}
+.s1-tag {
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: .04em;
+  margin-bottom: .5rem;
+}
+.s1-sub {
+  font-size: clamp(.85rem, 2vw, 1rem);
+  font-weight: 400;
+  color: var(--text3);
+  letter-spacing: .08em;
+  margin-bottom: 3rem;
+}
+.s1-scroll {
+  font-size: .85rem;
+  color: var(--dim);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+
+/* ── SECTION 2 — PROBLEM ──────────────────────────────────────── */
+#s2 {
+  background: radial-gradient(ellipse 100% 80% at 50% 100%, rgba(255,59,48,.12) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 50% at 80% 20%, rgba(255,107,53,.1) 0%, transparent 60%),
+              var(--bg);
+  flex-direction: column;
+  text-align: center;
+}
+.s2-headline {
+  font-size: clamp(1.8rem, 5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.03em;
+  margin-bottom: 1.5rem;
+  max-width: 820px;
+}
+.s2-headline span { color: var(--orange); }
+.s2-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  max-width: 820px;
+}
+.s2-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,107,53,.2);
+  border-radius: var(--r);
+  padding: 24px 28px;
+  min-width: 180px;
+  flex: 1;
+  max-width: 260px;
+  text-align: left;
+  backdrop-filter: blur(8px);
+  transition: border-color .3s, transform .3s;
+}
+.s2-card:hover { border-color: rgba(255,107,53,.45); transform: translateY(-4px); }
+.s2-card-emoji { font-size: 2rem; display: block; margin-bottom: .5rem; }
+.s2-card-label { font-size: .95rem; font-weight: 700; margin-bottom: .35rem; }
+.s2-card-sub { font-size: .82rem; color: var(--text2); line-height: 1.55; }
+
+/* ── SECTION 3 — REALITY CYCLER ───────────────────────────────── */
+#s3 {
+  background: var(--bg2);
+  flex-direction: column;
+  text-align: center;
+}
+#s3-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,107,53,.06) 0%, transparent 70%);
+  animation: throb 3s ease-in-out infinite alternate;
+}
+@keyframes throb { 0% { opacity: .5; } 100% { opacity: 1; } }
+.s3-cycle-wrap {
+  min-height: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 2.5rem;
+  padding: 0 24px;
+}
+#s3-cycler {
+  font-size: clamp(1.4rem, 4.5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -.03em;
+  transition: opacity .4s, transform .4s;
+  max-width: 820px;
+  text-align: center;
+}
+#s3-cycler.fade-out { opacity: 0; transform: translateY(-20px); }
+.s3-bottom {
+  position: relative; z-index: 2;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: .02em;
+}
+.glitch { position: relative; }
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute; left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: transparent;
+}
+.glitch::before {
+  color: var(--orange);
+  clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+  animation: glitch1 .8s steps(1) infinite;
+  opacity: .5;
+}
+.glitch::after {
+  color: var(--teal);
+  clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+  animation: glitch2 1.2s steps(1) infinite;
+  opacity: .4;
+}
+@keyframes glitch1 {
+  0%,100% { transform: translate(0); } 20% { transform: translate(-3px, 1px); }
+  40% { transform: translate(3px, -1px); } 60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+@keyframes glitch2 {
+  0%,100% { transform: translate(0); } 15% { transform: translate(3px, 2px); }
+  35% { transform: translate(-3px, -1px); } 55% { transform: translate(2px, 1px); }
+  75% { transform: translate(-2px, -2px); }
+}
+
+/* ── SECTION 4 — SOLUTION INTRO ───────────────────────────────── */
+#s4 {
+  background: var(--bg);
+  flex-direction: column;
+  text-align: center;
+}
+#s4-nebula {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,107,53,.15) 0%, rgba(78,205,196,.06) 40%, transparent 70%),
+              radial-gradient(ellipse 40% 40% at 70% 30%, rgba(6,214,160,.08) 0%, transparent 60%);
+  animation: nebula 6s ease-in-out infinite alternate;
+}
+@keyframes nebula {
+  0%   { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.08) rotate(2deg); }
+}
+.s4-icon-wrap { position: relative; display: inline-block; z-index: 2; margin-bottom: .5rem; }
+.s4-icon { font-size: clamp(3rem, 8vw, 5.5rem); display: block; }
+.s4-icon-glow {
+  position: absolute; inset: -30px;
+  background: radial-gradient(circle, rgba(255,107,53,.4) 0%, transparent 70%);
+  animation: glow-pulse 2.5s ease-in-out infinite alternate;
+  border-radius: 50%;
+  pointer-events: none;
+}
+@keyframes glow-pulse { 0% { opacity: .4; transform: scale(.8); } 100% { opacity: 1; transform: scale(1.2); } }
+.s4-name {
+  position: relative; z-index: 2;
+  font-size: clamp(3rem, 12vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -.05em;
+  line-height: 1;
+  color: var(--text);
+  text-shadow: 0 0 80px rgba(255,107,53,.35);
+}
+.s4-tagline {
+  position: relative; z-index: 2;
+  font-size: clamp(.85rem, 2vw, 1.1rem);
+  font-weight: 400;
+  color: var(--text2);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin: 1rem 0 2.5rem;
+}
+.pillar-grid {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 880px;
+  width: 100%;
+}
+@media(max-width:800px){ .pillar-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:420px){ .pillar-grid { grid-template-columns: 1fr; } }
+.pillar-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px 18px;
+  text-align: center;
+  transition: border-color .3s, transform .3s;
+}
+.pillar-card:hover { border-color: rgba(255,107,53,.35); transform: translateY(-4px); }
+.pillar-icon { font-size: 1.8rem; margin-bottom: .6rem; display: block; }
+.pillar-title { font-size: .9rem; font-weight: 700; margin-bottom: .3rem; }
+.pillar-sub { font-size: .75rem; color: var(--text2); line-height: 1.5; }
+
+/* ── PHONE MOCK (shared) ──────────────────────────────────────── */
+.phone-wrap {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 960px;
+}
+.phone {
+  width: 280px;
+  height: 560px;
+  background: var(--bg2);
+  border: 2px solid var(--border2);
+  border-radius: 36px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,107,53,.08), inset 0 1px 0 rgba(255,255,255,.08);
+  position: relative;
+  flex-shrink: 0;
+}
+.phone-notch {
+  width: 100px; height: 26px;
+  background: #000;
+  border-radius: 0 0 14px 14px;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+.phone-screen {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg);
+}
+.phone-scroll {
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 58px;
+  scrollbar-width: none;
+}
+.phone-scroll::-webkit-scrollbar { display: none; }
+.phone-nav {
+  height: 54px;
+  background: rgba(8,8,8,.95);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-shrink: 0;
+}
+.pnav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--text3);
+  font-size: 9px;
+  font-weight: 600;
+}
+.pnav.on { color: var(--orange); }
+.pnav.sos { color: var(--red); }
+.pnav.sos.on { color: var(--red); }
+.pnav-ic { font-size: 16px; }
+
+/* Today mock internals */
+.m-greet { padding: 14px 16px 8px; font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; }
+.m-pill {
+  display: inline-block;
+  margin: 0 16px 10px;
+  padding: 5px 11px;
+  background: rgba(255,107,53,.12);
+  border: 1px solid rgba(255,107,53,.25);
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--orange);
+}
+.m-sos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 14px 12px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, rgba(255,59,48,.18), rgba(255,107,53,.08));
+  border: 1px solid rgba(255,59,48,.35);
+  border-radius: var(--r);
+}
+.m-sos-ic { font-size: 1.4rem; }
+.m-sos-t { font-size: 12px; font-weight: 800; color: var(--red); }
+.m-sos-s { font-size: 9px; color: var(--text2); margin-top: 2px; }
+.m-sec {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 8px 16px 6px;
+}
+.m-group {
+  margin: 0 14px 10px;
+  padding: 10px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+.m-ghead { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+.m-gprog { font-size: 9px; color: var(--teal); font-weight: 600; }
+.m-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.m-row:last-child { border-bottom: none; }
+.m-box {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  border: 2px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800;
+  flex-shrink: 0;
+}
+.m-box.on { background: rgba(6,214,160,.15); border-color: var(--green); color: var(--green); }
+.m-lbl { font-size: 11px; font-weight: 600; }
+.m-sub { font-size: 9px; color: var(--text3); margin-top: 1px; }
+.m-badge {
+  padding: 3px 8px;
+  border-radius: 99px;
+  font-size: 8px;
+  font-weight: 700;
+  background: rgba(78,205,196,.12);
+  color: var(--teal);
+  border: 1px solid rgba(78,205,196,.25);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.m-badge.asneeded {
+  background: rgba(191,90,242,.12);
+  color: var(--purple);
+  border-color: rgba(191,90,242,.25);
+}
+
+/* Score ring */
+.score-ring {
+  width: 130px; height: 130px;
+  border-radius: 50%;
+  background: conic-gradient(var(--orange) 0% 52%, var(--teal) 52% 87%, rgba(255,255,255,.06) 87% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.score-ring::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background: var(--bg2);
+}
+.score-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.score-num { font-size: 36px; font-weight: 800; letter-spacing: -.04em; line-height: 1; }
+.score-lbl { font-size: 8px; font-weight: 700; letter-spacing: .1em; color: var(--text3); text-transform: uppercase; margin-top: 2px; }
+
+/* Mini rings row */
+.rings-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 320px;
+  width: 100%;
+}
+.ring-cell { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.mini-ring {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+}
+.ring-cell-name { font-size: 8px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .04em; }
+
+/* Timeline */
+.tl { display: flex; flex-direction: column; gap: 0; max-width: 520px; width: 100%; }
+.tl-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+.tl-item:last-child { border-bottom: none; }
+.tl-time { font-family: 'SF Mono', Menlo, monospace; font-size: 11px; font-weight: 700; color: var(--orange); width: 52px; flex-shrink: 0; padding-top: 2px; }
+.tl-body { flex: 1; }
+.tl-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+.tl-desc { font-size: 10px; color: var(--text2); line-height: 1.45; }
+.tl-sys { font-size: 8px; color: var(--teal); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-top: 3px; }
+.tl-dot-col { display: flex; flex-direction: column; align-items: center; width: 12px; flex-shrink: 0; padding-top: 4px; }
+.tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 8px rgba(255,107,53,.5); }
+.tl-line { width: 2px; flex: 1; background: linear-gradient(var(--orange), var(--teal)); min-height: 20px; margin-top: 4px; opacity: .4; }
+
+/* Habit chips */
+.hgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 480px; width: 100%; }
+@media(max-width:600px){ .hgrid { grid-template-columns: repeat(3, 1fr); } }
+.hchip {
+  padding: 14px 8px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: border-color .3s, background .3s;
+}
+.hchip.sel { background: rgba(255,107,53,.1); border-color: var(--orange); }
+.hchip-ic { font-size: 1.4rem; }
+.hchip-nm { font-size: 9px; font-weight: 600; color: var(--text2); text-align: center; line-height: 1.3; }
+.hchip.sel .hchip-nm { color: var(--orange); }
+
+/* Forecast */
+.forecast {
+  padding: 16px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  max-width: 320px;
+  width: 100%;
+}
+.fc-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.fc-title { font-size: 12px; font-weight: 700; }
+.fc-risk { padding: 4px 10px; border-radius: 99px; font-size: 9px; font-weight: 700; }
+.fc-risk.high { background: rgba(255,59,48,.15); color: var(--red); border: 1px solid rgba(255,59,48,.3); }
+.fc-risk.med { background: rgba(255,107,53,.12); color: var(--orange); border: 1px solid rgba(255,107,53,.3); }
+.fc-risk.low { background: rgba(6,214,160,.12); color: var(--green); border: 1px solid rgba(6,214,160,.3); }
+.fc-bar { height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; margin: 8px 0; }
+.fc-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--green), var(--orange), var(--red)); }
+.fc-triggers { font-size: 10px; color: var(--text2); line-height: 1.5; }
+
+/* Breath / SOS */
+.breath-ring {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  border: 3px solid rgba(78,205,196,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .6s ease;
+  margin: 0 auto;
+}
+.breath-ring.inhale { border-color: var(--teal); box-shadow: 0 0 40px rgba(78,205,196,.35); transform: scale(1.15); }
+.breath-ring.hold { border-color: var(--orange); box-shadow: 0 0 40px rgba(255,107,53,.3); transform: scale(1.08); }
+.breath-ring.exhale { border-color: rgba(78,205,196,.3); transform: scale(.92); }
+.breath-num { font-size: 3rem; font-weight: 800; color: var(--orange); line-height: 1; }
+.sos-phases { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 560px; margin-top: 1.5rem; }
+.sos-phase {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 14px 18px;
+  text-align: center;
+  min-width: 110px;
+  flex: 1;
+}
+.sos-phase.active { border-color: rgba(255,107,53,.4); background: rgba(255,107,53,.08); }
+.sos-phase-num { font-size: 1.5rem; font-weight: 900; color: var(--orange); opacity: .35; line-height: 1; }
+.sos-phase-label { font-size: .85rem; font-weight: 700; margin-top: 4px; }
+
+/* Journal */
+.jcard {
+  padding: 16px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  max-width: 320px;
+  width: 100%;
+  text-align: left;
+}
+.jdate { font-size: 9px; color: var(--text3); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 6px; }
+.jmood { display: flex; gap: 6px; margin-bottom: 8px; }
+.jmood span { font-size: 1.2rem; opacity: .35; }
+.jmood span.on { opacity: 1; }
+.jtext { font-size: 11px; color: var(--text2); line-height: 1.55; margin-bottom: 8px; }
+.jtags { display: flex; gap: 5px; flex-wrap: wrap; }
+.jtag {
+  padding: 3px 8px;
+  border-radius: 99px;
+  font-size: 8px;
+  font-weight: 600;
+  background: rgba(255,107,53,.1);
+  color: var(--orange);
+  border: 1px solid rgba(255,107,53,.2);
+}
+
+/* Split layout */
+.split {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 960px;
+}
+.split-text { flex: 1; min-width: 260px; max-width: 420px; text-align: left; }
+.split-text .section-title { text-align: left; }
+.split-text .section-sub { text-align: left; margin-left: 0; }
+
+/* Feature cards */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 840px;
+  width: 100%;
+}
+@media(max-width:700px){ .feature-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:420px){ .feature-grid { grid-template-columns: 1fr; } }
+.feat-card {
+  background: rgba(255,107,53,.04);
+  border: 1px solid rgba(255,107,53,.15);
+  border-radius: var(--r);
+  padding: 22px 20px;
+  text-align: left;
+  transition: border-color .3s, background .3s, transform .3s;
+}
+.feat-card:hover { border-color: rgba(255,107,53,.4); background: rgba(255,107,53,.08); transform: translateY(-4px); }
+.feat-card-icon { font-size: 1.8rem; display: block; margin-bottom: .75rem; }
+.feat-card-title { font-size: .95rem; font-weight: 700; margin-bottom: .35rem; }
+.feat-card-sub { font-size: .8rem; color: var(--text2); line-height: 1.5; }
+
+/* System bars */
+.sys-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); width: 100%; }
+.sys-row:last-child { border-bottom: none; }
+.sys-ic { font-size: 14px; width: 24px; text-align: center; }
+.sys-lbl { font-size: 11px; color: var(--text2); width: 80px; }
+.sys-bar { flex: 1; height: 4px; background: rgba(255,255,255,.06); border-radius: 2px; overflow: hidden; }
+.sys-fill { height: 100%; border-radius: 2px; }
+.sys-pct { font-size: 10px; font-weight: 700; width: 32px; text-align: right; color: var(--teal); }
+
+/* Learn library */
+.learn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 640px; width: 100%; }
+.learn-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px;
+  text-align: left;
+  transition: border-color .3s;
+}
+.learn-card:hover { border-color: rgba(78,205,196,.35); }
+.learn-cat { font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+.learn-title { font-size: .9rem; font-weight: 700; margin-bottom: 4px; }
+.learn-desc { font-size: .75rem; color: var(--text2); line-height: 1.5; }
+
+/* Privacy specs */
+.sec-specs { display: flex; flex-direction: column; gap: 14px; max-width: 560px; margin: 2rem auto 0; width: 100%; }
+.spec-item {
+  background: rgba(6,214,160,.04);
+  border: 1px solid rgba(6,214,160,.15);
+  border-radius: var(--r-sm);
+  padding: 18px 22px;
+  display: flex; align-items: center; gap: 16px;
+  text-align: left;
+  transition: border-color .3s, background .3s;
+}
+.spec-item:hover { border-color: rgba(6,214,160,.35); background: rgba(6,214,160,.08); }
+.spec-check { font-size: 1.4rem; flex-shrink: 0; }
+.spec-text { font-size: .95rem; font-weight: 600; }
+.spec-detail { font-size: .78rem; color: var(--text2); margin-top: 2px; }
+
+/* Tech stack terminal */
+.terminal {
+  background: var(--bg3);
+  border: 1px solid rgba(255,107,53,.2);
+  border-radius: var(--r);
+  padding: 24px 26px;
+  font-family: 'SF Mono', Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.9;
+  max-width: 560px;
+  width: 100%;
+  text-align: left;
+}
+.terminal .path { color: var(--orange); font-weight: 600; }
+.terminal .dim { color: var(--text3); }
+.terminal .hl { color: var(--green); }
+.terminal .teal { color: var(--teal); }
+
+/* Roadmap */
+.roadmap { display: flex; flex-direction: column; gap: 0; max-width: 560px; width: 100%; position: relative; }
+.road-item {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  border-left: 2px solid rgba(255,107,53,.2);
+  margin-left: 16px;
+  padding-left: 28px;
+  position: relative;
+  text-align: left;
+}
+.road-item::before {
+  content: '';
+  position: absolute;
+  left: -7px; top: 24px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 12px rgba(255,107,53,.5);
+}
+.road-item.future::before { background: var(--text3); box-shadow: none; }
+.road-q { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+.road-item.future .road-q { color: var(--text3); }
+.road-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.road-desc { font-size: .82rem; color: var(--text2); line-height: 1.55; }
+
+/* CTA */
+#s16 {
+  background: var(--bg);
+  flex-direction: column;
+  text-align: center;
+  overflow: hidden;
+}
+#s16-gradient {
+  position: absolute; inset: 0;
+  animation: cta-shift 5s ease-in-out infinite alternate;
+}
+@keyframes cta-shift {
+  0%   { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(255,107,53,.2) 0%, transparent 70%); }
+  33%  { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(78,205,196,.15) 0%, transparent 70%); }
+  66%  { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(6,214,160,.12) 0%, transparent 70%); }
+  100% { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(255,107,53,.18) 0%, transparent 70%); }
+}
+.s16-content { position: relative; z-index: 2; }
+.cta-quote {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-style: italic;
+  color: var(--text2);
+  max-width: 520px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+  border-left: 3px solid var(--orange);
+  padding-left: 20px;
+  text-align: left;
+}
+.cta-big {
+  font-size: clamp(2.5rem, 10vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -.05em;
+  line-height: 1;
+  margin-bottom: .5rem;
+}
+.cta-sub {
+  font-size: clamp(.9rem, 2vw, 1.2rem);
+  color: var(--text2);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+}
+.cta-buttons { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-bottom: 2.5rem; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--orange), rgba(255,107,53,.75));
+  color: #fff;
+  border: none;
+  padding: 18px 36px;
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: transform .2s, box-shadow .2s;
+  display: inline-flex; align-items: center; gap: 10px;
+  box-shadow: 0 8px 32px rgba(255,107,53,.3);
+  font-family: inherit;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,107,53,.45); }
+.btn-secondary {
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  border: 1px solid var(--border2);
+  padding: 18px 36px;
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: .02em;
+  transition: background .2s, transform .2s;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: inherit;
+  backdrop-filter: blur(8px);
+}
+.btn-secondary:hover { background: rgba(255,255,255,.1); transform: translateY(-2px); }
+.cta-copyright { margin-top: 2rem; font-size: .75rem; color: var(--dim); letter-spacing: .08em; }
+.cta-copyright a { color: var(--orange); text-decoration: none; }
+
+/* Section backgrounds */
+#s5 {
+  background: radial-gradient(ellipse 70% 60% at 30% 50%, rgba(255,107,53,.08) 0%, transparent 60%),
+              var(--bg);
+}
+#s6 {
+  background: radial-gradient(ellipse 80% 70% at 70% 40%, rgba(78,205,196,.1) 0%, transparent 65%),
+              var(--bg2);
+}
+#s7 {
+  background: radial-gradient(ellipse 60% 50% at 20% 60%, rgba(255,107,53,.1) 0%, transparent 60%),
+              var(--bg);
+}
+#s8 {
+  background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(255,59,48,.12) 0%, transparent 65%),
+              var(--bg2);
+}
+#s9 {
+  background: radial-gradient(ellipse 70% 60% at 60% 70%, rgba(78,205,196,.08) 0%, transparent 60%),
+              var(--bg);
+}
+#s10 {
+  background: radial-gradient(ellipse 60% 50% at 40% 50%, rgba(255,107,53,.1) 0%, transparent 65%),
+              var(--bg2);
+}
+#s11 {
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(191,90,242,.08) 0%, transparent 65%),
+              var(--bg);
+}
+#s12 {
+  background: radial-gradient(ellipse 60% 50% at 30% 40%, rgba(78,205,196,.1) 0%, transparent 60%),
+              var(--bg2);
+}
+#s13 {
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(6,214,160,.08) 0%, transparent 70%),
+              var(--bg);
+}
+#s14 {
+  background: var(--bg2);
+}
+#s15 {
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255,107,53,.08) 0%, transparent 65%),
+              var(--bg);
+}
+#privacy-canvas { position: absolute; inset: 0; opacity: .08; z-index: 1; }
+
+/* Medicine schedule mock */
+.med-schedule { max-width: 340px; width: 100%; }
+.med-time-block {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.med-time-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.med-time-label { font-size: 11px; font-weight: 700; color: var(--orange); }
+.med-time-count { font-size: 9px; color: var(--teal); font-weight: 600; }
+.med-pill-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+.med-pill-icon { font-size: 1rem; }
+.med-pill-name { font-size: 11px; font-weight: 600; flex: 1; }
+.med-pill-dose { font-size: 9px; color: var(--text3); }
+
+/* Nav tabs demo */
+.tabs-demo { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 680px; margin-top: 1.5rem; }
+.tab-demo {
+  padding: 14px 18px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  text-align: center;
+  min-width: 90px;
+}
+.tab-demo.on { border-color: rgba(255,107,53,.4); background: rgba(255,107,53,.08); }
+.tab-demo.sos { border-color: rgba(255,59,48,.35); background: rgba(255,59,48,.08); }
+.tab-ic { font-size: 22px; margin-bottom: 4px; }
+.tab-nm { font-size: 10px; font-weight: 700; color: var(--text2); }
+.tab-demo.on .tab-nm { color: var(--orange); }
+.tab-demo.sos .tab-nm { color: var(--red); }
+
+/* Print */
+@media print {
+  .slide {
+    page-break-after: always;
+    height: auto !important;
+    min-height: 100vh;
+    padding: 60px 48px;
+    display: block;
+  }
+  #nav-dots, #export-btn { display: none !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1 !important; transform: none !important; }
+  canvas { display: none !important; }
+  #s1-gradient, #s4-nebula, #s3-bg, #s16-gradient { display: block; }
+}
 </style>
 </head>
 <body>
+
+<!-- Navigation dots -->
 <div id="nav-dots"></div>
+
+<!-- PDF Export button -->
 <button id="export-btn" onclick="window.print()">⬇ Export PDF</button>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 1 — OPENER / TITLE
+     ═══════════════════════════════════════════════════════════════ -->
 <section class="slide" id="s1">
-  <div>
-    <div style="font-size:4rem;margin-bottom:.5rem" class="reveal">🧡</div>
-    <h1 class="reveal delay-1">DisciplineOS</h1>
-    <p class="sub reveal delay-2">Personal Recovery & Daily Discipline OS</p>
-    <p class="sub reveal delay-3" style="font-size:.9rem">Habits · Today routines · SOS · Hourly body healing</p>
-    <p class="reveal delay-4" style="color:var(--dim);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase">Scroll to explore ↓</p>
+  <div id="s1-gradient"></div>
+  <canvas id="canvas-particles"></canvas>
+  <div class="s1-content">
+    <span class="s1-logo-icon reveal">🧡</span>
+    <div class="s1-logo-text reveal delay-1">DisciplineOS</div>
+    <p class="s1-tag reveal delay-2">Personal Recovery Operating System</p>
+    <p class="s1-sub reveal delay-3">Habits · Recovery Score · Emergency SOS · Journal</p>
+    <p class="s1-scroll reveal delay-4">Scroll to explore ↓</p>
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 2 — THE PROBLEM
+     ═══════════════════════════════════════════════════════════════ -->
 <section class="slide" id="s2">
-  <div style="max-width:800px;width:100%">
-    <h2 class="reveal">The problem</h2>
-    <p class="sub reveal delay-1">Recovery is scattered across habit apps, notes, and willpower.</p>
-    <div class="cards">
-      <div class="card reveal delay-1"><h3>Pain 1</h3><p>Cravings need one tap — not five apps</p></div><div class="card reveal delay-2"><h3>Pain 2</h3><p>Medicines & skincare live in separate reminders</p></div><div class="card reveal delay-3"><h3>Pain 3</h3><p>Body healing progress is invisible hour by hour</p></div>
+  <div style="display:flex;flex-direction:column;align-items:center;max-width:900px;width:100%;">
+    <h2 class="s2-headline reveal">Recovery tools are <span>fragmented.</span></h2>
+    <p class="section-sub reveal delay-1">Habit apps don't understand cravings. Journals don't connect to triggers. Crisis moments need one tap — not five apps. People in recovery deserve a single, private command centre.</p>
+    <div class="s2-cards">
+      <div class="s2-card reveal-left delay-1">
+        <span class="s2-card-emoji">📱</span>
+        <div class="s2-card-label">Scattered apps</div>
+        <div class="s2-card-sub">Habit trackers, notes, reminders — nothing talks to each other</div>
+      </div>
+      <div class="s2-card reveal delay-2">
+        <span class="s2-card-emoji">🫁</span>
+        <div class="s2-card-label">Crisis friction</div>
+        <div class="s2-card-sub">When cravings hit, you can't hunt through menus</div>
+      </div>
+      <div class="s2-card reveal delay-3">
+        <span class="s2-card-emoji">💊</span>
+        <div class="s2-card-label">Routines split</div>
+        <div class="s2-card-sub">Medicines, skincare, and hair care live in separate reminders</div>
+      </div>
+      <div class="s2-card reveal-right delay-4">
+        <span class="s2-card-emoji">🧬</span>
+        <div class="s2-card-label">Invisible healing</div>
+        <div class="s2-card-sub">Body recovery progress is invisible hour by hour</div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 3 — REALITY CYCLER
+     ═══════════════════════════════════════════════════════════════ -->
 <section class="slide" id="s3">
-  <div style="max-width:800px;width:100%">
-    <h2 class="reveal">Introducing DisciplineOS</h2>
-    <p class="sub reveal delay-1">One offline command centre for quitting, routines, and crisis.</p>
-    <div class="badges reveal delay-2">
-      <span class="badge">📱 PWA</span><span class="badge">🔒 Private</span><span class="badge">✈️ Offline</span>
+  <div id="s3-bg"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:820px;z-index:2;position:relative;">
+    <div class="s3-cycle-wrap">
+      <div id="s3-cycler" class="glitch reveal" data-text="Cravings need one tap — not five apps.">Cravings need one tap — not five apps.</div>
     </div>
+    <p class="s3-bottom reveal delay-2">People in recovery deserve better.</p>
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 4 — SOLUTION INTRO
+     ═══════════════════════════════════════════════════════════════ -->
 <section class="slide" id="s4">
-  <div style="max-width:900px;width:100%">
-    <h2 class="reveal">Core pillars</h2>
-    <div class="cards">
-      <div class="card reveal delay-1"><div style="font-size:1.8rem;margin-bottom:.5rem">📅</div><h3>Today</h3><p>Medicines, skincare, hair, habit checklists</p></div><div class="card reveal delay-2"><div style="font-size:1.8rem;margin-bottom:.5rem">🫁</div><h3>SOS</h3><p>Phased emergency protocol when cravings hit</p></div><div class="card reveal delay-3"><div style="font-size:1.8rem;margin-bottom:.5rem">🧬</div><h3>Recovery DB</h3><p>Hourly body milestones for 72h per habit</p></div><div class="card reveal delay-4"><div style="font-size:1.8rem;margin-bottom:.5rem">🔔</div><h3>Reminders</h3><p>Push + in-app gentle nudges</p></div>
+  <div id="s4-nebula"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;z-index:2;position:relative;max-width:920px;width:100%;">
+    <div class="s4-icon-wrap reveal">
+      <span class="s4-icon">🧡</span>
+      <div class="s4-icon-glow"></div>
+    </div>
+    <div class="s4-name reveal delay-1">DisciplineOS</div>
+    <p class="s4-tagline reveal delay-2">One offline PWA · Zero servers · Your recovery OS</p>
+    <div class="pillar-grid">
+      <div class="pillar-card reveal-left delay-2">
+        <span class="pillar-icon">📊</span>
+        <div class="pillar-title">Score</div>
+        <div class="pillar-sub">0–100 recovery compass from real behaviour</div>
+      </div>
+      <div class="pillar-card reveal delay-3">
+        <span class="pillar-icon">🔥</span>
+        <div class="pillar-title">Habits</div>
+        <div class="pillar-sub">Streaks + timelines, not guilt</div>
+      </div>
+      <div class="pillar-card reveal delay-4">
+        <span class="pillar-icon">🆘</span>
+        <div class="pillar-title">Emergency</div>
+        <div class="pillar-sub">Phased SOS for high-risk moments</div>
+      </div>
+      <div class="pillar-card reveal-right delay-5">
+        <span class="pillar-icon">🧠</span>
+        <div class="pillar-title">Intelligence</div>
+        <div class="pillar-sub">Craving forecast from journal patterns</div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 5 — TODAY COMMAND CENTRE
+     ═══════════════════════════════════════════════════════════════ -->
 <section class="slide" id="s5">
-  <div style="max-width:700px;width:100%">
-    <h2 class="reveal">Your DisciplineOS awaits.</h2>
-    <p class="sub reveal delay-1">Anyone quitting vape, cigarettes, doomscrolling, or building daily discipline.</p>
-    <div class="btn-row reveal delay-2">
-      <a class="btn btn-p" href="https://shamikhahmed.github.io/DisciplineOS/" target="_blank" rel="noopener">Open DisciplineOS</a>
-      <a class="btn btn-s" href="presentation.html">📊 Presentation</a>
-      <a class="btn btn-s" href="landing.html">🌐 Landing</a>
-      <a class="btn btn-s" href="docs/GUIDE.md">📖 Guide</a>
-      <a class="btn btn-s" href="https://github.com/shamikhahmed/DisciplineOS" target="_blank" rel="noopener">GitHub</a>
+  <div class="split">
+    <div class="split-text">
+      <h2 class="section-title reveal">Today — your command centre.</h2>
+      <p class="section-sub reveal delay-1">Medicines, skincare, hair routines, and habit progress in one daily checklist. One-tap SOS. Gentle nudges. Designed for glances, not scrolling.</p>
+      <div class="tabs-demo reveal delay-2">
+        <div class="tab-demo on"><div class="tab-ic">☀️</div><div class="tab-nm">Today</div></div>
+        <div class="tab-demo"><div class="tab-ic">🧬</div><div class="tab-nm">Recovery</div></div>
+        <div class="tab-demo sos"><div class="tab-ic">🆘</div><div class="tab-nm">SOS</div></div>
+        <div class="tab-demo"><div class="tab-ic">📚</div><div class="tab-nm">Learn</div></div>
+        <div class="tab-demo"><div class="tab-ic">📓</div><div class="tab-nm">Journal</div></div>
+        <div class="tab-demo"><div class="tab-ic">👤</div><div class="tab-nm">You</div></div>
+      </div>
     </div>
-    <p class="reveal delay-3" style="margin-top:2.5rem;font-size:.75rem;color:var(--dim)">© 2026 Shamikh Ahmed · shamikhahmed.github.io/DisciplineOS/</p>
+    <div class="phone reveal-scale delay-2">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-scroll">
+          <div class="m-greet">Good morning ☀️</div>
+          <div class="m-pill">4/7 today's tasks done</div>
+          <div class="m-sos">
+            <span class="m-sos-ic">🆘</span>
+            <div>
+              <div class="m-sos-t">Emergency SOS</div>
+              <div class="m-sos-s">Tap when cravings hit</div>
+            </div>
+          </div>
+          <div class="m-sec">Today's Routines</div>
+          <div class="m-group">
+            <div class="m-ghead"><span>💊 Medicines</span><span class="m-gprog">2/3</span></div>
+            <div class="m-row">
+              <div class="m-box on">✓</div>
+              <div><div class="m-lbl">Bupropion</div><div class="m-sub">8:00 AM · 150mg</div></div>
+            </div>
+            <div class="m-row">
+              <div class="m-box on">✓</div>
+              <div><div class="m-lbl">Omega-3</div><div class="m-sub">8:00 AM · with food</div></div>
+            </div>
+            <div class="m-row">
+              <div class="m-box"></div>
+              <div><div class="m-lbl">Melatonin</div><div class="m-sub">10:00 PM</div></div>
+              <span class="m-badge">Due soon</span>
+            </div>
+          </div>
+          <div class="m-group">
+            <div class="m-ghead"><span>✨ Skincare AM</span><span class="m-gprog">1/2</span></div>
+            <div class="m-row">
+              <div class="m-box on">✓</div>
+              <div><div class="m-lbl">Gentle cleanser</div></div>
+            </div>
+            <div class="m-row">
+              <div class="m-box"></div>
+              <div><div class="m-lbl">SPF 50</div></div>
+            </div>
+          </div>
+          <div class="m-sec">Habit Progress</div>
+          <div class="m-group">
+            <div class="m-row">
+              <div style="font-size:1.2rem">🚬</div>
+              <div><div class="m-lbl">No smoking</div><div class="m-sub">Day 14 · 12 day streak</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-nav">
+        <div class="pnav on"><span class="pnav-ic">☀️</span>Today</div>
+        <div class="pnav"><span class="pnav-ic">🧬</span>Recovery</div>
+        <div class="pnav sos"><span class="pnav-ic">🆘</span>SOS</div>
+        <div class="pnav"><span class="pnav-ic">📚</span>Learn</div>
+        <div class="pnav"><span class="pnav-ic">📓</span>Journal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 6 — RECOVERY SCORE + BODY HEALING
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s6">
+  <div class="split">
+    <div class="reveal-scale delay-1" style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+      <div class="score-ring">
+        <div class="score-inner">
+          <div class="score-num">72</div>
+          <div class="score-lbl">Recovery</div>
+        </div>
+      </div>
+      <div class="rings-row">
+        <div class="ring-cell">
+          <div class="mini-ring" style="border-color:var(--orange);color:var(--orange)">78</div>
+          <div class="ring-cell-name">Physical</div>
+        </div>
+        <div class="ring-cell">
+          <div class="mini-ring" style="border-color:var(--teal);color:var(--teal)">65</div>
+          <div class="ring-cell-name">Mental</div>
+        </div>
+        <div class="ring-cell">
+          <div class="mini-ring" style="border-color:var(--green);color:var(--green)">81</div>
+          <div class="ring-cell-name">Sleep</div>
+        </div>
+        <div class="ring-cell">
+          <div class="mini-ring" style="border-color:var(--gold);color:var(--gold)">58</div>
+          <div class="ring-cell-name">Craving</div>
+        </div>
+      </div>
+      <div class="forecast reveal delay-3">
+        <div class="fc-head">
+          <div class="fc-title">Craving Forecast</div>
+          <div class="fc-risk med">Medium</div>
+        </div>
+        <div class="fc-bar"><div class="fc-fill" style="width:58%"></div></div>
+        <div class="fc-triggers">Peak risk: 6–8 PM · Triggers: stress, after meals, social settings</div>
+      </div>
+    </div>
+    <div class="split-text">
+      <h2 class="section-title reveal">Recovery score + body healing.</h2>
+      <p class="section-sub reveal delay-1">A 0–100 recovery compass built from real behaviour — streaks, routines, journal patterns. Body system scores track physical recovery. Craving forecast warns you before the wave hits.</p>
+      <div style="margin-top:1rem;" class="reveal delay-2">
+        <div class="sys-row">
+          <span class="sys-ic">🫁</span>
+          <span class="sys-lbl">Lungs</span>
+          <div class="sys-bar"><div class="sys-fill" style="width:72%;background:var(--teal)"></div></div>
+          <span class="sys-pct">72%</span>
+        </div>
+        <div class="sys-row">
+          <span class="sys-ic">🧠</span>
+          <span class="sys-lbl">Brain</span>
+          <div class="sys-bar"><div class="sys-fill" style="width:58%;background:var(--orange)"></div></div>
+          <span class="sys-pct">58%</span>
+        </div>
+        <div class="sys-row">
+          <span class="sys-ic">❤️</span>
+          <span class="sys-lbl">Heart</span>
+          <div class="sys-bar"><div class="sys-fill" style="width:81%;background:var(--green)"></div></div>
+          <span class="sys-pct">81%</span>
+        </div>
+        <div class="sys-row">
+          <span class="sys-ic">🩸</span>
+          <span class="sys-lbl">Blood</span>
+          <div class="sys-bar"><div class="sys-fill" style="width:65%;background:var(--teal)"></div></div>
+          <span class="sys-pct">65%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 7 — HOURLY TIMELINE
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s7">
+  <div style="display:flex;flex-direction:column;align-items:center;max-width:900px;width:100%;">
+    <h2 class="section-title reveal">Hourly body-healing timeline.</h2>
+    <p class="section-sub reveal delay-1">Science-informed milestones for the first 72 hours per habit type — then daily and weekly beyond. See exactly what your body is doing right now.</p>
+    <div class="split" style="margin-top:1rem;">
+      <div class="tl reveal-left delay-2">
+        <div class="tl-item">
+          <div class="tl-time">20m</div>
+          <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-title">Heart rate normalises</div>
+            <div class="tl-desc">Blood pressure and pulse begin dropping toward baseline levels.</div>
+            <div class="tl-sys">Cardiovascular · Scientific</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">8h</div>
+          <div class="tl-dot-col"><div class="tl-dot" style="background:var(--teal)"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-title">Oxygen levels rise</div>
+            <div class="tl-desc">Carbon monoxide clears. Blood oxygen returns to normal range.</div>
+            <div class="tl-sys">Respiratory · Scientific</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">24h</div>
+          <div class="tl-dot-col"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-line"></div></div>
+          <div class="tl-body">
+            <div class="tl-title">Nicotine fully eliminated</div>
+            <div class="tl-desc">Withdrawal peaks — SOS protocol most valuable here.</div>
+            <div class="tl-sys">Neurological · Scientific</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">72h</div>
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
+          <div class="tl-body">
+            <div class="tl-title">Bronchial tubes relax</div>
+            <div class="tl-desc">Breathing eases. Energy begins returning. Milestone unlocked.</div>
+            <div class="tl-sys">Respiratory · Scientific</div>
+          </div>
+        </div>
+      </div>
+      <div class="phone reveal-right delay-3" style="width:260px;height:520px;">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-scroll">
+            <div class="m-greet" style="font-size:1.1rem">Recovery 🧬</div>
+            <div class="m-pill">Day 3 · No smoking</div>
+            <div style="padding:12px 14px;text-align:center;">
+              <div style="font-size:2.5rem;font-weight:800;color:var(--orange);line-height:1">72<span style="font-size:1rem;color:var(--text3)">h</span></div>
+              <div style="font-size:9px;color:var(--text3);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:4px">Since quit</div>
+            </div>
+            <div class="m-sec">Next milestone</div>
+            <div class="m-group">
+              <div style="font-size:11px;font-weight:700;margin-bottom:4px">Bronchial tubes relax</div>
+              <div style="font-size:9px;color:var(--text2);line-height:1.5">Breathing becomes noticeably easier. Cilia begin recovering.</div>
+              <div style="margin-top:8px;font-size:8px;color:var(--green);font-weight:600;text-transform:uppercase">~6 hours away</div>
+            </div>
+            <div class="m-sec">Body systems</div>
+            <div class="m-group">
+              <div class="sys-row"><span class="sys-ic">🫁</span><span class="sys-lbl">Lungs</span><div class="sys-bar"><div class="sys-fill" style="width:45%;background:var(--teal)"></div></div><span class="sys-pct">45%</span></div>
+              <div class="sys-row"><span class="sys-ic">🧠</span><span class="sys-lbl">Brain</span><div class="sys-bar"><div class="sys-fill" style="width:38%;background:var(--orange)"></div></div><span class="sys-pct">38%</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-nav">
+          <div class="pnav"><span class="pnav-ic">☀️</span>Today</div>
+          <div class="pnav on"><span class="pnav-ic">🧬</span>Recovery</div>
+          <div class="pnav sos"><span class="pnav-ic">🆘</span>SOS</div>
+          <div class="pnav"><span class="pnav-ic">📚</span>Learn</div>
+          <div class="pnav"><span class="pnav-ic">📓</span>Journal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 8 — SOS EMERGENCY
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s8">
+  <div style="display:flex;flex-direction:column;align-items:center;max-width:900px;width:100%;">
+    <h2 class="section-title reveal">Emergency SOS.</h2>
+    <p class="section-sub reveal delay-1">Built for the moment you can't think straight. Phased flow: Pause → Ground → Breathe → Decide. One-thumb, full-screen, no distractions.</p>
+    <div class="split" style="margin-top:1rem;">
+      <div class="reveal-left delay-2" style="text-align:center;">
+        <div class="breath-ring inhale" id="breath-ring">
+          <div>
+            <div class="breath-num" id="breath-count">4</div>
+            <div style="font-size:10px;color:var(--text2);font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.08em" id="breath-label">Inhale</div>
+          </div>
+        </div>
+        <div class="sos-phases">
+          <div class="sos-phase active"><div class="sos-phase-num">01</div><div class="sos-phase-label">Pause</div></div>
+          <div class="sos-phase"><div class="sos-phase-num">02</div><div class="sos-phase-label">Ground</div></div>
+          <div class="sos-phase"><div class="sos-phase-num">03</div><div class="sos-phase-label">Breathe</div></div>
+          <div class="sos-phase"><div class="sos-phase-num">04</div><div class="sos-phase-label">Decide</div></div>
+        </div>
+      </div>
+      <div class="phone reveal-right delay-3" style="width:260px;height:520px;">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" style="background:linear-gradient(180deg,var(--bg) 0%,rgba(255,59,48,.06) 100%);">
+          <div class="phone-scroll" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;text-align:center;min-height:100%;">
+            <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:12px">Phase 2 · Ground</div>
+            <div style="font-size:1.1rem;font-weight:800;margin-bottom:16px;line-height:1.3">5-4-3-2-1<br>Grounding</div>
+            <div style="text-align:left;width:100%;font-size:11px;color:var(--text2);line-height:2;">
+              <div>👁 <strong style="color:var(--text)">5</strong> things you can see</div>
+              <div>✋ <strong style="color:var(--text)">4</strong> things you can touch</div>
+              <div>👂 <strong style="color:var(--text)">3</strong> things you can hear</div>
+              <div>👃 <strong style="color:var(--text)">2</strong> things you can smell</div>
+              <div>👅 <strong style="color:var(--text)">1</strong> thing you can taste</div>
+            </div>
+            <div style="margin-top:20px;width:100%;padding:12px;background:rgba(78,205,196,.1);border:1px solid rgba(78,205,196,.25);border-radius:var(--r-sm);font-size:10px;color:var(--teal);font-weight:600;">This craving will pass in ~7 minutes</div>
+          </div>
+        </div>
+        <div class="phone-nav">
+          <div class="pnav"><span class="pnav-ic">☀️</span>Today</div>
+          <div class="pnav"><span class="pnav-ic">🧬</span>Recovery</div>
+          <div class="pnav sos on"><span class="pnav-ic">🆘</span>SOS</div>
+          <div class="pnav"><span class="pnav-ic">📚</span>Learn</div>
+          <div class="pnav"><span class="pnav-ic">📓</span>Journal</div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-grid reveal delay-4" style="margin-top:2rem;">
+      <div class="feat-card"><span class="feat-card-icon">🫁</span><div class="feat-card-title">Breathing timer</div><div class="feat-card-sub">Guided 4-7-8 and box breathing cycles</div></div>
+      <div class="feat-card"><span class="feat-card-icon">📞</span><div class="feat-card-title">Crisis contacts</div><div class="feat-card-sub">One tap to call your support person</div></div>
+      <div class="feat-card"><span class="feat-card-icon">👍</span><div class="feat-card-title">One-thumb design</div><div class="feat-card-sub">Full-screen flow under stress</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 9 — MEDICINES & ROUTINES
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s9">
+  <div class="split">
+    <div class="split-text">
+      <h2 class="section-title reveal">Medicines &amp; routines.</h2>
+      <p class="section-sub reveal delay-1">Configure fixed times or as-needed scheduling in Profile. Push notifications plus in-app toasts. Skincare AM/PM, hair AM/PM, weekly steps — set once, check off daily on Today.</p>
+      <div class="feature-grid reveal delay-2" style="grid-template-columns:1fr 1fr;margin-top:1rem;">
+        <div class="feat-card"><span class="feat-card-icon">💊</span><div class="feat-card-title">Medicines</div><div class="feat-card-sub">Fixed or as-needed · push reminders</div></div>
+        <div class="feat-card"><span class="feat-card-icon">✨</span><div class="feat-card-title">Skincare</div><div class="feat-card-sub">AM / PM checklists per category</div></div>
+        <div class="feat-card"><span class="feat-card-icon">💇</span><div class="feat-card-title">Hair care</div><div class="feat-card-sub">Daily + weekly deeper steps</div></div>
+        <div class="feat-card"><span class="feat-card-icon">🔔</span><div class="feat-card-title">Gentle nudges</div><div class="feat-card-sub">In-app reminders for missed times</div></div>
+      </div>
+    </div>
+    <div class="med-schedule reveal-scale delay-2">
+      <div class="med-time-block">
+        <div class="med-time-head"><span class="med-time-label">🌅 8:00 AM</span><span class="med-time-count">2 items</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">💊</span><span class="med-pill-name">Bupropion</span><span class="med-pill-dose">150mg</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">🐟</span><span class="med-pill-name">Omega-3</span><span class="med-pill-dose">1000mg</span></div>
+      </div>
+      <div class="med-time-block">
+        <div class="med-time-head"><span class="med-time-label">☀️ Morning routine</span><span class="med-time-count">Skincare AM</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">🧴</span><span class="med-pill-name">Gentle cleanser</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">💧</span><span class="med-pill-name">Vitamin C serum</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">☀️</span><span class="med-pill-name">SPF 50</span></div>
+      </div>
+      <div class="med-time-block">
+        <div class="med-time-head"><span class="med-time-label">🌙 10:00 PM</span><span class="med-time-count">1 item</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">💊</span><span class="med-pill-name">Melatonin</span><span class="med-pill-dose">3mg · as needed</span></div>
+      </div>
+      <div class="med-time-block">
+        <div class="med-time-head"><span class="med-time-label">📅 Weekly</span><span class="med-time-count">Hair care</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">🧖</span><span class="med-pill-name">Deep conditioning mask</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 10 — HABITS (12 BUILT-IN)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s10">
+  <div style="display:flex;flex-direction:column;align-items:center;max-width:900px;width:100%;">
+    <h2 class="section-title reveal">12 built-in habits + custom.</h2>
+    <p class="section-sub reveal delay-1">Smoking, vape, alcohol, porn, social media, masturbation, weed, gaming, sugar, caffeine, and more. Add your own name, icon, and quit date. Streaks and recovery score update as you log progress.</p>
+    <div class="hgrid reveal-scale delay-2">
+      <div class="hchip sel"><span class="hchip-ic">🚬</span><span class="hchip-nm">Smoking</span></div>
+      <div class="hchip"><span class="hchip-ic">💨</span><span class="hchip-nm">Vape</span></div>
+      <div class="hchip"><span class="hchip-ic">🍺</span><span class="hchip-nm">Alcohol</span></div>
+      <div class="hchip"><span class="hchip-ic">📱</span><span class="hchip-nm">Social media</span></div>
+      <div class="hchip"><span class="hchip-ic">🎮</span><span class="hchip-nm">Gaming</span></div>
+      <div class="hchip"><span class="hchip-ic">🌿</span><span class="hchip-nm">Weed</span></div>
+      <div class="hchip"><span class="hchip-ic">🍬</span><span class="hchip-nm">Sugar</span></div>
+      <div class="hchip"><span class="hchip-ic">☕</span><span class="hchip-nm">Caffeine</span></div>
+      <div class="hchip"><span class="hchip-ic">🔞</span><span class="hchip-nm">Porn</span></div>
+      <div class="hchip"><span class="hchip-ic">✋</span><span class="hchip-nm">Masturbation</span></div>
+      <div class="hchip"><span class="hchip-ic">🛒</span><span class="hchip-nm">Shopping</span></div>
+      <div class="hchip" style="border-style:dashed"><span class="hchip-ic">➕</span><span class="hchip-nm">Custom</span></div>
+    </div>
+    <div class="s2-cards reveal delay-3" style="margin-top:2rem;">
+      <div class="s2-card"><span class="s2-card-emoji">🔥</span><div class="s2-card-label">Streak tracking</div><div class="s2-card-sub">Daily logs build momentum — not guilt</div></div>
+      <div class="s2-card"><span class="s2-card-emoji">📅</span><div class="s2-card-label">Quit date anchored</div><div class="s2-card-sub">Timelines seed from your real start</div></div>
+      <div class="s2-card"><span class="s2-card-emoji">📊</span><div class="s2-card-label">Score integration</div><div class="s2-card-sub">Habit progress feeds recovery score</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 11 — JOURNAL & TRIGGER INTELLIGENCE
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s11">
+  <div class="split">
+    <div class="split-text">
+      <h2 class="section-title reveal">Journal &amp; trigger intelligence.</h2>
+      <p class="section-sub reveal delay-1">Log mood, triggers, and reflections. Journal data feeds craving forecasts and recovery insights — connecting what you feel to when you're most vulnerable.</p>
+      <div class="forecast reveal delay-2" style="max-width:100%;">
+        <div class="fc-head"><div class="fc-title">Pattern detected</div><div class="fc-risk high">High risk</div></div>
+        <div class="fc-bar"><div class="fc-fill" style="width:78%"></div></div>
+        <div class="fc-triggers">Evening entries mention "work stress" 4× this week. Craving forecast elevated 6–9 PM.</div>
+      </div>
+    </div>
+    <div class="jcard reveal-scale delay-2">
+      <div class="jdate">Wednesday · Day 14</div>
+      <div class="jmood"><span>😔</span><span class="on">😤</span><span>😌</span><span>😰</span><span>💪</span></div>
+      <div class="jtext">Tough afternoon after the team meeting. Felt the pull around 5 PM but used the breathing exercise instead. Proud I didn't reach for it.</div>
+      <div class="jtags">
+        <span class="jtag">work stress</span>
+        <span class="jtag">afternoon</span>
+        <span class="jtag">craving resisted</span>
+        <span class="jtag">meeting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 12 — LEARN LIBRARY
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s12">
+  <div style="display:flex;flex-direction:column;align-items:center;max-width:900px;width:100%;">
+    <h2 class="section-title reveal">Learn library.</h2>
+    <p class="section-sub reveal delay-1">Recovery knowledge at your fingertips — science-informed, human-centred. Protocols linked to your habits and milestones.</p>
+    <div class="learn-grid reveal delay-2">
+      <div class="learn-card reveal-left delay-1">
+        <div class="learn-cat">Withdrawal</div>
+        <div class="learn-title">What happens in 72 hours</div>
+        <div class="learn-desc">Hour-by-hour breakdown of nicotine elimination and what to expect.</div>
+      </div>
+      <div class="learn-card reveal delay-2">
+        <div class="learn-cat">Cravings</div>
+        <div class="learn-title">The 7-minute wave</div>
+        <div class="learn-desc">Why cravings peak and pass — and how to ride them out.</div>
+      </div>
+      <div class="learn-card reveal delay-3">
+        <div class="learn-cat">Sleep</div>
+        <div class="learn-title">Recovery and rest</div>
+        <div class="learn-desc">How quitting affects sleep cycles and what helps.</div>
+      </div>
+      <div class="learn-card reveal-right delay-4">
+        <div class="learn-cat">Triggers</div>
+        <div class="learn-title">Mapping your patterns</div>
+        <div class="learn-desc">Identify HALT states and environmental cues before they hit.</div>
+      </div>
+      <div class="learn-card reveal-left delay-3">
+        <div class="learn-cat">Body</div>
+        <div class="learn-title">Lung recovery timeline</div>
+        <div class="learn-desc">From 20 minutes to 10 years — what science shows.</div>
+      </div>
+      <div class="learn-card reveal-right delay-4">
+        <div class="learn-cat">Mind</div>
+        <div class="learn-title">Dopamine and habits</div>
+        <div class="learn-desc">Why your brain fights change — and how to rewire it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 13 — PRIVACY BY DESIGN
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s13">
+  <canvas id="privacy-canvas"></canvas>
+  <div style="display:flex;flex-direction:column;align-items:center;max-width:700px;width:100%;position:relative;z-index:2;">
+    <h2 class="section-title reveal" style="color:var(--green)">Privacy by design.</h2>
+    <p class="section-sub reveal delay-1">Zero servers. No accounts. No analytics. All data stays in localStorage on your device. Orange-on-obsidian UI — calm, not clinical.</p>
+    <div class="sec-specs">
+      <div class="spec-item reveal delay-1">
+        <span class="spec-check">📱</span>
+        <div>
+          <div class="spec-text">localStorage only</div>
+          <div class="spec-detail">Your recovery data never leaves your phone</div>
+        </div>
+      </div>
+      <div class="spec-item reveal delay-2">
+        <span class="spec-check">✈️</span>
+        <div>
+          <div class="spec-text">Offline-first PWA</div>
+          <div class="spec-detail">Service worker caches app shell — airplane mode works after first load</div>
+        </div>
+      </div>
+      <div class="spec-item reveal delay-3">
+        <span class="spec-check">🔕</span>
+        <div>
+          <div class="spec-text">No accounts · No tracking</div>
+          <div class="spec-detail">No sign-up, no analytics, no backdoors</div>
+        </div>
+      </div>
+      <div class="spec-item reveal delay-4">
+        <span class="spec-check">📦</span>
+        <div>
+          <div class="spec-text">Export / import JSON</div>
+          <div class="spec-detail">Full backup you own — restore on any device</div>
+        </div>
+      </div>
+      <div class="spec-item reveal delay-5">
+        <span class="spec-check">🏠</span>
+        <div>
+          <div class="spec-text">Add to Home Screen</div>
+          <div class="spec-detail">Safari → Share → full-screen native feel on iPhone</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 14 — TECH STACK
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s14">
+  <div style="display:flex;flex-direction:column;align-items:center;max-width:900px;width:100%;">
+    <h2 class="section-title reveal">Tech stack.</h2>
+    <p class="section-sub reveal delay-1">No framework. No build step. Ship from index.html. Vanilla JS PWA with a premium dark-glass design system.</p>
+    <div class="terminal reveal-scale delay-2">
+      <div><span class="path">DisciplineOS/</span></div>
+      <div class="dim">├── index.html          <span class="hl"># PWA entry</span></div>
+      <div class="dim">├── css/app.css         <span class="hl"># Design system</span></div>
+      <div class="dim">├── js/modules/         <span class="hl"># Feature modules</span></div>
+      <div class="dim">├── sw.js               <span class="hl"># Service worker</span></div>
+      <div class="dim">└── manifest.json       <span class="hl"># Installable PWA</span></div>
+      <div style="margin-top:12px"><span class="teal">Storage</span>  → localStorage</div>
+      <div><span class="teal">Offline</span>  → Service Worker cache</div>
+      <div><span class="teal">Design</span>   → <span class="hl">#FF6B35</span> accent · dark glass UI</div>
+      <div><span class="teal">Push</span>     → Web Push (iOS 16.4+ PWA)</div>
+      <div><span class="teal">Deploy</span>   → GitHub Pages · zero backend</div>
+    </div>
+    <div class="feature-grid reveal delay-3" style="margin-top:2rem;">
+      <div class="feat-card"><span class="feat-card-icon">📱</span><div class="feat-card-title">iPhone-native feel</div><div class="feat-card-sub">Safe area aware · touch-action: manipulation</div></div>
+      <div class="feat-card"><span class="feat-card-icon">⚡</span><div class="feat-card-title">Zero build step</div><div class="feat-card-sub">Open index.html and ship</div></div>
+      <div class="feat-card"><span class="feat-card-icon">🎨</span><div class="feat-card-title">Premium UI</div><div class="feat-card-sub">Obsidian + orange · SF Pro aesthetic</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 15 — ROADMAP
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s15">
+  <div style="display:flex;flex-direction:column;align-items:center;max-width:700px;width:100%;">
+    <h2 class="section-title reveal">Roadmap.</h2>
+    <p class="section-sub reveal delay-1">Recovery is not a streak. It's a system — and systems evolve.</p>
+    <div class="roadmap reveal delay-2">
+      <div class="road-item">
+        <div>
+          <div class="road-q">Shipped · v2</div>
+          <div class="road-title">Recovery score + hourly timelines</div>
+          <div class="road-desc">Body system scores, 72h milestones, craving forecast from journal data.</div>
+        </div>
+      </div>
+      <div class="road-item">
+        <div>
+          <div class="road-q">Shipped · v2</div>
+          <div class="road-title">Today command centre</div>
+          <div class="road-desc">Unified checklist for medicines, skincare, hair, and habit progress.</div>
+        </div>
+      </div>
+      <div class="road-item future">
+        <div>
+          <div class="road-q">Next</div>
+          <div class="road-title">Deeper trigger intelligence</div>
+          <div class="road-desc">ML-free pattern detection from journal history — smarter forecasts.</div>
+        </div>
+      </div>
+      <div class="road-item future">
+        <div>
+          <div class="road-q">Planned</div>
+          <div class="road-title">Prayer anchor integrations</div>
+          <div class="road-desc">Spiritual grounding tools woven into SOS flow.</div>
+        </div>
+      </div>
+      <div class="road-item future">
+        <div>
+          <div class="road-q">Planned</div>
+          <div class="road-title">Therapist-friendly PDF export</div>
+          <div class="road-desc">Share progress summaries without exposing raw journal entries.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 16 — CTA CLOSE
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="slide" id="s16">
+  <div id="s16-gradient"></div>
+  <div class="s16-content" style="display:flex;flex-direction:column;align-items:center;">
+    <blockquote class="cta-quote reveal">Recovery is not a streak. It's a system.</blockquote>
+    <p class="cta-big reveal delay-1">DisciplineOS</p>
+    <p class="cta-sub reveal delay-2">Your recovery OS · Built by Shamikh Ahmed</p>
+    <div class="cta-buttons">
+      <a class="btn-primary reveal-left delay-3" href="https://shamikhahmed.github.io/DisciplineOS/" target="_blank" rel="noopener">🧡 Open DisciplineOS</a>
+      <a class="btn-secondary reveal delay-3" href="presentation.html">📊 Presentation</a>
+      <a class="btn-secondary reveal-right delay-3" href="landing.html">🌐 Landing</a>
+      <a class="btn-secondary reveal-right delay-4" href="docs/GUIDE.md">📖 Guide</a>
+      <a class="btn-secondary reveal-right delay-4" href="https://github.com/shamikhahmed/DisciplineOS" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p class="reveal delay-5" style="font-size:.85rem;color:var(--text2);margin-bottom:1rem;">📱 Safari → Share → Add to Home Screen</p>
+    <p class="cta-copyright reveal delay-6">
+      © 2026 Shamikh Ahmed &nbsp;·&nbsp;
+      <a href="https://shamikhahmed.github.io/DisciplineOS/">shamikhahmed.github.io/DisciplineOS</a>
+    </p>
   </div>
 </section>
 
 <script>
-const slides=document.querySelectorAll('.slide'),nav=document.getElementById('nav-dots');
-slides.forEach((s,i)=>{const d=document.createElement('button');d.className='nav-dot'+(i?'':' active');d.onclick=()=>s.scrollIntoView({behavior:'smooth'});nav.appendChild(d);});
-const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('.reveal').forEach(r=>r.classList.add('visible'));}),{threshold:.2});
-slides.forEach(s=>obs.observe(s));
-let cur=0;window.addEventListener('scroll',()=>{slides.forEach((s,i)=>{const r=s.getBoundingClientRect();if(Math.abs(r.top)<innerHeight/2)cur=i;});nav.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));},{passive:true});
-document.querySelectorAll('#s1 .reveal').forEach(el=>setTimeout(()=>el.classList.add('visible'),80));
+// ─── Navigation Dots ──────────────────────────────────────────────────
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('nav-dots');
+let currentSlide = 0;
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  dot.title = `Section ${i + 1}`;
+  dot.setAttribute('aria-label', `Go to section ${i + 1}`);
+  dot.onclick = () => slides[i].scrollIntoView({ behavior: 'smooth' });
+  navDots.appendChild(dot);
+});
+
+function updateDots() {
+  const dots = navDots.querySelectorAll('.nav-dot');
+  let idx = 0;
+  slides.forEach((s, i) => {
+    const rect = s.getBoundingClientRect();
+    if (Math.abs(rect.top) < window.innerHeight / 2) idx = i;
+  });
+  currentSlide = idx;
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+window.addEventListener('scroll', updateDots, { passive: true });
+
+// ─── Keyboard navigation ──────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+    e.preventDefault();
+    if (currentSlide < slides.length - 1) slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
+  } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+    e.preventDefault();
+    if (currentSlide > 0) slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+// ─── Touch/swipe navigation ───────────────────────────────────────────
+let touchStartY = 0;
+document.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+  const dy = touchStartY - e.changedTouches[0].clientY;
+  if (Math.abs(dy) > 50) {
+    if (dy > 0 && currentSlide < slides.length - 1) slides[currentSlide + 1].scrollIntoView({ behavior: 'smooth' });
+    else if (dy < 0 && currentSlide > 0) slides[currentSlide - 1].scrollIntoView({ behavior: 'smooth' });
+  }
+}, { passive: true });
+
+// ─── Intersection Observer (reveal animations) ────────────────────────
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// Section visibility for special triggers
+let cyclerRunning = false;
+let breathRunning = false;
+let privacyRunning = false;
+
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      if (id === 's3') startCycler();
+      if (id === 's8') startBreath();
+      if (id === 's13') startPrivacyGrid();
+    } else {
+      if (entry.target.id === 's3') cyclerRunning = false;
+      if (entry.target.id === 's8') breathRunning = false;
+    }
+  });
+}, { threshold: 0.3 });
+
+slides.forEach(s => sectionObserver.observe(s));
+
+// ─── Section 1: Particle System ───────────────────────────────────────
+(function () {
+  const canvas = document.getElementById('canvas-particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const particles = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for (let i = 0; i < 65; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - .5) * .35,
+      vy: (Math.random() - .5) * .35,
+      r: Math.random() * 1.5 + .5,
+      alpha: Math.random() * .45 + .15,
+      hue: Math.random() > .5 ? '255,107,53' : '78,205,196'
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.hue},${p.alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ─── Section 3: Text cycler ───────────────────────────────────────────
+const cyclerTexts = [
+  'Cravings need one tap — not five apps.',
+  'Habit apps don\'t understand cravings.',
+  'Journals don\'t connect to triggers.',
+  'Body healing progress is invisible.',
+  'Your recovery data shouldn\'t live on a server.'
+];
+let cyclerIdx = 0;
+
+function startCycler() {
+  if (cyclerRunning) return;
+  cyclerRunning = true;
+  function cycle() {
+    if (!cyclerRunning) return;
+    const el = document.getElementById('s3-cycler');
+    if (!el) return;
+    el.classList.add('fade-out');
+    setTimeout(() => {
+      cyclerIdx = (cyclerIdx + 1) % cyclerTexts.length;
+      el.textContent = cyclerTexts[cyclerIdx];
+      el.setAttribute('data-text', cyclerTexts[cyclerIdx]);
+      el.classList.remove('fade-out');
+    }, 400);
+    setTimeout(cycle, 2800);
+  }
+  setTimeout(cycle, 2800);
+}
+
+// ─── Section 8: Breathing animation ───────────────────────────────────
+const breathPhases = [
+  { cls: 'inhale', label: 'Inhale', count: 4 },
+  { cls: 'hold', label: 'Hold', count: 7 },
+  { cls: 'exhale', label: 'Exhale', count: 8 }
+];
+let breathPhaseIdx = 0;
+let breathCount = 4;
+
+function startBreath() {
+  if (breathRunning) return;
+  breathRunning = true;
+  const ring = document.getElementById('breath-ring');
+  const countEl = document.getElementById('breath-count');
+  const labelEl = document.getElementById('breath-label');
+  if (!ring || !countEl || !labelEl) return;
+
+  function tick() {
+    if (!breathRunning) return;
+    const phase = breathPhases[breathPhaseIdx];
+    ring.className = 'breath-ring ' + phase.cls;
+    labelEl.textContent = phase.label;
+    countEl.textContent = breathCount;
+
+    breathCount--;
+    if (breathCount < 1) {
+      breathPhaseIdx = (breathPhaseIdx + 1) % breathPhases.length;
+      breathCount = breathPhases[breathPhaseIdx].count;
+    }
+    setTimeout(tick, 1000);
+  }
+  tick();
+}
+
+// ─── Section 13: Privacy grid canvas ──────────────────────────────────
+let privacyRaf = null;
+function startPrivacyGrid() {
+  const canvas = document.getElementById('privacy-canvas');
+  if (!canvas || privacyRunning) return;
+  privacyRunning = true;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const cols = Math.floor(canvas.width / 24);
+  const rows = Math.floor(canvas.height / 24);
+
+  function draw() {
+    if (!privacyRunning) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = 'rgba(6,214,160,0.06)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= cols; x++) {
+      ctx.beginPath();
+      ctx.moveTo(x * 24, 0);
+      ctx.lineTo(x * 24, canvas.height);
+      ctx.stroke();
+    }
+    for (let y = 0; y <= rows; y++) {
+      ctx.beginPath();
+      ctx.moveTo(0, y * 24);
+      ctx.lineTo(canvas.width, y * 24);
+      ctx.stroke();
+    }
+    privacyRaf = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ─── Section 1: auto-trigger reveals ─────────────────────────────────
+setTimeout(() => {
+  document.querySelectorAll('#s1 .reveal, #s1 .reveal-left, #s1 .reveal-right, #s1 .reveal-scale').forEach(el => el.classList.add('visible'));
+}, 100);
 </script>
 </body>
 </html>
