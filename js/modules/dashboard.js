@@ -1,78 +1,195 @@
 'use strict';
 const Dashboard = (() => {
+  function greeting() {
+    const h = new Date().getHours();
+    if (h < 12) return 'Good morning';
+    if (h < 17) return 'Good afternoon';
+    return 'Good evening';
+  }
+
+  function formatDate() {
+    return new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+  }
+
+  function toggleItem(kind, key) {
+    const log = State.getDailyLog();
+    const isDone = kind === 'medicine'
+      ? !!log.medicines[key]
+      : !!log.routines[key];
+    State.toggleDailyItem(kind === 'medicine' ? 'medicine' : 'routine', key, !isDone);
+    render();
+  }
+
+  function buildNudgeBanner(missed) {
+    if (!missed.length) return '';
+    const names = missed.slice(0, 2).map(m => m.label).join(', ');
+    const extra = missed.length > 2 ? ` +${missed.length - 2} more` : '';
+    return `<div class="nudge-banner card-press" onclick="Dashboard.render()">
+      <span class="nudge-icon">🔔</span>
+      <div>
+        <div class="nudge-title">Gentle reminder</div>
+        <div class="nudge-body">You missed ${names}${extra}. No pressure — tap to check off when ready.</div>
+      </div>
+    </div>`;
+  }
+
+  function buildSOS() {
+    return `<button class="sos-tap card-press" onclick="Navigation.go('emergency')">
+      <span class="sos-tap-icon">🆘</span>
+      <div class="sos-tap-text">
+        <div class="sos-tap-title">SOS — One Tap</div>
+        <div class="sos-tap-sub">Craving protocol · breathe · act · survive</div>
+      </div>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>`;
+  }
+
+  function buildChecklist() {
+    const items = Notifications.getDueItems();
+    const period = Notifications.getPeriod();
+    if (!items.length) {
+      return `<div class="today-empty">
+        <div class="t-caption">No routines set up yet.</div>
+        <button class="btn btn-ghost" style="margin-top:12px;font-size:0.82rem" onclick="Navigation.go('profile')">Set up in Profile →</button>
+      </div>`;
+    }
+
+    const groups = { medicine: [], skincare: [], hair: [] };
+    items.forEach(item => {
+      if (item.kind === 'medicine') groups.medicine.push(item);
+      else if (item.cat === 'skincare') groups.skincare.push(item);
+      else groups.hair.push(item);
+    });
+
+    const renderGroup = (title, icon, list) => {
+      if (!list.length) return '';
+      const done = list.filter(i => i.done).length;
+      const rows = list.map(item => {
+        const key = item.kind === 'medicine'
+          ? `${item.id}_${item.timeKey || 'asneeded'}`
+          : `${item.cat}_${item.slot}_${item.id}`;
+        const logKey = item.kind === 'medicine' ? key : key;
+        const checked = item.done;
+        return `<div class="check-row card-press${checked ? ' done' : ''}${item.overdue && !checked ? ' overdue' : ''}" onclick="Dashboard._toggle('${item.kind}','${logKey}')">
+          <div class="check-box${checked ? ' checked' : ''}">${checked ? '✓' : ''}</div>
+          <div class="check-info">
+            <div class="check-label">${item.label}</div>
+            <div class="check-sub">${item.sub}${item.overdue && !checked ? ' · missed' : ''}</div>
+          </div>
+        </div>`;
+      }).join('');
+      return `<div class="check-group">
+        <div class="check-group-head">
+          <span>${icon} ${title}</span>
+          <span class="check-progress">${done}/${list.length}</span>
+        </div>
+        ${rows}
+      </div>`;
+    };
+
+    return `
+      <div class="period-pill">${period === 'am' ? '☀️ Morning' : period === 'pm' ? '🌤️ Afternoon' : '🌙 Evening'} routine</div>
+      ${renderGroup('Medicines', '💊', groups.medicine)}
+      ${renderGroup('Skincare', '✨', groups.skincare)}
+      ${renderGroup('Hair', '💇', groups.hair)}
+    `;
+  }
+
+  function buildHabitProgress(habits) {
+    if (!habits.length) {
+      return `<div class="today-empty"><div class="t-caption">No habits tracked yet.</div></div>`;
+    }
+    const totalDays = habits.reduce((s, h) => s + RecoveryEngine.daysClean(h.quitTime), 0);
+    const score = RecoveryEngine.recoveryScore(habits);
+    const cards = habits.slice(0, 4).map(h => {
+      const cfg = State.habitConfig(h.type, h.isCustom, h);
+      const days = RecoveryEngine.daysClean(h.quitTime);
+      const hrs = RecoveryEngine.hoursClean(h.quitTime);
+      const prog = RecoveryEngine.progressToNext(h.isCustom ? 'custom' : h.type, h.quitTime);
+      const curr = RecoveryEngine.currentMilestone(h.isCustom ? 'custom' : h.type, h.quitTime);
+      return `<div class="habit-mini card-press" onclick="Navigation.go('recovery',{habitId:'${h.id}'})">
+        <span class="habit-mini-icon">${cfg.icon || '✨'}</span>
+        <div class="habit-mini-info">
+          <div class="habit-mini-name">${cfg.name || h.type}</div>
+          <div class="habit-mini-days">${days}d ${Math.floor(hrs % 24)}h · ${curr ? curr.title : 'Starting'}</div>
+          <div class="prog-bar" style="margin-top:6px"><div class="prog-fill" style="width:${prog}%;background:${cfg.color || 'var(--orange)'}"></div></div>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `
+      <div class="habit-summary">
+        <div class="habit-summary-stat">
+          <div class="habit-summary-val" style="color:var(--orange)">${score}</div>
+          <div class="t-label">Recovery</div>
+        </div>
+        <div class="habit-summary-stat">
+          <div class="habit-summary-val" style="color:var(--teal)">${totalDays}</div>
+          <div class="t-label">Total Days</div>
+        </div>
+        <div class="habit-summary-stat">
+          <div class="habit-summary-val" style="color:var(--green)">${habits.length}</div>
+          <div class="t-label">Habits</div>
+        </div>
+      </div>
+      <div class="habit-minis">${cards}</div>
+      ${habits.length > 4 ? `<button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:0.78rem" onclick="Navigation.go('recovery')">View all habits →</button>` : ''}
+    `;
+  }
+
+  function buildHourlyMilestone(habits) {
+    const primary = habits[0];
+    if (!primary) return '';
+    const type = primary.isCustom ? 'custom' : primary.type;
+    const curr = RecoveryEngine.currentMilestone(type, primary.quitTime);
+    const next = RecoveryEngine.nextMilestone(type, primary.quitTime);
+    if (!curr) return '';
+    const cfg = State.habitConfig(primary.type, primary.isCustom, primary);
+    return `<div class="milestone-card card-press" onclick="Navigation.go('recovery',{habitId:'${primary.id}'})">
+      <div class="milestone-icon">${curr.icon || cfg.icon || '✨'}</div>
+      <div>
+        <div class="t-label" style="margin-bottom:4px">Body healing now · ${cfg.name}</div>
+        <div class="milestone-title">${curr.title}</div>
+        <div class="milestone-body">${curr.body.substring(0, 120)}${curr.body.length > 120 ? '…' : ''}</div>
+        ${next ? `<div class="milestone-next">Next: ${next.title} in ${RecoveryEngine.timeUntilNext(type, primary.quitTime)}</div>` : ''}
+      </div>
+    </div>`;
+  }
+
   function render() {
     const screen = document.getElementById('screen-dashboard');
     if (!screen) return;
-    const habits = State.get('habits') || [];
-    const settings = State.get('settings') || {};
-    const currency = settings.currency || 'USD';
-    const score = RecoveryEngine.recoveryScore(habits);
-    const primaryHabit = habits[0] || null;
-
-    const scoreColor = score < 40 ? 'var(--orange)' : score < 70 ? 'var(--teal)' : 'var(--green)';
-    const scoreSize = 180;
-    const scoreR = (scoreSize - 14) / 2;
-    const scoreCirc = 2 * Math.PI * scoreR;
-    const scoreOffset = scoreCirc - (score / 100) * scoreCirc;
-
-    const phase = primaryHabit ? RecoveryEngine.recoveryPhase(RecoveryEngine.hoursClean(primaryHabit.quitTime)) : null;
-    const days = primaryHabit ? RecoveryEngine.daysClean(primaryHabit.quitTime) : 0;
-    const hours = primaryHabit ? Math.floor(RecoveryEngine.hoursClean(primaryHabit.quitTime) % 24) : 0;
-
-    const rings4 = buildRings4(habits, currency);
-    const feed = buildFeed(habits);
-    const habitCards = buildHabitCards(habits);
-    const bodySystems = buildBodySystems(primaryHabit);
-    const moneySaved = buildMoney(habits, currency);
+    const habits = State.getAllHabits();
+    const user = State.get('user') || {};
+    const missed = Notifications.getMissedNudges();
     const insight = RecoveryEngine.todayInsight();
-
-    const cravingLog = State.get('cravingLog') || [];
-    const triggerCard = buildTriggerCard(cravingLog, habits, primaryHabit);
+    const checklistDone = Notifications.getDueItems().filter(i => i.done).length;
+    const checklistTotal = Notifications.getDueItems().filter(i => !i.asNeeded).length;
 
     screen.innerHTML = `
-      <div class="score-ring-wrap">
-        <div class="ring-wrap" style="width:${scoreSize}px;height:${scoreSize}px">
-          <svg width="${scoreSize}" height="${scoreSize}" viewBox="0 0 ${scoreSize} ${scoreSize}" style="transform:rotate(-90deg)">
-            <circle class="ring-track" cx="${scoreSize/2}" cy="${scoreSize/2}" r="${scoreR}" stroke-width="14"/>
-            <circle class="ring-fill" cx="${scoreSize/2}" cy="${scoreSize/2}" r="${scoreR}" stroke="${scoreColor}" stroke-width="14"
-              stroke-dasharray="${scoreCirc}" stroke-dashoffset="${scoreCirc}"
-              data-offset="${scoreOffset}"/>
-          </svg>
-          <div class="ring-center">
-            <div class="score-val">${score}</div>
-            <div class="score-label">RECOVERY</div>
-          </div>
-        </div>
+      <div class="today-header">
+        <div class="t-caption">${formatDate()}</div>
+        <div class="t-display" style="font-size:1.6rem">${greeting()}${user.name ? ', ' + user.name.split(' ')[0] : ''}</div>
+        ${checklistTotal > 0 ? `<div class="today-progress-pill">${checklistDone}/${checklistTotal} today&apos;s tasks done</div>` : ''}
       </div>
 
-      <div class="status-card">
-        ${phase ? `<div class="phase-pill">${phase.name}</div>` : ''}
-        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
-          <span class="day-num">${days}</span><span class="day-unit">days</span>
-          <span class="day-unit" style="font-size:0.9rem;color:var(--text3)">${hours}h</span>
-        </div>
-        ${phase ? `<div class="t-caption">${phase.description}</div>` : '<div class="t-caption t-dim">Start tracking to see your recovery phase.</div>'}
+      ${buildNudgeBanner(missed)}
+      ${buildSOS()}
+
+      <div class="section-header"><span class="section-title">Today&apos;s Routines</span>
+        <button class="section-link" onclick="Navigation.go('profile')">Edit</button>
       </div>
+      <div class="today-checklist">${buildChecklist()}</div>
 
-      ${rings4}
-
-      ${feed}
-
-      ${habitCards}
-
-      ${bodySystems}
-
-      ${triggerCard}
-
-      <div class="craving-btn card-press" onclick="Navigation.go('emergency')">
-        <div style="font-size:1.1rem;font-weight:700;color:var(--teal)">I have a craving right now</div>
-        <div style="font-size:0.8rem;color:var(--text2);margin-top:4px">Tap to start the SOS protocol</div>
+      <div class="section-header"><span class="section-title">Habit Progress</span>
+        <button class="section-link" onclick="Navigation.go('recovery')">Details</button>
       </div>
+      <div style="padding:0 20px 8px">${buildHabitProgress(habits)}</div>
 
-      ${moneySaved}
+      ${buildHourlyMilestone(habits)}
 
       ${insight ? `
-        <div class="insight-card" style="margin:0 20px 20px">
+        <div class="insight-card" style="margin:12px 20px 20px">
           <div class="insight-emoji">${insight.emoji}</div>
           <div>
             <div class="insight-text">${insight.text}</div>
@@ -82,188 +199,12 @@ const Dashboard = (() => {
       ` : ''}
       <div style="height:16px"></div>
     `;
-
-    setTimeout(() => Charts.animateRings(), 60);
   }
 
-  function buildRings4(habits, currency) {
-    if (!habits.length) return '';
-    const primary = habits[0];
-    const h = RecoveryEngine.hoursClean(primary.quitTime);
-    const physical = BodyEngine.overallBodyScore(primary.type, h);
-    const mental = DopamineEngine.progressInStage(primary.type, h);
-    const timeScore = Math.min(100, Math.round((h / (8760)) * 100));
-    let financial = 0;
-    const fin = FinanceEngine.calculate(primary, currency);
-    if (fin.hasCost && fin.annualProjection > 0) {
-      financial = Math.min(100, Math.round((fin.savedTotal / (fin.annualProjection)) * 100 * 3));
-    }
-
-    const items = [
-      { label: 'Physical', val: physical, color: 'var(--green)' },
-      { label: 'Mental', val: mental, color: 'var(--purple)' },
-      { label: 'Financial', val: financial, color: 'var(--gold)' },
-      { label: 'Time', val: timeScore, color: 'var(--teal)' },
-    ];
-
-    const rSize = 52;
-    const rR = (rSize - 6) / 2;
-    const rCirc = 2 * Math.PI * rR;
-
-    return `<div class="rings-row">
-      ${items.map(item => {
-        const offset = rCirc - (item.val / 100) * rCirc;
-        return `<div class="ring-cell">
-          <div class="ring-wrap" style="width:${rSize}px;height:${rSize}px">
-            <svg width="${rSize}" height="${rSize}" viewBox="0 0 ${rSize} ${rSize}" style="transform:rotate(-90deg)">
-              <circle class="ring-track" cx="${rSize/2}" cy="${rSize/2}" r="${rR}" stroke-width="5"/>
-              <circle class="ring-fill" cx="${rSize/2}" cy="${rSize/2}" r="${rR}" stroke="${item.color}" stroke-width="5"
-                stroke-dasharray="${rCirc}" stroke-dashoffset="${rCirc}" data-offset="${offset}"/>
-            </svg>
-            <div class="ring-center"><span class="ring-cell-val" style="color:${item.color}">${item.val}%</span></div>
-          </div>
-          <span class="ring-cell-name">${item.label}</span>
-        </div>`;
-      }).join('')}
-    </div>`;
+  function _toggle(kind, key) {
+    toggleItem(kind, key);
   }
 
-  function buildFeed(habits) {
-    if (!habits.length) return '';
-    const cards = habits.map(h => {
-      const curr = RecoveryEngine.currentMilestone(h.type, h.quitTime);
-      const next = RecoveryEngine.nextMilestone(h.type, h.quitTime);
-      const hCfg = (window.HABITS_CONFIG || {})[h.type] || {};
-      if (!curr) return '';
-      return `<div class="feed-card">
-        <div class="feed-icon">${curr.icon || hCfg.icon || '✨'}</div>
-        <div class="feed-milestone">${curr.title}</div>
-        <div class="feed-body">${curr.body.substring(0, 90)}…</div>
-        ${next ? `<div class="feed-level ${curr.level || ''}" style="margin-top:auto;font-size:0.65rem;font-weight:600;color:${curr.level==='scientific'?'var(--green)':'var(--gold)'};text-transform:uppercase;letter-spacing:0.06em">Next: ${next.title} in ${RecoveryEngine.timeUntilNext(h.type, h.quitTime)}</div>` : `<div style="font-size:0.65rem;color:var(--green);font-weight:700;margin-top:auto">COMPLETE ✓</div>`}
-      </div>`;
-    }).join('');
-
-    return `<div>
-      <div class="section-header"><span class="section-title">Live Recovery Feed</span></div>
-      <div class="feed-scroll">${cards}</div>
-    </div>`;
-  }
-
-  function buildHabitCards(habits) {
-    if (!habits.length) {
-      return `<div style="padding:0 20px;text-align:center;color:var(--text3);font-size:0.85rem;margin:20px 0">No habits tracked yet.</div>`;
-    }
-    const rSize = 44;
-    const rR = (rSize - 5) / 2;
-    const rCirc = 2 * Math.PI * rR;
-    const cards = habits.map(h => {
-      const hCfg = (window.HABITS_CONFIG || {})[h.type] || {};
-      const days = RecoveryEngine.daysClean(h.quitTime);
-      const hrs = RecoveryEngine.hoursClean(h.quitTime);
-      const next = RecoveryEngine.nextMilestone(h.type, h.quitTime);
-      const prog = RecoveryEngine.progressToNext(h.type, h.quitTime);
-      const score = BodyEngine.overallBodyScore(h.type, hrs);
-      const offset = rCirc - (score / 100) * rCirc;
-      const timeUntil = next ? `Next: ${next.title} in ${RecoveryEngine.timeUntilNext(h.type, h.quitTime)}` : 'All milestones reached';
-      return `<div class="habit-card card-press" onclick="Navigation.go('recovery',{habitId:'${h.id}'})">
-        <div style="position:relative;width:${rSize}px;height:${rSize}px;flex-shrink:0">
-          <svg width="${rSize}" height="${rSize}" viewBox="0 0 ${rSize} ${rSize}" style="transform:rotate(-90deg)">
-            <circle class="ring-track" cx="${rSize/2}" cy="${rSize/2}" r="${rR}" stroke-width="4.5"/>
-            <circle class="ring-fill" cx="${rSize/2}" cy="${rSize/2}" r="${rR}" stroke="${hCfg.color||'var(--orange)'}" stroke-width="4.5"
-              stroke-dasharray="${rCirc}" stroke-dashoffset="${rCirc}" data-offset="${offset}"/>
-          </svg>
-          <div class="ring-center"><span style="font-size:0.6rem;font-weight:700;color:${hCfg.color||'var(--orange)'}">${score}%</span></div>
-        </div>
-        <div class="habit-info">
-          <div class="habit-name">${hCfg.icon||''} ${hCfg.name||h.type}</div>
-          <div class="habit-days">${days}d ${Math.floor(hrs%24)}h clean</div>
-          <div class="habit-next">${timeUntil}</div>
-          <div class="prog-bar"><div class="prog-fill" style="width:${prog}%;background:${hCfg.color||'var(--orange)'}"></div></div>
-        </div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>`;
-    }).join('');
-    return `<div>
-      <div class="section-header"><span class="section-title">Your Habits</span></div>
-      <div class="habit-cards">${cards}</div>
-    </div>`;
-  }
-
-  function buildBodySystems(habit) {
-    if (!habit) return '';
-    const hrs = RecoveryEngine.hoursClean(habit.quitTime);
-    const systems = BodyEngine.getBodySystems(habit.type, hrs);
-    if (!systems.length) return '';
-    const rows = systems.map(s => {
-      const barColor = s.pct > 70 ? 'var(--green)' : s.pct > 40 ? 'var(--teal)' : 'var(--orange)';
-      return `<div class="system-row">
-        <span class="system-icon">${s.icon}</span>
-        <span class="system-label">${s.label}</span>
-        <div class="system-bar"><div class="system-fill" style="width:0%;background:${barColor}" data-width="${s.pct}%"></div></div>
-        <span class="system-pct" style="color:${barColor}">${s.pct}%</span>
-      </div>`;
-    }).join('');
-    return `<div>
-      <div class="section-header"><span class="section-title">Body Recovery</span></div>
-      <div class="systems-list">${rows}</div>
-    </div>`;
-  }
-
-  function buildTriggerCard(cravingLog, habits, primaryHabit) {
-    if (!window.TriggerEngine) return '';
-    const forecast = TriggerEngine.forecastCard(cravingLog, habits, primaryHabit);
-    const { risk, withdrawalWarning, analysis } = forecast;
-    if (!analysis && !withdrawalWarning) return '';
-
-    const parts = [];
-
-    if (withdrawalWarning) {
-      parts.push(`<div style="padding:12px 14px;background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);border-radius:var(--r-sm);margin-bottom:8px">
-        <div style="font-size:0.7rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Withdrawal Alert</div>
-        <div style="font-size:0.82rem;color:var(--text2);line-height:1.5">${withdrawalWarning}</div>
-      </div>`);
-    }
-
-    if (risk.level === 'high' || risk.level === 'medium') {
-      parts.push(`<div style="padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid ${risk.color}40;border-radius:var(--r-sm);margin-bottom:8px">
-        <div style="font-size:0.7rem;font-weight:700;color:${risk.color};text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">${risk.label}</div>
-        <div style="font-size:0.82rem;color:var(--text2)">Based on your patterns, now is a higher-risk time. Stay alert.</div>
-      </div>`);
-    }
-
-    if (analysis && analysis.insights && analysis.insights.length) {
-      analysis.insights.forEach(ins => {
-        parts.push(`<div style="display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
-          <span style="font-size:1rem;flex-shrink:0">${ins.icon}</span>
-          <span style="font-size:0.82rem;color:var(--text2);line-height:1.4">${ins.message}</span>
-        </div>`);
-      });
-    }
-
-    if (!parts.length) return '';
-
-    return `<div>
-      <div class="section-header"><span class="section-title">Trigger Intelligence</span></div>
-      <div style="padding:0 20px 4px">${parts.join('')}</div>
-    </div>`;
-  }
-
-  function buildMoney(habits, currency) {
-    const habitsWithCost = habits.filter(h => {
-      const cfg = window.HABITS_CONFIG && window.HABITS_CONFIG[h.type];
-      return cfg && cfg.computeCostPerDay(h.config || {}) > 0;
-    });
-    if (!habitsWithCost.length) return '';
-    const total = FinanceEngine.totalSaved(habitsWithCost, currency);
-    if (total < 0.01) return '';
-    const sym = FinanceEngine.CURRENCY_SYMBOLS[currency] || '$';
-    return `<div class="money-card" style="margin:0 20px 16px">
-      <div class="t-label" style="margin-bottom:6px">Money Saved</div>
-      <div class="money-amount">${sym}${total.toFixed(2)}</div>
-      <div class="t-caption" style="margin-top:4px">Since you quit</div>
-    </div>`;
-  }
-
-  return { render };
+  return { render, _toggle };
 })();
 window.Dashboard = Dashboard;

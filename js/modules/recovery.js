@@ -2,10 +2,14 @@
 const Recovery = (() => {
   let currentHabitId = null;
 
+  function habitType(habit) {
+    return habit.isCustom ? 'custom' : habit.type;
+  }
+
   function render(habitId) {
     const screen = document.getElementById('screen-recovery');
     if (!screen) return;
-    const habits = State.get('habits') || [];
+    const habits = State.getAllHabits();
 
     if (!habits.length) {
       screen.innerHTML = `<div style="padding:40px 20px;text-align:center;color:var(--text3)">No habits tracked yet.<br><br>
@@ -17,36 +21,65 @@ const Recovery = (() => {
     const habit = habits.find(h => h.id === currentHabitId) || habits[0];
     if (!habit) return;
 
-    const hCfg = (window.HABITS_CONFIG || {})[habit.type] || {};
+    const hCfg = State.habitConfig(habit.type, habit.isCustom, habit);
+    const type = habitType(habit);
     const hrs = RecoveryEngine.hoursClean(habit.quitTime);
     const days = RecoveryEngine.daysClean(habit.quitTime);
     const phase = RecoveryEngine.recoveryPhase(hrs);
-    const dopStage = DopamineEngine.getStage(habit.type, hrs);
-    const dopProg = DopamineEngine.progressInStage(habit.type, hrs);
-    const timeline = (window.RECOVERY_TIMELINES || {})[habit.type] || [];
-    const systems = BodyEngine.getBodySystems(habit.type, hrs);
+    const dopStage = DopamineEngine.getStage(type, hrs);
+    const dopProg = DopamineEngine.progressInStage(type, hrs);
+    const timeline = (window.RECOVERY_TIMELINES || {})[type] || [];
+    const systems = BodyEngine.getBodySystems(type, hrs);
     const relapses = (habit.relapses || []).length;
     const integrityPct = relapses === 0 ? 100 : Math.max(0, Math.round(100 - (relapses / (days + 1)) * 100 * 7));
-    const currentM = RecoveryEngine.currentMilestone(habit.type, habit.quitTime);
+    const currentM = RecoveryEngine.currentMilestone(type, habit.quitTime);
+    const cravingLog = State.get('cravingLog') || [];
+    let triggerHtml = '';
+    if (window.TriggerEngine) {
+      const forecast = TriggerEngine.forecastCard(cravingLog, habits, habit);
+      const { risk, withdrawalWarning, analysis } = forecast;
+      const parts = [];
+      if (withdrawalWarning) {
+        parts.push(`<div style="padding:12px 14px;background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);border-radius:var(--r-sm);margin-bottom:8px">
+          <div style="font-size:0.7rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Withdrawal Alert</div>
+          <div style="font-size:0.82rem;color:var(--text2);line-height:1.5">${withdrawalWarning}</div></div>`);
+      }
+      if (risk.level === 'high' || risk.level === 'medium') {
+        parts.push(`<div style="padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid ${risk.color}40;border-radius:var(--r-sm);margin-bottom:8px">
+          <div style="font-size:0.7rem;font-weight:700;color:${risk.color};text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">${risk.label}</div>
+          <div style="font-size:0.82rem;color:var(--text2)">Higher-risk window based on your patterns.</div></div>`);
+      }
+      if (analysis && analysis.insights) {
+        analysis.insights.forEach(ins => {
+          parts.push(`<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
+            <span>${ins.icon}</span><span style="font-size:0.82rem;color:var(--text2);line-height:1.4">${ins.message}</span></div>`);
+        });
+      }
+      if (parts.length) {
+        triggerHtml = `<div style="padding:0 20px;margin-bottom:12px"><div class="section-title" style="margin-bottom:8px">Trigger forecast</div>${parts.join('')}</div>`;
+      }
+    }
 
     const selectorHtml = habits.length > 1 ? `
       <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 20px 16px">
         ${habits.map(h => {
-          const hc = (window.HABITS_CONFIG||{})[h.type]||{};
+          const hc = State.habitConfig(h.type, h.isCustom, h);
           return `<button onclick="Recovery.render('${h.id}')" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid ${h.id===currentHabitId?'var(--orange)':'var(--border)'};background:${h.id===currentHabitId?'rgba(255,107,53,0.1)':'transparent'};color:${h.id===currentHabitId?'var(--orange)':'var(--text3)'};font-size:0.78rem;font-weight:600;cursor:pointer">${hc.icon||''} ${hc.name||h.type}</button>`;
         }).join('')}
       </div>` : '';
 
+    const hourlyCount = timeline.filter(m => m.hours <= 72).length;
     const timelineHtml = timeline.map(m => {
       const reached = hrs >= m.hours;
       const isCurrent = currentM && currentM.hours === m.hours;
-      return `<div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start">
+      const isHourly = m.hours <= 72;
+      return `<div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start${isHourly ? ';opacity:' + (reached ? '1' : '0.85') : ''}">
         <div style="width:32px;height:32px;border-radius:50%;border:2px solid ${reached?'var(--green)':isCurrent?'var(--orange)':'var(--border)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;background:${reached?'rgba(6,214,160,0.1)':'transparent'}">
           <span style="font-size:1rem">${reached?'✓':m.icon||'○'}</span>
         </div>
         <div style="flex:1;min-width:0">
           <div style="font-size:0.88rem;font-weight:700;color:${reached?'var(--text)':isCurrent?'var(--orange)':'var(--text3)'}">${m.title}</div>
-          <div style="font-size:0.75rem;color:var(--text3);margin-top:2px">${RecoveryEngine.formatDuration(m.hours)} ${reached?'— reached':''}</div>
+          <div style="font-size:0.75rem;color:var(--text3);margin-top:2px">${RecoveryEngine.formatDuration(m.hours)} ${reached?'— reached':''}${isHourly ? ' · hourly' : ''}</div>
           ${reached||isCurrent?`<div style="font-size:0.78rem;color:var(--text2);margin-top:6px;line-height:1.5">${m.body}</div>`:''}
           <div style="font-size:0.65rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-top:4px;color:${m.level==='scientific'?'var(--green)':'var(--gold)'}">${m.level}</div>
         </div>
@@ -75,6 +108,7 @@ const Recovery = (() => {
       </div>
 
       ${selectorHtml}
+      ${triggerHtml}
 
       <div style="padding:0 20px;margin-bottom:12px">
         <div class="card" style="background:linear-gradient(135deg,${phase.color}18,transparent)">
@@ -101,7 +135,8 @@ const Recovery = (() => {
         </div>
       </div>
 
-      <div class="section-header"><span class="section-title">Recovery Timeline</span></div>
+      <div class="section-header"><span class="section-title">Body Healing Timeline</span></div>
+      <div style="padding:0 20px 8px"><div class="t-caption">${hourlyCount} hourly milestones in first 72h, then daily & weekly</div></div>
       <div style="padding:0 20px">${timelineHtml}</div>
 
       <div class="section-header"><span class="section-title">Body Systems</span></div>
@@ -121,15 +156,15 @@ const Recovery = (() => {
       </div>
 
       <div style="padding:20px">
-        <button class="btn btn-danger" onclick="Recovery._confirmRelapse('${habit.id}')">Log Relapse</button>
+        <button class="btn btn-danger" onclick="Recovery._confirmRelapse('${habit.id}',${!!habit.isCustom})">Log Relapse</button>
       </div>
       <div style="height:8px"></div>
     `;
   }
 
-  function _confirmRelapse(id) {
+  function _confirmRelapse(id, isCustom) {
     if (confirm('Log a relapse? This will reset your clean time for this habit.')) {
-      State.logRelapse(id);
+      State.logRelapse(id, isCustom);
       if (window.App) App.showToast('Relapse logged. Your streak resets now. Keep going.', 'info');
       render(id);
     }

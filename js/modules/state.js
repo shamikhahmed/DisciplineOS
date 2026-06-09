@@ -4,8 +4,15 @@ const State = (() => {
   const DEFAULT = {
     user: { name: '', currency: 'USD', goals: [], triggers: [], spiritualMode: false, hairTreatment: 'none' },
     habits: [],
+    customHabits: [],
+    medicines: [],
+    routines: {
+      skincare: { am: [], pm: [], weekly: [] },
+      hair: { am: [], pm: [], weekly: [] },
+    },
+    dailyLog: {},
     cravingLog: [],
-    settings: { currency: 'USD' },
+    settings: { currency: 'USD', notificationsEnabled: false },
     onboardingComplete: false,
   };
 
@@ -14,7 +21,17 @@ const State = (() => {
   function load() {
     try {
       const raw = localStorage.getItem(KEY);
-      data = raw ? { ...JSON.parse(JSON.stringify(DEFAULT)), ...JSON.parse(raw) } : JSON.parse(JSON.stringify(DEFAULT));
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        data = { ...JSON.parse(JSON.stringify(DEFAULT)), ...parsed };
+        data.routines = { ...JSON.parse(JSON.stringify(DEFAULT.routines)), ...(parsed.routines || {}) };
+        data.settings = { ...DEFAULT.settings, ...(parsed.settings || {}) };
+        data.customHabits = parsed.customHabits || [];
+        data.medicines = parsed.medicines || [];
+        data.dailyLog = parsed.dailyLog || {};
+      } else {
+        data = JSON.parse(JSON.stringify(DEFAULT));
+      }
     } catch (e) {
       data = JSON.parse(JSON.stringify(DEFAULT));
     }
@@ -46,6 +63,45 @@ const State = (() => {
     save();
   }
 
+  function todayKey() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function getDailyLog(date) {
+    if (!data) load();
+    const key = date || todayKey();
+    if (!data.dailyLog[key]) {
+      data.dailyLog[key] = { medicines: {}, routines: {}, habitChecks: {} };
+    }
+    return data.dailyLog[key];
+  }
+
+  function toggleDailyItem(type, key, val) {
+    if (!data) load();
+    const log = getDailyLog();
+    if (type === 'medicine') log.medicines[key] = val !== false;
+    else if (type === 'routine') log.routines[key] = val !== false;
+    save();
+  }
+
+  function getAllHabits() {
+    const builtIn = (get('habits') || []).map(h => ({ ...h, isCustom: false }));
+    const custom = (get('customHabits') || []).map(h => ({
+      ...h,
+      type: h.type || 'custom',
+      isCustom: true,
+      config: h.config || {},
+    }));
+    return [...builtIn, ...custom];
+  }
+
+  function habitConfig(type, isCustom, customData) {
+    if (isCustom && customData) {
+      return { name: customData.name, icon: customData.icon || '✨', color: customData.color || '#FF6B35' };
+    }
+    return (window.HABITS_CONFIG || {})[type] || { name: type, icon: '✨', color: '#FF6B35' };
+  }
+
   function addHabit(habitData) {
     if (!data) load();
     const habit = {
@@ -61,18 +117,106 @@ const State = (() => {
     return habit;
   }
 
-  function updateHabit(id, changes) {
+  function addCustomHabit(habitData) {
     if (!data) load();
-    const idx = data.habits.findIndex(h => h.id === id);
+    const habit = {
+      id: 'c' + Date.now().toString(),
+      name: habitData.name,
+      icon: habitData.icon || '✨',
+      color: habitData.color || '#FF6B35',
+      type: 'custom',
+      quitTime: habitData.quitTime || new Date().toISOString(),
+      relapses: [],
+      createdAt: new Date().toISOString(),
+    };
+    data.customHabits.push(habit);
+    save();
+    return habit;
+  }
+
+  function updateHabit(id, changes, isCustom) {
+    if (!data) load();
+    const list = isCustom ? data.customHabits : data.habits;
+    const idx = list.findIndex(h => h.id === id);
     if (idx !== -1) {
-      data.habits[idx] = { ...data.habits[idx], ...changes };
+      list[idx] = { ...list[idx], ...changes };
       save();
     }
   }
 
-  function logRelapse(habitId) {
+  function removeCustomHabit(id) {
     if (!data) load();
-    const h = data.habits.find(x => x.id === habitId);
+    data.customHabits = data.customHabits.filter(h => h.id !== id);
+    save();
+  }
+
+  function addMedicine(med) {
+    if (!data) load();
+    const item = {
+      id: 'm' + Date.now().toString(),
+      name: med.name,
+      dose: med.dose || '',
+      schedule: med.schedule || 'fixed',
+      times: med.times || ['08:00'],
+      notes: med.notes || '',
+      enabled: true,
+    };
+    data.medicines.push(item);
+    save();
+    return item;
+  }
+
+  function updateMedicine(id, changes) {
+    if (!data) load();
+    const idx = data.medicines.findIndex(m => m.id === id);
+    if (idx !== -1) {
+      data.medicines[idx] = { ...data.medicines[idx], ...changes };
+      save();
+    }
+  }
+
+  function removeMedicine(id) {
+    if (!data) load();
+    data.medicines = data.medicines.filter(m => m.id !== id);
+    save();
+  }
+
+  function addRoutineStep(cat, slot, label) {
+    if (!data) load();
+    if (!data.routines[cat]) data.routines[cat] = { am: [], pm: [], weekly: [] };
+    const step = {
+      id: 'r' + Date.now().toString(),
+      label,
+      enabled: true,
+      weekday: slot === 'weekly' ? ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][new Date().getDay()] : undefined,
+    };
+    data.routines[cat][slot].push(step);
+    save();
+    return step;
+  }
+
+  function updateRoutineStep(cat, slot, id, changes) {
+    if (!data) load();
+    const list = data.routines[cat]?.[slot];
+    if (!list) return;
+    const idx = list.findIndex(s => s.id === id);
+    if (idx !== -1) {
+      list[idx] = { ...list[idx], ...changes };
+      save();
+    }
+  }
+
+  function removeRoutineStep(cat, slot, id) {
+    if (!data) load();
+    if (!data.routines[cat]) return;
+    data.routines[cat][slot] = data.routines[cat][slot].filter(s => s.id !== id);
+    save();
+  }
+
+  function logRelapse(habitId, isCustom) {
+    if (!data) load();
+    const list = isCustom ? data.customHabits : data.habits;
+    const h = list.find(x => x.id === habitId);
     if (h) {
       h.relapses = h.relapses || [];
       h.relapses.push({ at: new Date().toISOString() });
@@ -89,12 +233,21 @@ const State = (() => {
   }
 
   function exportJSON() {
-    return JSON.stringify(data, null, 2);
+    let journal = [];
+    try { journal = JSON.parse(localStorage.getItem('dos_journal_v1') || '[]'); } catch (e) {}
+    return JSON.stringify({ ...data, journal }, null, 2);
   }
 
   function importJSON(str) {
     try {
-      data = JSON.parse(str);
+      const parsed = JSON.parse(str);
+      const journal = parsed.journal;
+      const copy = { ...parsed };
+      delete copy.journal;
+      data = { ...JSON.parse(JSON.stringify(DEFAULT)), ...copy };
+      if (Array.isArray(journal)) {
+        try { localStorage.setItem('dos_journal_v1', JSON.stringify(journal)); } catch (e) {}
+      }
       save();
       return true;
     } catch (e) {
@@ -103,18 +256,24 @@ const State = (() => {
   }
 
   function longestStreak() {
-    if (!data || !data.habits.length) return 0;
-    return Math.max(...data.habits.map(h => {
+    const all = getAllHabits();
+    if (!all.length) return 0;
+    return Math.max(...all.map(h => {
       const relapses = (h.relapses || []).map(r => new Date(r.at).getTime()).sort();
       if (!relapses.length) return RecoveryEngine.daysClean(h.quitTime);
       let maxGap = relapses[0] - new Date(h.createdAt).getTime();
-      for (let i = 1; i < relapses.length; i++) maxGap = Math.max(maxGap, relapses[i] - relapses[i-1]);
-      maxGap = Math.max(maxGap, Date.now() - relapses[relapses.length-1]);
+      for (let i = 1; i < relapses.length; i++) maxGap = Math.max(maxGap, relapses[i] - relapses[i - 1]);
+      maxGap = Math.max(maxGap, Date.now() - relapses[relapses.length - 1]);
       return Math.floor(maxGap / 86400000);
     }));
   }
 
   load();
-  return { get, set, update, save, reset, addHabit, updateHabit, logRelapse, logCraving, exportJSON, importJSON, longestStreak };
+  return {
+    get, set, update, save, reset, todayKey, getDailyLog, toggleDailyItem, getAllHabits, habitConfig,
+    addHabit, addCustomHabit, updateHabit, removeCustomHabit, logRelapse, logCraving,
+    addMedicine, updateMedicine, removeMedicine, addRoutineStep, updateRoutineStep, removeRoutineStep,
+    exportJSON, importJSON, longestStreak,
+  };
 })();
 window.State = State;

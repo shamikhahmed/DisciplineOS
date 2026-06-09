@@ -25,6 +25,7 @@ const App = (() => {
     document.getElementById('nav').style.display = '';
     document.getElementById('screen-onboarding').classList.remove('active');
     Navigation.init();
+    if (window.Notifications) Notifications.init();
   }
 
   function showToast(msg, type) {

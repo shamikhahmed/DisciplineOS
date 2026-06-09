@@ -121,6 +121,10 @@ const Onboarding = (() => {
           ${['USD','GBP','AED','PKR','EUR'].map(c => `<option value="${c}" ${currency===c?'selected':''}>${c}</option>`).join('')}
         </select>
       </div>
+      <div class="ob-field">
+        <div class="ob-label">Why you're quitting <span style="color:var(--text3)">(powers SOS screen)</span></div>
+        <textarea class="ob-input" id="ob-goals" rows="3" placeholder="One reason per line — e.g. My family, My health, Save money" style="resize:vertical;min-height:72px"></textarea>
+      </div>
       <div class="ob-footer">
         <button class="btn btn-primary" onclick="Onboarding._finish()">Start Recovery →</button>
         <button class="btn btn-ghost" style="text-align:center;padding:10px" onclick="Onboarding._back()">← Back</button>
@@ -176,9 +180,12 @@ const Onboarding = (() => {
   function _finish() {
     const name = document.getElementById('ob-name').value.trim();
     const currency = document.getElementById('ob-currency').value;
+    const goalsRaw = (document.getElementById('ob-goals')?.value || '').trim();
+    const goals = goalsRaw.split('\n').map(g => g.trim()).filter(Boolean).slice(0, 5);
     State.update(d => {
       d.user.name = name;
       d.user.currency = currency;
+      d.user.goals = goals.length ? goals : d.user.goals;
       d.settings.currency = currency;
     });
     selectedHabits.forEach(key => {

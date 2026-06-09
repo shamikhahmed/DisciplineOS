@@ -65,6 +65,25 @@ const BodyEngine = (() => {
       { system: 'gut', icon: '🦠', label: 'Gut Health', curve: [[0,30],[336,50],[720,72],[2160,95]] },
       { system: 'hair', icon: '💇', label: 'Hair & Scalp', curve: [[0,35],[168,40],[720,52],[2160,65],[4320,78],[8760,90]] },
     ],
+    alcohol: [
+      { system: 'liver', icon: '🫀', label: 'Liver', curve: [[0,20],[72,35],[168,50],[720,72],[2160,88],[8760,98]] },
+      { system: 'cardiovascular', icon: '❤️', label: 'Heart', curve: [[0,35],[48,50],[168,65],[720,82],[2160,94]] },
+      { system: 'sleep', icon: '🌙', label: 'Sleep', curve: [[0,25],[72,45],[168,68],[720,88],[2160,96]] },
+      { system: 'brain', icon: '🧠', label: 'Brain Fog', curve: [[0,20],[168,40],[720,65],[2160,85],[4320,96]] },
+      { system: 'skin', icon: '✨', label: 'Skin', curve: [[0,30],[168,45],[720,68],[2160,88]] },
+      { system: 'hair', icon: '💇', label: 'Hair & Scalp', curve: [[0,25],[168,32],[720,48],[2160,65],[4320,80]] },
+    ],
+    masturbation: [
+      { system: 'dopamine', icon: '🧠', label: 'Dopamine', curve: [[0,15],[168,30],[720,58],[2160,80],[4320,96]] },
+      { system: 'focus', icon: '🎯', label: 'Focus', curve: [[0,25],[168,42],[720,65],[2160,85],[4320,98]] },
+      { system: 'confidence', icon: '💪', label: 'Confidence', curve: [[0,30],[336,48],[720,68],[2160,88],[4320,98]] },
+      { system: 'energy', icon: '⚡', label: 'Energy', curve: [[0,25],[168,45],[720,70],[2160,90]] },
+    ],
+    custom: [
+      { system: 'dopamine', icon: '🧠', label: 'Dopamine', curve: [[0,20],[168,35],[720,60],[2160,82],[4320,96]] },
+      { system: 'focus', icon: '🎯', label: 'Focus', curve: [[0,25],[168,42],[720,65],[2160,85]] },
+      { system: 'willpower', icon: '💪', label: 'Willpower', curve: [[0,30],[336,50],[720,72],[2160,92]] },
+    ],
     caffeine: [
       { system: 'sleep', icon: '🌙', label: 'Sleep', curve: [[0,30],[72,55],[168,75],[720,96]] },
       { system: 'anxiety', icon: '🧘', label: 'Calm', curve: [[0,25],[72,40],[168,62],[720,88],[2160,98]] },

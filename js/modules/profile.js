@@ -3,9 +3,12 @@ const Profile = (() => {
   function render() {
     const screen = document.getElementById('screen-profile');
     if (!screen) return;
-    const habits = State.get('habits') || [];
+    const habits = State.getAllHabits();
+    const medicines = State.get('medicines') || [];
+    const routines = State.get('routines') || {};
     const user = State.get('user') || {};
     const settings = State.get('settings') || {};
+    const notifOn = settings.notificationsEnabled && Notifications.permission() === 'granted';
     const spiritualMode = user.spiritualMode === true;
     const hairTreatment = user.hairTreatment || 'none';
     const currency = settings.currency || 'USD';
@@ -18,7 +21,7 @@ const Profile = (() => {
     const longest = State.longestStreak ? State.longestStreak() : 0;
 
     const habitsHtml = habits.map(h => {
-      const hCfg = (window.HABITS_CONFIG || {})[h.type] || {};
+      const hCfg = State.habitConfig(h.type, h.isCustom, h);
       const days = RecoveryEngine.daysClean(h.quitTime);
       const hrs = RecoveryEngine.hoursClean(h.quitTime);
       const relapses = (h.relapses || []).length;
@@ -34,9 +37,49 @@ const Profile = (() => {
           ${fin.hasCost?`<div><div class="t-label">Saved</div><div style="font-size:1.3rem;font-weight:800;color:var(--green)">${sym}${fin.savedTotal.toFixed(2)}</div></div>`:''}
           <div><div class="t-label">Body Score</div><div style="font-size:1.3rem;font-weight:800;color:var(--teal)">${BodyEngine.overallBodyScore(h.type, hrs)}%</div></div>
         </div>
-        <button class="btn btn-ghost" style="font-size:0.78rem;padding:10px 16px;width:100%" onclick="Profile._editHabit('${h.id}')">Edit Habit Config</button>
+        <button class="btn btn-ghost" style="font-size:0.78rem;padding:10px 16px;width:100%" onclick="Profile._editHabit('${h.id}',${h.isCustom})">Edit Habit Config</button>
       </div>`;
     }).join('');
+
+    const medsHtml = medicines.map(m => `
+      <div class="card profile-item-card" style="margin-bottom:8px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div><span style="font-size:1.1rem">💊</span> <strong>${m.name}</strong></div>
+          <div onclick="Profile._toggleMed('${m.id}')" style="width:40px;height:24px;background:${m.enabled?'var(--green)':'var(--bg2)'};border-radius:12px;position:relative;cursor:pointer;border:1px solid var(--border)">
+            <div style="position:absolute;top:2px;${m.enabled?'right:2px':'left:2px'};width:18px;height:18px;border-radius:50%;background:white;transition:all 0.2s"></div>
+          </div>
+        </div>
+        <div class="t-caption">${m.dose || '—'} · ${m.schedule === 'as_needed' ? 'As needed' : (m.times || []).join(', ')}</div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn btn-ghost" style="flex:1;font-size:0.75rem;padding:8px" onclick="Profile._editMed('${m.id}')">Edit</button>
+          <button class="btn btn-ghost" style="font-size:0.75rem;padding:8px;color:var(--red)" onclick="Profile._removeMed('${m.id}')">Remove</button>
+        </div>
+      </div>
+    `).join('') || '<div class="t-caption t-dim" style="padding:0 20px 8px">No medicines added yet.</div>';
+
+    const routineSection = (cat, label, icon) => {
+      const r = routines[cat] || { am: [], pm: [], weekly: [] };
+      const slotHtml = (slot, slotLabel) => {
+        const steps = r[slot] || [];
+        if (!steps.length) return '';
+        return `<div style="margin-bottom:12px">
+          <div class="t-label" style="margin-bottom:6px">${slotLabel}</div>
+          ${steps.map(s => `
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+              <span style="flex:1;font-size:0.85rem;color:var(--text2)">${s.label}</span>
+              <button onclick="Profile._removeRoutine('${cat}','${slot}','${s.id}')" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.9rem">✕</button>
+            </div>
+          `).join('')}
+        </div>`;
+      };
+      return `<div class="card" style="margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span>${icon}</span><span class="t-heading">${label}</span></div>
+        ${slotHtml('am', 'AM')}
+        ${slotHtml('pm', 'PM')}
+        ${slotHtml('weekly', 'Weekly')}
+        <button class="btn btn-ghost" style="width:100%;font-size:0.78rem;margin-top:4px" onclick="Profile._addRoutine('${cat}')">+ Add step</button>
+      </div>`;
+    };
 
     screen.innerHTML = `
       <div class="profile-header">
@@ -67,8 +110,30 @@ const Profile = (() => {
       <div style="padding:0 20px">${habitsHtml}</div>
 
       <div class="section-header"><span class="section-title">Add Habit</span></div>
+      <div style="padding:0 20px 12px;display:flex;gap:8px">
+        <button class="btn btn-ghost" style="flex:1;text-align:center" onclick="Profile._addHabit()">+ Built-in</button>
+        <button class="btn btn-ghost" style="flex:1;text-align:center" onclick="Profile._addCustomHabit()">+ Custom</button>
+      </div>
+
+      <div class="section-header"><span class="section-title">Medicines</span></div>
+      <div style="padding:0 20px 8px">${medsHtml}</div>
+      <div style="padding:0 20px 16px">
+        <button class="btn btn-ghost" style="width:100%;text-align:center" onclick="Profile._addMed()">+ Add medicine</button>
+      </div>
+
+      <div class="section-header"><span class="section-title">Daily Routines</span></div>
+      <div style="padding:0 20px 16px">
+        ${routineSection('skincare', 'Skincare', '✨')}
+        ${routineSection('hair', 'Hair', '💇')}
+      </div>
+
+      <div class="section-header"><span class="section-title">Your Why</span></div>
       <div style="padding:0 20px 12px">
-        <button class="btn btn-ghost" style="width:100%;text-align:center" onclick="Profile._addHabit()">+ Add another habit</button>
+        <div class="card" style="margin-bottom:10px">
+          <div class="ob-label">Recovery goals — shown in Emergency SOS</div>
+          <textarea class="ob-input" id="p-goals" rows="3" placeholder="One per line" style="resize:vertical;margin-top:8px"
+            oninput="Profile._saveGoals(this.value)">${(user.goals||[]).join('\n')}</textarea>
+        </div>
       </div>
 
       <div class="section-header"><span class="section-title">Settings</span></div>
@@ -83,6 +148,12 @@ const Profile = (() => {
             <select class="ob-select" id="p-currency" onchange="Profile._saveCurrency(this.value)">
               ${['USD','GBP','AED','PKR','EUR'].map(c=>`<option value="${c}" ${currency===c?'selected':''}>${c}</option>`).join('')}
             </select>
+          </div>
+          <div class="ob-field" style="display:flex;align-items:center;justify-content:space-between">
+            <div class="ob-label" style="margin-bottom:0">Push Reminders</div>
+            <div onclick="Profile._toggleNotifications()" style="width:44px;height:26px;background:${notifOn ? 'var(--green)' : 'var(--bg2)'};border-radius:13px;border:1px solid var(--border);position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0">
+              <div style="position:absolute;top:3px;${notifOn ? 'right:3px' : 'left:3px'};width:18px;height:18px;border-radius:50%;background:white;transition:all 0.2s;"></div>
+            </div>
           </div>
           <div class="ob-field" style="margin-bottom:0;display:flex;align-items:center;justify-content:space-between">
             <div class="ob-label" style="margin-bottom:0">Spiritual Mode</div>
@@ -162,6 +233,11 @@ const Profile = (() => {
     State.update(d => { d.settings.currency = val; d.user.currency = val; });
   }
 
+  function _saveGoals(val) {
+    const goals = (val || '').split('\n').map(g => g.trim()).filter(Boolean).slice(0, 5);
+    State.update(d => { d.user.goals = goals; });
+  }
+
   function _exportData() {
     const json = State.exportJSON();
     const blob = new Blob([json], { type: 'application/json' });
@@ -199,10 +275,11 @@ const Profile = (() => {
     }
   }
 
-  function _editHabit(id) {
-    const habits = State.get('habits') || [];
+  function _editHabit(id, isCustom) {
+    const habits = State.getAllHabits();
     const habit = habits.find(h => h.id === id);
     if (!habit) return;
+    if (isCustom || habit.isCustom) return _editCustomHabit(id);
     const hCfg = (window.HABITS_CONFIG || {})[habit.type];
     if (!hCfg) return;
     const modal = document.getElementById('profile-modal');
@@ -281,8 +358,43 @@ const Profile = (() => {
   }
 
   function _startAddHabit(type) {
+    const hCfg = (window.HABITS_CONFIG || {})[type];
+    if (!hCfg) return;
+    const modal = document.getElementById('profile-modal');
+    if (!modal) return;
+    const now = new Date().toISOString().slice(0, 16);
+    modal.style.display = 'block';
+    modal.innerHTML = `
+      <div style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);display:flex;align-items:flex-end" onclick="if(event.target===this)Profile._closeModal()">
+        <div style="background:var(--bg3);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-height:80vh;overflow-y:auto">
+          <div class="t-heading" style="margin-bottom:16px">${hCfg.icon} ${hCfg.name}</div>
+          <div class="ob-field">
+            <div class="ob-label">Quit date</div>
+            <input class="ob-input" type="datetime-local" id="add-quit" value="${now}">
+          </div>
+          ${hCfg.configFields.filter(f=>f.type!=='hidden').map(f=>{
+            if(f.type==='select') return `<div class="ob-field"><div class="ob-label">${f.label}</div><select class="ob-select" id="add_${f.id}">${(f.options||[]).map(o=>`<option value="${o}">${o}</option>`).join('')}</select></div>`;
+            return `<div class="ob-field"><div class="ob-label">${f.label}</div><input class="ob-input" type="${f.type==='text'?'text':'number'}" id="add_${f.id}" placeholder="${f.placeholder||''}"></div>`;
+          }).join('')}
+          <button class="btn btn-primary" onclick="Profile._confirmAddHabit('${type}')">Add Habit</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function _confirmAddHabit(type) {
+    const hCfg = (window.HABITS_CONFIG || {})[type];
+    const quitEl = document.getElementById('add-quit');
+    const quitTime = quitEl ? new Date(quitEl.value).toISOString() : new Date().toISOString();
+    const cfg = {};
+    if (hCfg) {
+      hCfg.configFields.forEach(f => {
+        const el = document.getElementById('add_' + f.id);
+        if (el) cfg[f.id] = el.type === 'number' ? parseFloat(el.value) || 0 : el.value;
+      });
+    }
     _closeModal();
-    State.addHabit({ type, quitTime: new Date().toISOString(), config: {} });
+    State.addHabit({ type, quitTime, config: cfg });
     App.showToast('Habit added', 'success');
     render();
   }
@@ -299,6 +411,199 @@ const Profile = (() => {
     render();
   }
 
-  return { render, _saveName, _saveCurrency, _exportData, _importData, _reset, _editHabit, _saveEdit, _closeModal, _addHabit, _startAddHabit, _toggleSpiritual, _setHairTreatment };
+  function _toggleNotifications() {
+    if (Notifications.permission() === 'granted') {
+      State.update(d => { d.settings.notificationsEnabled = !d.settings.notificationsEnabled; });
+      if (State.get('settings').notificationsEnabled) Notifications.startChecking();
+      render();
+    } else {
+      Notifications.enableAndStart().then(ok => {
+        App.showToast(ok ? 'Reminders enabled' : 'Notifications blocked — in-app nudges still work', ok ? 'success' : 'info');
+        render();
+      });
+    }
+  }
+
+  function _addMed() {
+    const modal = document.getElementById('profile-modal');
+    if (!modal) return;
+    modal.style.display = 'block';
+    modal.innerHTML = `
+      <div style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);display:flex;align-items:flex-end" onclick="if(event.target===this)Profile._closeModal()">
+        <div style="background:var(--bg3);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-height:80vh;overflow-y:auto">
+          <div class="t-heading" style="margin-bottom:16px">Add Medicine</div>
+          <div class="ob-field"><div class="ob-label">Name</div><input class="ob-input" id="med-name" placeholder="e.g. Finasteride"></div>
+          <div class="ob-field"><div class="ob-label">Dose</div><input class="ob-input" id="med-dose" placeholder="e.g. 1mg"></div>
+          <div class="ob-field"><div class="ob-label">Schedule</div>
+            <select class="ob-select" id="med-schedule" onchange="document.getElementById('med-times-wrap').style.display=this.value==='fixed'?'block':'none'">
+              <option value="fixed">Fixed times</option>
+              <option value="as_needed">As needed</option>
+            </select>
+          </div>
+          <div class="ob-field" id="med-times-wrap"><div class="ob-label">Times (comma-separated)</div><input class="ob-input" id="med-times" placeholder="08:00, 20:00" value="08:00, 20:00"></div>
+          <button class="btn btn-primary" onclick="Profile._saveMed()">Save Medicine</button>
+        </div>
+      </div>`;
+  }
+
+  function _saveMed(editId) {
+    const name = document.getElementById('med-name')?.value?.trim();
+    if (!name) { App.showToast('Name required', 'error'); return; }
+    const dose = document.getElementById('med-dose')?.value?.trim() || '';
+    const schedule = document.getElementById('med-schedule')?.value || 'fixed';
+    const timesRaw = document.getElementById('med-times')?.value || '08:00';
+    const times = schedule === 'fixed' ? timesRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+    if (editId) {
+      State.updateMedicine(editId, { name, dose, schedule, times });
+      App.showToast('Medicine updated', 'success');
+    } else {
+      State.addMedicine({ name, dose, schedule, times });
+      App.showToast('Medicine added', 'success');
+    }
+    _closeModal();
+    render();
+  }
+
+  function _editMed(id) {
+    const med = (State.get('medicines') || []).find(m => m.id === id);
+    if (!med) return;
+    _addMed();
+    setTimeout(() => {
+      document.getElementById('med-name').value = med.name;
+      document.getElementById('med-dose').value = med.dose || '';
+      document.getElementById('med-schedule').value = med.schedule;
+      document.getElementById('med-times-wrap').style.display = med.schedule === 'fixed' ? 'block' : 'none';
+      document.getElementById('med-times').value = (med.times || []).join(', ');
+      const btn = document.querySelector('#profile-modal .btn-primary');
+      if (btn) { btn.onclick = () => Profile._saveMed(id); btn.textContent = 'Update Medicine'; }
+    }, 50);
+  }
+
+  function _removeMed(id) {
+    if (confirm('Remove this medicine?')) { State.removeMedicine(id); render(); }
+  }
+
+  function _toggleMed(id) {
+    const med = (State.get('medicines') || []).find(m => m.id === id);
+    if (med) { State.updateMedicine(id, { enabled: !med.enabled }); render(); }
+  }
+
+  function _addRoutine(cat) {
+    const modal = document.getElementById('profile-modal');
+    if (!modal) return;
+    modal.style.display = 'block';
+    modal.innerHTML = `
+      <div style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);display:flex;align-items:flex-end" onclick="if(event.target===this)Profile._closeModal()">
+        <div style="background:var(--bg3);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom));width:100%">
+          <div class="t-heading" style="margin-bottom:16px">Add ${cat} step</div>
+          <div class="ob-field"><div class="ob-label">Step name</div><input class="ob-input" id="routine-label" placeholder="e.g. Cleanser, Minoxidil"></div>
+          <div class="ob-field"><div class="ob-label">When</div>
+            <select class="ob-select" id="routine-slot">
+              <option value="am">AM (morning)</option>
+              <option value="pm">PM (evening)</option>
+              <option value="weekly">Weekly</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="Profile._saveRoutine('${cat}')">Add Step</button>
+        </div>
+      </div>`;
+  }
+
+  function _saveRoutine(cat) {
+    const label = document.getElementById('routine-label')?.value?.trim();
+    const slot = document.getElementById('routine-slot')?.value || 'am';
+    if (!label) { App.showToast('Step name required', 'error'); return; }
+    State.addRoutineStep(cat, slot, label);
+    _closeModal();
+    App.showToast('Step added', 'success');
+    render();
+  }
+
+  function _removeRoutine(cat, slot, id) {
+    if (confirm('Remove this step?')) { State.removeRoutineStep(cat, slot, id); render(); }
+  }
+
+  function _addCustomHabit() {
+    const modal = document.getElementById('profile-modal');
+    if (!modal) return;
+    const icons = ['✨', '🎯', '🔥', '💪', '🚫', '📵', '🍕', '🎰', '💳', '🛒'];
+    modal.style.display = 'block';
+    modal.innerHTML = `
+      <div style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);display:flex;align-items:flex-end" onclick="if(event.target===this)Profile._closeModal()">
+        <div style="background:var(--bg3);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom));width:100%">
+          <div class="t-heading" style="margin-bottom:16px">Custom Habit</div>
+          <div class="ob-field"><div class="ob-label">Habit name</div><input class="ob-input" id="custom-name" placeholder="e.g. Nail biting"></div>
+          <div class="ob-field"><div class="ob-label">Icon</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">${icons.map(i => `<span onclick="Profile._pickIcon('${i}')" class="habit-chip" style="padding:8px 12px;cursor:pointer" id="icon-${i}">${i}</span>`).join('')}</div>
+            <input type="hidden" id="custom-icon" value="✨">
+          </div>
+          <div class="ob-field"><div class="ob-label">Quit date</div><input class="ob-input" type="datetime-local" id="custom-quit" value="${new Date().toISOString().slice(0,16)}"></div>
+          <button class="btn btn-primary" onclick="Profile._saveCustomHabit()">Add Custom Habit</button>
+        </div>
+      </div>`;
+  }
+
+  function _pickIcon(icon) {
+    document.getElementById('custom-icon').value = icon;
+    document.querySelectorAll('[id^="icon-"]').forEach(el => el.classList.remove('selected'));
+    const el = document.getElementById('icon-' + icon);
+    if (el) el.classList.add('selected');
+  }
+
+  function _saveCustomHabit() {
+    const name = document.getElementById('custom-name')?.value?.trim();
+    const icon = document.getElementById('custom-icon')?.value || '✨';
+    const quitTime = new Date(document.getElementById('custom-quit')?.value || Date.now()).toISOString();
+    if (!name) { App.showToast('Name required', 'error'); return; }
+    State.addCustomHabit({ name, icon, quitTime });
+    _closeModal();
+    App.showToast('Custom habit added', 'success');
+    render();
+  }
+
+  function _editCustomHabit(id) {
+    const habit = (State.get('customHabits') || []).find(h => h.id === id);
+    if (!habit) return;
+    const modal = document.getElementById('profile-modal');
+    if (!modal) return;
+    modal.style.display = 'block';
+    modal.innerHTML = `
+      <div style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);display:flex;align-items:flex-end" onclick="if(event.target===this)Profile._closeModal()">
+        <div style="background:var(--bg3);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom));width:100%">
+          <div class="t-heading" style="margin-bottom:16px">${habit.icon} ${habit.name}</div>
+          <div class="ob-field"><div class="ob-label">Name</div><input class="ob-input" id="edit-custom-name" value="${habit.name}"></div>
+          <div class="ob-field"><div class="ob-label">Quit date</div><input class="ob-input" type="datetime-local" id="edit-custom-quit" value="${new Date(habit.quitTime).toISOString().slice(0,16)}"></div>
+          <button class="btn btn-primary" onclick="Profile._saveCustomEdit('${id}')">Save</button>
+          <button class="btn btn-danger" style="margin-top:8px" onclick="Profile._removeCustom('${id}')">Remove Habit</button>
+        </div>
+      </div>`;
+  }
+
+  function _saveCustomEdit(id) {
+    const name = document.getElementById('edit-custom-name')?.value?.trim();
+    const quitTime = new Date(document.getElementById('edit-custom-quit')?.value).toISOString();
+    if (!name) return;
+    State.updateHabit(id, { name, quitTime }, true);
+    _closeModal();
+    App.showToast('Habit updated', 'success');
+    render();
+  }
+
+  function _removeCustom(id) {
+    if (confirm('Remove this custom habit?')) {
+      State.removeCustomHabit(id);
+      _closeModal();
+      render();
+    }
+  }
+
+  return {
+    render, _saveName, _saveCurrency, _saveGoals, _exportData, _importData, _reset,
+    _editHabit, _saveEdit, _closeModal, _addHabit, _startAddHabit, _confirmAddHabit,
+    _toggleSpiritual, _setHairTreatment, _toggleNotifications,
+    _addMed, _saveMed, _editMed, _removeMed, _toggleMed,
+    _addRoutine, _saveRoutine, _removeRoutine,
+    _addCustomHabit, _pickIcon, _saveCustomHabit, _editCustomHabit, _saveCustomEdit, _removeCustom,
+  };
 })();
 window.Profile = Profile;

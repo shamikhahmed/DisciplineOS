@@ -1,25 +1,56 @@
 # DisciplineOS
 
-**Personal Recovery Operating System** — habits, recovery score, emergency SOS, journal, and trigger intelligence.
+**Personal Recovery Operating System** — habits, daily routines, medicines, recovery timelines, emergency SOS, journal, and trigger intelligence.
 
 🔗 **Live:** https://shamikhahmed.github.io/DisciplineOS/  
 📁 **Repo:** https://github.com/shamikhahmed/DisciplineOS
 
 ---
 
+## What's New
+
+### Today (Home)
+- **Today's Routines** — medicines, skincare AM/PM, hair AM/PM, and weekly steps in one checklist
+- **SOS one-tap** — instant craving protocol from the home screen
+- **Habit progress** — recovery score, streaks, and body-healing milestone preview
+- **Gentle nudges** — in-app reminders for missed medicine/routine times (no guilt)
+
+### Medicines
+- Fixed times **or** as-needed scheduling
+- Push notifications (with permission) + in-app toasts
+- Add, edit, enable/disable in **Profile**
+
+### Skincare & Hair Routines
+- AM / PM checklists + weekly steps per category
+- Set once, modify anytime in **Profile**
+
+### Bad Habits
+- **12 built-in habits** including smoking, vape, alcohol, porn, social media, masturbation, weed, gaming, sugar, caffeine, and more
+- **Custom habits** — user-defined name, icon, and quit date
+
+### Recovery Database
+- **Hourly body-healing milestones** for the first 72 hours per habit type
+- Daily and weekly milestones beyond 72h
+- Full timeline view on the **Recovery** tab with body system scores
+
+---
+
 ## Install on iPhone
 
-1. Open the live URL in **Safari** (same Wi‑Fi not required — hosted on GitHub Pages)
+1. Open the live URL in **Safari**
 2. **Share → Add to Home Screen**
 3. Launch from home screen for full-screen PWA mode
+4. Enable **Push Reminders** in Profile for medicine alerts (iOS 16.4+)
 
 ## iPhone test checklist
 
-- [ ] Onboarding completes and lands on dashboard
-- [ ] Bottom nav switches all tabs (Dashboard, Recovery, Emergency, Knowledge, Journal, Profile)
-- [ ] Recovery score renders on dashboard
-- [ ] Emergency SOS screen opens
-- [ ] App works in airplane mode after first load (offline SW)
+- [ ] Onboarding completes and lands on Today
+- [ ] Bottom nav switches all tabs (Today, Recovery, SOS, Learn, Journal, You)
+- [ ] Today's checklist: medicines + skincare + hair
+- [ ] SOS opens from one-tap button
+- [ ] Recovery timeline shows hourly milestones (first 72h)
+- [ ] Custom habit can be added in Profile
+- [ ] App works offline after first load (service worker)
 - [ ] Safe area: no content under notch / home indicator
 
 ## Local dev
@@ -36,12 +67,12 @@ Vanilla JS PWA · orange accent `#FF6B35` · offline-first · localStorage
 
 ## Modules
 
-- **Dashboard** — recovery score, habits, daily pulse
-- **Recovery** — timelines, craving forecast, body engine
-- **Emergency** — SOS flow, grounding tools
-- **Knowledge** — recovery library
+- **Today** — routines checklist, habit progress, SOS, gentle nudges
+- **Recovery** — hourly + daily body-healing timelines, craving forecast, body engine
+- **SOS** — emergency craving protocol, grounding tools
+- **Learn** — recovery knowledge library
 - **Journal** — daily entries
-- **Profile** — settings and identity
+- **You (Profile)** — medicines, routines, habits, settings, export/import
 
 ---
 

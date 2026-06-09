@@ -87,6 +87,23 @@ const HABITS_CONFIG = {
     ],
     computeCostPerDay: (cfg) => cfg.spendPerDay || 0,
   },
+  alcohol: {
+    name: 'Alcohol', icon: '🍺', color: '#FF9500',
+    configFields: [
+      { id: 'drinksPerWeek', label: 'Drinks per week', type: 'number', placeholder: '14' },
+      { id: 'avgCostPerDrink', label: 'Average cost per drink', type: 'number', placeholder: '8.00' },
+      { id: 'severity', label: 'Usage level', type: 'select', options: ['Social only','Regular','Heavy','Daily'] },
+    ],
+    computeCostPerDay: (cfg) => ((cfg.drinksPerWeek || 0) * (cfg.avgCostPerDrink || 0)) / 7,
+  },
+  masturbation: {
+    name: 'Masturbation', icon: '🚫', color: '#FF2D55',
+    configFields: [
+      { id: 'frequencyPerWeek', label: 'Sessions per week', type: 'number', placeholder: '7' },
+      { id: 'primaryTrigger', label: 'Primary trigger', type: 'select', options: ['Boredom','Stress','Loneliness','Night time','Anxiety','Habit'] },
+    ],
+    computeCostPerDay: () => 0,
+  },
   caffeine: {
     name: 'Excess Caffeine', icon: '☕', color: '#FF6B35',
     configFields: [

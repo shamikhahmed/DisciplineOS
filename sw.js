@@ -1,5 +1,5 @@
 'use strict';
-const CACHE = 'discipline-v3';
+const CACHE = 'discipline-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -8,6 +8,7 @@ const ASSETS = [
   './js/app.js',
   './js/data/habits.js',
   './js/data/timelines.js',
+  './js/data/timelines-hourly.js',
   './js/data/insights.js',
   './js/data/knowledge.js',
   './js/engines/recoveryEngine.js',
@@ -18,6 +19,7 @@ const ASSETS = [
   './js/ui/charts.js',
   './js/ui/navigation.js',
   './js/modules/state.js',
+  './js/modules/notifications.js',
   './js/modules/onboarding.js',
   './js/modules/dashboard.js',
   './js/modules/recovery.js',

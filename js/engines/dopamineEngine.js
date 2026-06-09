@@ -44,6 +44,9 @@ const DopamineEngine = (() => {
     gaming:           [0, 24, 168, 720, 2160],
     sugar:            [0, 24, 168, 720, 2160],
     caffeine:         [0, 12, 72, 336, 720],
+    alcohol:          [0, 48, 168, 720, 2160],
+    masturbation:     [0, 72, 336, 720, 2160],
+    custom:           [0, 48, 168, 720, 2160],
   };
 
   function getStage(habitType, hoursClean) {
