@@ -27,6 +27,7 @@ const Dashboard = (() => {
     const insight = RecoveryEngine.todayInsight();
 
     const cravingLog = State.get('cravingLog') || [];
+    const triggerCard = buildTriggerCard(cravingLog, habits, primaryHabit);
 
     screen.innerHTML = `
       <div class="score-ring-wrap">
@@ -60,6 +61,8 @@ const Dashboard = (() => {
       ${habitCards}
 
       ${bodySystems}
+
+      ${triggerCard}
 
       <div class="craving-btn card-press" onclick="Navigation.go('emergency')">
         <div style="font-size:1.1rem;font-weight:700;color:var(--teal)">I have a craving right now</div>
@@ -203,6 +206,45 @@ const Dashboard = (() => {
     return `<div>
       <div class="section-header"><span class="section-title">Body Recovery</span></div>
       <div class="systems-list">${rows}</div>
+    </div>`;
+  }
+
+  function buildTriggerCard(cravingLog, habits, primaryHabit) {
+    if (!window.TriggerEngine) return '';
+    const forecast = TriggerEngine.forecastCard(cravingLog, habits, primaryHabit);
+    const { risk, withdrawalWarning, analysis } = forecast;
+    if (!analysis && !withdrawalWarning) return '';
+
+    const parts = [];
+
+    if (withdrawalWarning) {
+      parts.push(`<div style="padding:12px 14px;background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);border-radius:var(--r-sm);margin-bottom:8px">
+        <div style="font-size:0.7rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Withdrawal Alert</div>
+        <div style="font-size:0.82rem;color:var(--text2);line-height:1.5">${withdrawalWarning}</div>
+      </div>`);
+    }
+
+    if (risk.level === 'high' || risk.level === 'medium') {
+      parts.push(`<div style="padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid ${risk.color}40;border-radius:var(--r-sm);margin-bottom:8px">
+        <div style="font-size:0.7rem;font-weight:700;color:${risk.color};text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">${risk.label}</div>
+        <div style="font-size:0.82rem;color:var(--text2)">Based on your patterns, now is a higher-risk time. Stay alert.</div>
+      </div>`);
+    }
+
+    if (analysis && analysis.insights && analysis.insights.length) {
+      analysis.insights.forEach(ins => {
+        parts.push(`<div style="display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
+          <span style="font-size:1rem;flex-shrink:0">${ins.icon}</span>
+          <span style="font-size:0.82rem;color:var(--text2);line-height:1.4">${ins.message}</span>
+        </div>`);
+      });
+    }
+
+    if (!parts.length) return '';
+
+    return `<div>
+      <div class="section-header"><span class="section-title">Trigger Intelligence</span></div>
+      <div style="padding:0 20px 4px">${parts.join('')}</div>
     </div>`;
   }
 

@@ -6,6 +6,8 @@ const Profile = (() => {
     const habits = State.get('habits') || [];
     const user = State.get('user') || {};
     const settings = State.get('settings') || {};
+    const spiritualMode = user.spiritualMode === true;
+    const hairTreatment = user.hairTreatment || 'none';
     const currency = settings.currency || 'USD';
     const cravingLog = State.get('cravingLog') || [];
     const sym = FinanceEngine.CURRENCY_SYMBOLS[currency] || '$';
@@ -76,12 +78,62 @@ const Profile = (() => {
             <div class="ob-label">Name</div>
             <input class="ob-input" type="text" id="p-name" placeholder="Your name" value="${user.name||''}" oninput="Profile._saveName(this.value)">
           </div>
-          <div class="ob-field" style="margin-bottom:0">
+          <div class="ob-field">
             <div class="ob-label">Currency</div>
             <select class="ob-select" id="p-currency" onchange="Profile._saveCurrency(this.value)">
               ${['USD','GBP','AED','PKR','EUR'].map(c=>`<option value="${c}" ${currency===c?'selected':''}>${c}</option>`).join('')}
             </select>
           </div>
+          <div class="ob-field" style="margin-bottom:0;display:flex;align-items:center;justify-content:space-between">
+            <div class="ob-label" style="margin-bottom:0">Spiritual Mode</div>
+            <div onclick="Profile._toggleSpiritual()" style="width:44px;height:26px;background:${spiritualMode ? 'var(--orange)' : 'var(--bg2)'};border-radius:13px;border:1px solid var(--border);position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0">
+              <div style="position:absolute;top:3px;${spiritualMode ? 'right:3px' : 'left:3px'};width:18px;height:18px;border-radius:50%;background:white;transition:all 0.2s;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      ${spiritualMode ? `
+      <div class="section-header"><span class="section-title">Prayer Anchors</span></div>
+      <div style="padding:0 20px">
+        <div style="padding:16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px">
+          <div class="t-caption t-dim" style="margin-bottom:12px">Use your prayer times as recovery check-ins</div>
+          ${[
+            { name: 'Fajr', time: 'Morning', note: 'Set your intention for the day. Declare your commitment.' },
+            { name: 'Dhuhr', time: 'Midday', note: 'Midday check-in. How are cravings so far?' },
+            { name: 'Asr', time: 'Afternoon', note: 'Afternoon reset. High-risk window for many.' },
+            { name: 'Maghrib', time: 'Evening', note: 'Evening review. Reflect on your wins today.' },
+            { name: 'Isha', time: 'Night', note: 'Night protection. Highest risk window. Guard this time.' },
+          ].map((p, i, arr) => `
+            <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 0;${i < arr.length-1 ? 'border-bottom:1px solid var(--border)' : ''}">
+              <div style="min-width:62px">
+                <div style="font-size:0.85rem;font-weight:700;color:var(--text)">${p.name}</div>
+                <div style="font-size:0.7rem;color:var(--text3)">${p.time}</div>
+              </div>
+              <div style="font-size:0.8rem;color:var(--text2);line-height:1.4">${p.note}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
+
+      <div class="section-header"><span class="section-title">Hair Recovery Tracking</span></div>
+      <div style="padding:0 20px">
+        <div class="t-caption t-dim" style="margin-bottom:12px">Quitting habits supports hair follicle health</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+          ${[
+            { id: 'none', icon: '🚫', label: 'No treatment' },
+            { id: 'minoxidil', icon: '💧', label: 'Minoxidil' },
+            { id: 'finasteride', icon: '💊', label: 'Finasteride / Dut.' },
+            { id: 'both', icon: '💊💧', label: 'Both' },
+            { id: 'natural', icon: '🌿', label: 'Natural approach' },
+            { id: 'transplant', icon: '🏥', label: 'Hair transplant' },
+          ].map(t => `
+            <div onclick="Profile._setHairTreatment('${t.id}')" style="padding:12px 8px;background:${hairTreatment===t.id ? 'rgba(255,107,53,0.12)' : 'var(--glass)'};border:1px solid ${hairTreatment===t.id ? 'var(--orange)' : 'var(--border)'};border-radius:var(--r-sm);cursor:pointer;touch-action:manipulation;text-align:center">
+              <div style="font-size:1.2rem;margin-bottom:4px">${t.icon}</div>
+              <div style="font-size:0.7rem;font-weight:600;color:${hairTreatment===t.id ? 'var(--orange)' : 'var(--text2)'}">${t.label}</div>
+            </div>
+          `).join('')}
         </div>
       </div>
 
@@ -235,6 +287,18 @@ const Profile = (() => {
     render();
   }
 
-  return { render, _saveName, _saveCurrency, _exportData, _importData, _reset, _editHabit, _saveEdit, _closeModal, _addHabit, _startAddHabit };
+  function _toggleSpiritual() {
+    const user = State.get('user') || {};
+    State.set('user', { ...user, spiritualMode: !user.spiritualMode });
+    render();
+  }
+
+  function _setHairTreatment(val) {
+    const user = State.get('user') || {};
+    State.set('user', { ...user, hairTreatment: val });
+    render();
+  }
+
+  return { render, _saveName, _saveCurrency, _exportData, _importData, _reset, _editHabit, _saveEdit, _closeModal, _addHabit, _startAddHabit, _toggleSpiritual, _setHairTreatment };
 })();
 window.Profile = Profile;

@@ -8,6 +8,7 @@ const BodyEngine = (() => {
       { system: 'sensory', icon: '👃', label: 'Taste/Smell', curve: [[0,25],[48,50],[168,70],[720,90],[2160,98]] },
       { system: 'skin', icon: '✨', label: 'Skin', curve: [[0,40],[168,52],[720,68],[2160,82],[8760,94]] },
       { system: 'immune', icon: '🛡️', label: 'Immunity', curve: [[0,45],[720,60],[2160,75],[8760,92]] },
+      { system: 'hair', icon: '💇', label: 'Hair & Scalp', curve: [[0,15],[168,22],[720,35],[2160,50],[4320,68],[8760,85]] },
     ],
     vape: [
       { system: 'lungs', icon: '🫁', label: 'Lungs', curve: [[0,30],[72,50],[336,65],[720,78],[4320,92],[8760,98]] },
@@ -15,18 +16,21 @@ const BodyEngine = (() => {
       { system: 'dopamine', icon: '🧠', label: 'Dopamine', curve: [[0,20],[168,35],[720,60],[2160,80],[4320,95]] },
       { system: 'sensory', icon: '👃', label: 'Taste/Smell', curve: [[0,35],[48,55],[168,75],[720,92]] },
       { system: 'airways', icon: '💨', label: 'Airways', curve: [[0,25],[72,50],[336,72],[720,88],[2160,98]] },
+      { system: 'hair', icon: '💇', label: 'Hair & Scalp', curve: [[0,18],[168,25],[720,38],[2160,52],[4320,70],[8760,83]] },
     ],
     nicotine_pouches: [
       { system: 'cardiovascular', icon: '❤️', label: 'Heart', curve: [[0,45],[24,58],[72,68],[720,85],[2160,98]] },
       { system: 'oral', icon: '🦷', label: 'Oral Health', curve: [[0,30],[48,50],[168,70],[720,90],[2160,98]] },
       { system: 'dopamine', icon: '🧠', label: 'Dopamine', curve: [[0,20],[168,40],[720,65],[2160,85],[4320,98]] },
       { system: 'blood_pressure', icon: '📊', label: 'Blood Pressure', curve: [[0,40],[24,55],[72,70],[720,90],[2160,98]] },
+      { system: 'hair', icon: '💇', label: 'Hair & Scalp', curve: [[0,30],[168,38],[720,50],[2160,65],[4320,78],[8760,88]] },
     ],
     shisha: [
       { system: 'lungs', icon: '🫁', label: 'Lungs', curve: [[0,15],[12,30],[72,48],[336,62],[720,75],[2160,88],[8760,96]] },
       { system: 'cardiovascular', icon: '❤️', label: 'Heart', curve: [[0,25],[12,45],[24,58],[168,70],[720,82],[8760,96]] },
       { system: 'co_levels', icon: '💨', label: 'CO Levels', curve: [[0,0],[8,50],[12,90],[24,98]] },
       { system: 'heavy_metals', icon: '🔬', label: 'Detox', curve: [[0,10],[168,40],[336,65],[720,85],[2160,98]] },
+      { system: 'hair', icon: '💇', label: 'Hair & Scalp', curve: [[0,12],[168,20],[720,32],[2160,48],[4320,65],[8760,80]] },
     ],
     weed: [
       { system: 'sleep', icon: '🌙', label: 'Sleep', curve: [[0,25],[72,35],[336,60],[720,80],[2160,95]] },
@@ -34,6 +38,7 @@ const BodyEngine = (() => {
       { system: 'dopamine', icon: '🧠', label: 'Dopamine', curve: [[0,20],[168,35],[720,60],[2160,82],[4320,96]] },
       { system: 'motivation', icon: '🔥', label: 'Motivation', curve: [[0,25],[336,45],[720,65],[2160,85],[4320,98]] },
       { system: 'lungs', icon: '🫁', label: 'Lungs', curve: [[0,35],[720,60],[2160,80],[4320,95]] },
+      { system: 'hair', icon: '💇', label: 'Hair & Scalp', curve: [[0,40],[168,45],[720,55],[2160,68],[4320,78],[8760,88]] },
     ],
     porn: [
       { system: 'dopamine', icon: '🧠', label: 'Dopamine', curve: [[0,15],[168,30],[720,58],[2160,80],[4320,96]] },
@@ -58,12 +63,14 @@ const BodyEngine = (() => {
       { system: 'energy', icon: '⚡', label: 'Energy', curve: [[0,30],[168,55],[720,80],[2160,96]] },
       { system: 'inflammation', icon: '🔬', label: 'Inflammation', curve: [[0,20],[336,45],[720,68],[2160,90]] },
       { system: 'gut', icon: '🦠', label: 'Gut Health', curve: [[0,30],[336,50],[720,72],[2160,95]] },
+      { system: 'hair', icon: '💇', label: 'Hair & Scalp', curve: [[0,35],[168,40],[720,52],[2160,65],[4320,78],[8760,90]] },
     ],
     caffeine: [
       { system: 'sleep', icon: '🌙', label: 'Sleep', curve: [[0,30],[72,55],[168,75],[720,96]] },
       { system: 'anxiety', icon: '🧘', label: 'Calm', curve: [[0,25],[72,40],[168,62],[720,88],[2160,98]] },
       { system: 'energy', icon: '⚡', label: 'Natural Energy', curve: [[0,20],[72,30],[168,52],[720,80],[2160,98]] },
       { system: 'heart', icon: '❤️', label: 'Heart Rate', curve: [[0,45],[72,65],[168,80],[720,96]] },
+      { system: 'hair', icon: '💇', label: 'Hair & Scalp', curve: [[0,50],[168,55],[720,65],[2160,75],[4320,85],[8760,92]] },
     ],
   };
 

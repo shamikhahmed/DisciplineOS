@@ -2,7 +2,7 @@
 const State = (() => {
   const KEY = 'dos_v2';
   const DEFAULT = {
-    user: { name: '', currency: 'USD', goals: [], triggers: [] },
+    user: { name: '', currency: 'USD', goals: [], triggers: [], spiritualMode: false, hairTreatment: 'none' },
     habits: [],
     cravingLog: [],
     settings: { currency: 'USD' },

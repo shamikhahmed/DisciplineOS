@@ -1,28 +1,32 @@
 'use strict';
-const CACHE = 'discipline-v2';
+const CACHE = 'discipline-v3';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/css/app.css',
-  '/js/app.js',
-  '/js/data/habits.js',
-  '/js/data/timelines.js',
-  '/js/data/insights.js',
-  '/js/data/knowledge.js',
-  '/js/engines/recoveryEngine.js',
-  '/js/engines/bodyEngine.js',
-  '/js/engines/dopamineEngine.js',
-  '/js/engines/financeEngine.js',
-  '/js/ui/charts.js',
-  '/js/ui/navigation.js',
-  '/js/modules/state.js',
-  '/js/modules/onboarding.js',
-  '/js/modules/dashboard.js',
-  '/js/modules/recovery.js',
-  '/js/modules/emergency.js',
-  '/js/modules/knowledge.js',
-  '/js/modules/profile.js',
+  './',
+  './index.html',
+  './manifest.json',
+  './css/app.css',
+  './js/app.js',
+  './js/data/habits.js',
+  './js/data/timelines.js',
+  './js/data/insights.js',
+  './js/data/knowledge.js',
+  './js/engines/recoveryEngine.js',
+  './js/engines/bodyEngine.js',
+  './js/engines/dopamineEngine.js',
+  './js/engines/financeEngine.js',
+  './js/engines/triggerEngine.js',
+  './js/ui/charts.js',
+  './js/ui/navigation.js',
+  './js/modules/state.js',
+  './js/modules/onboarding.js',
+  './js/modules/dashboard.js',
+  './js/modules/recovery.js',
+  './js/modules/emergency.js',
+  './js/modules/knowledge.js',
+  './js/modules/profile.js',
+  './js/modules/journal.js',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png',
 ];
 
 self.addEventListener('install', e => {
@@ -48,7 +52,7 @@ self.addEventListener('fetch', e => {
           caches.open(CACHE).then(c => c.put(e.request, clone));
         }
         return res;
-      }).catch(() => caches.match('/index.html'));
+      }).catch(() => caches.match('./index.html'));
     })
   );
 });
