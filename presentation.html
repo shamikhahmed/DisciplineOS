@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>DisciplineOS — Presentation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -17,21 +14,21 @@
   --orange:#FF6B35;--teal:#4ECDC4;--green:#06D6A0;--red:#FF3B30;
   --blue:#0A84FF;--gold:#FFD60A;--purple:#BF5AF2;
   --r:20px;--r-sm:12px;--r-lg:28px;
-  --font:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  --font:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;
   --mono:'SF Mono',Menlo,monospace;
   --spring:cubic-bezier(0.34,1.56,0.64,1);
 }
 html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:var(--font);overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-font-smoothing:antialiased}
-#particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.32}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.28}
 #progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--teal));z-index:200;transition:width .45s ease;box-shadow:0 0 10px rgba(255,107,53,.5)}
 #counter{position:fixed;bottom:32px;right:36px;font-family:var(--mono);font-size:12px;color:var(--text3);z-index:200;letter-spacing:.08em}
-#dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:200;align-items:center;max-width:90vw;overflow-x:auto;padding:4px 8px}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--text3);transition:all .3s var(--spring);cursor:pointer;flex-shrink:0}
-.dot.on{width:16px;border-radius:3px;background:var(--orange)}
+#dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:200;align-items:center}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--text3);transition:all .3s var(--spring);cursor:pointer}
+.dot.on{width:18px;border-radius:3px;background:var(--orange)}
 #fsBtn{position:fixed;top:24px;right:24px;z-index:200;background:var(--glass2);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:99px;font-size:11px;cursor:pointer;letter-spacing:.03em;font-family:var(--font)}
 #fsBtn:hover{background:rgba(255,255,255,.12)}
 #deck{position:relative;width:100vw;height:100vh;z-index:1}
-.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:52px 72px;opacity:0;pointer-events:none;transform:scale(1.04);transition:opacity .4s ease,transform .4s var(--spring);overflow:hidden}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:56px 72px;opacity:0;pointer-events:none;transform:scale(1.04);transition:opacity .4s ease,transform .4s var(--spring);overflow:hidden}
 .slide.active{opacity:1;pointer-events:auto;transform:scale(1)}
 .slide.out{opacity:0;transform:scale(.96)}
 .anim{opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s ease}
@@ -46,20 +43,20 @@ html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-fam
 .slide.active .anim:nth-child(8){transition-delay:.6s}
 .label{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
 h1{font-size:clamp(48px,7.5vw,88px);font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:16px}
-h2{font-size:clamp(24px,3.8vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.12;margin-bottom:14px}
+h2{font-size:clamp(26px,4vw,48px);font-weight:700;letter-spacing:-.025em;line-height:1.12;margin-bottom:16px}
 .tagline{font-size:clamp(14px,1.8vw,19px);color:var(--text2);line-height:1.55;max-width:640px;text-align:center}
 .accent{color:var(--orange)}.teal{color:var(--teal)}.green{color:var(--green)}.red{color:var(--red)}
-.grad{background:linear-gradient(135deg,var(--text) 20%,var(--orange) 55%,var(--teal) 85%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.divider{width:40px;height:2px;background:var(--orange);border-radius:2px;margin:20px auto;box-shadow:0 0 8px rgba(255,107,53,.4)}
 .glass{background:var(--glass);border:1px solid var(--border);border-radius:var(--r)}
 .stat-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-.stat{background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.28);border-radius:14px;padding:14px 22px;text-align:center;min-width:110px}
+.stat{background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.28);border-radius:14px;padding:14px 22px;text-align:center;min-width:120px}
 .sv{font-family:var(--mono);font-size:clamp(20px,2.8vw,28px);font-weight:700;color:var(--orange)}
 .sk{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
 .pain{display:flex;flex-direction:column;gap:12px;max-width:560px;width:100%;margin-top:18px}
 .pain-item{background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 18px;font-size:14px;color:var(--text2);display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-24px);transition:opacity .4s,transform .4s var(--spring)}
 .pain-item.show{opacity:1;transform:translateX(0)}
 .pain-item span{font-size:20px;flex-shrink:0}
-.big-word{font-size:clamp(48px,7.5vw,80px);font-weight:800;letter-spacing:-.04em;opacity:0;transform:scale(.92);transition:opacity .4s,transform .5s var(--spring)}
+.big-word{font-size:clamp(52px,8vw,88px);font-weight:800;letter-spacing:-.04em;opacity:0;transform:scale(.92);transition:opacity .4s,transform .5s var(--spring)}
 .big-word.show{opacity:1;transform:scale(1)}
 .pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
 .pill{background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.3);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--orange)}
@@ -73,23 +70,18 @@ h2{font-size:clamp(24px,3.8vw,44px);font-weight:700;letter-spacing:-.025em;line-
 .feat-t{font-size:13px;font-weight:700;margin-bottom:4px}
 .feat-d{font-size:11px;color:var(--text2);line-height:1.5}
 .url-big{font-family:var(--mono);font-size:clamp(13px,2vw,22px);color:var(--orange);text-decoration:none;border-bottom:2px solid var(--orange);padding-bottom:4px}
-.credit{position:absolute;bottom:36px;right:32px;font-size:11px;color:var(--text3)}
+.credit{position:absolute;bottom:36px;right:32px;font-size:11px;color:var(--text3);text-align:right;line-height:1.7}
 .letter{display:inline-block;opacity:0;transform:translateY(36px);animation:letterUp .5s var(--spring) forwards}
 @keyframes letterUp{to{opacity:1;transform:translateY(0)}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes breathPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
-.s1-glow{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,.08) 0%,transparent 70%);pointer-events:none;animation:float 4s ease-in-out infinite}
-/* Phone mock */
 .phone-wrap{display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap;width:100%;max-width:920px}
-.phone{width:280px;height:560px;background:var(--bg2);border:2px solid var(--border2);border-radius:36px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08);position:relative;flex-shrink:0}
-.phone-sm{width:250px;height:500px}
+.phone{width:280px;height:560px;background:var(--bg2);border:2px solid var(--border2);border-radius:36px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08);flex-shrink:0}
 .phone-notch{width:100px;height:26px;background:#000;border-radius:0 0 14px 14px;margin:0 auto;flex-shrink:0}
 .phone-screen{flex:1;overflow:hidden;position:relative;background:var(--bg)}
 .phone-scroll{height:100%;overflow-y:auto;padding-bottom:58px}
 .phone-nav{height:54px;background:rgba(8,8,8,.95);border-top:1px solid var(--border);display:flex;flex-shrink:0}
-.pnav{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text3);font-size:9px;font-weight:600}
+.pnav{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text3);font-size:8px;font-weight:600}
 .pnav.on{color:var(--orange)}.pnav.sos{color:var(--red)}.pnav.sos.on{color:var(--red)}
-.pnav-ic{font-size:16px}
+.pnav-ic{font-size:14px}
 .m-greet{padding:14px 16px 8px;font-size:1.3rem;font-weight:800;letter-spacing:-.02em}
 .m-pill{display:inline-block;margin:0 16px 10px;padding:5px 11px;background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.25);border-radius:99px;font-size:10px;font-weight:600;color:var(--orange)}
 .m-sos{display:flex;align-items:center;gap:10px;margin:0 14px 12px;padding:12px 14px;background:linear-gradient(135deg,rgba(255,59,48,.18),rgba(255,107,53,.08));border:1px solid rgba(255,59,48,.35);border-radius:var(--r)}
@@ -105,35 +97,22 @@ h2{font-size:clamp(24px,3.8vw,44px);font-weight:700;letter-spacing:-.025em;line-
 .m-lbl{font-size:11px;font-weight:600}.m-sub{font-size:9px;color:var(--text3);margin-top:1px}
 .m-badge{padding:3px 8px;border-radius:99px;font-size:8px;font-weight:700;background:rgba(78,205,196,.12);color:var(--teal);border:1px solid rgba(78,205,196,.25);margin-left:auto;flex-shrink:0}
 .m-badge.asneeded{background:rgba(191,90,242,.12);color:var(--purple);border-color:rgba(191,90,242,.25)}
-/* Score ring */
+.m-chip{display:inline-block;padding:4px 9px;border-radius:99px;font-size:8px;font-weight:600;background:var(--glass);border:1px solid var(--border);color:var(--text2);margin:2px}
 .score-ring{width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--orange) 0% 52%,var(--teal) 52% 87%,rgba(255,255,255,.06) 87% 100%);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0}
-.score-ring.lg{width:160px;height:160px}
 .score-ring::before{content:'';position:absolute;inset:12px;border-radius:50%;background:var(--bg2)}
-.score-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
-.score-num{position:relative;z-index:1;font-size:36px;font-weight:800;letter-spacing:-.04em;line-height:1}
-.score-ring.lg .score-num{font-size:44px}
+.score-num{position:relative;z-index:1;font-size:36px;font-weight:800;letter-spacing:-.04em}
 .score-lbl{position:relative;z-index:1;font-size:8px;font-weight:700;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-top:2px}
-.rings-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:320px;width:100%}
-.ring-cell{display:flex;flex-direction:column;align-items:center;gap:4px}
-.mini-ring{width:44px;height:44px;border-radius:50%;border:3px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
-.ring-cell-name{font-size:8px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em}
-/* Timeline */
-.tl{display:flex;flex-direction:column;gap:0;max-width:480px;width:100%}
+.tl{display:flex;flex-direction:column;gap:0;max-width:520px;width:100%;margin-top:12px}
 .tl-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);align-items:flex-start}
 .tl-item:last-child{border-bottom:none}
 .tl-time{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--orange);width:52px;flex-shrink:0;padding-top:2px}
 .tl-body{flex:1}.tl-title{font-size:12px;font-weight:700;margin-bottom:2px}.tl-desc{font-size:10px;color:var(--text2);line-height:1.45}
 .tl-sys{font-size:8px;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
-.tl-dot-col{display:flex;flex-direction:column;align-items:center;width:12px;flex-shrink:0;padding-top:4px}
-.tl-dot{width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px rgba(255,107,53,.5)}
-.tl-line{width:2px;flex:1;background:linear-gradient(var(--orange),var(--teal));min-height:16px;margin-top:4px;opacity:.4}
-/* Habit chips */
-.hgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:480px;width:100%}
-.hchip{padding:12px 6px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);display:flex;flex-direction:column;align-items:center;gap:5px}
+.hgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:340px;width:100%}
+.hchip{padding:14px 8px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;gap:6px}
 .hchip.sel{background:rgba(255,107,53,.1);border-color:var(--orange)}
-.hchip-ic{font-size:1.4rem}.hchip-nm{font-size:9px;font-weight:600;color:var(--text2);text-align:center;line-height:1.3}
+.hchip-ic{font-size:1.5rem}.hchip-nm{font-size:9px;font-weight:600;color:var(--text2);text-align:center}
 .hchip.sel .hchip-nm{color:var(--orange)}
-/* Forecast */
 .forecast{padding:14px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r);max-width:300px;width:100%}
 .fc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .fc-title{font-size:12px;font-weight:700}
@@ -142,766 +121,1456 @@ h2{font-size:clamp(24px,3.8vw,44px);font-weight:700;letter-spacing:-.025em;line-
 .fc-risk.med{background:rgba(255,107,53,.12);color:var(--orange);border:1px solid rgba(255,107,53,.3)}
 .fc-risk.low{background:rgba(6,214,160,.12);color:var(--green);border:1px solid rgba(6,214,160,.3)}
 .fc-bar{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin:8px 0}
-.fc-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--orange),var(--red))}
+.fc-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--orange),var(--red));transition:width 1.2s ease}
 .fc-triggers{font-size:10px;color:var(--text2);line-height:1.5}
-/* Breath ring */
-.breath-ring{width:160px;height:160px;border-radius:50%;border:3px solid rgba(78,205,196,.25);display:flex;align-items:center;justify-content:center;margin:0 auto;animation:breathPulse 4s ease-in-out infinite}
+.breath-ring{width:160px;height:160px;border-radius:50%;border:3px solid rgba(78,205,196,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all .6s ease;margin:0 auto}
+.breath-ring.inhale{border-color:var(--teal);box-shadow:0 0 40px rgba(78,205,196,.35);transform:scale(1.15)}
+.breath-ring.hold{border-color:var(--orange);box-shadow:0 0 40px rgba(255,107,53,.3);transform:scale(1.08)}
+.breath-ring.exhale{border-color:rgba(78,205,196,.3);transform:scale(.92)}
 .breath-num{font-size:3rem;font-weight:800;color:var(--orange);line-height:1}
-.sos-phases{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:520px;margin-top:16px}
-.sos-phase{background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;text-align:center;min-width:90px;flex:1}
-.sos-phase.active{border-color:rgba(255,107,53,.4);background:rgba(255,107,53,.08)}
-.sos-phase-num{font-size:1.2rem;font-weight:900;color:var(--orange);opacity:.35;line-height:1}
-.sos-phase-label{font-size:11px;font-weight:700;margin-top:4px}
-/* Journal */
+.breath-label{font-size:11px;font-weight:700;color:var(--teal);margin-top:6px;letter-spacing:.08em;text-transform:uppercase}
 .jcard{padding:14px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r);max-width:300px;width:100%;text-align:left}
 .jdate{font-size:9px;color:var(--text3);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
 .jmood{display:flex;gap:6px;margin-bottom:8px}
-.jmood span{font-size:1.2rem;opacity:.35}.jmood span.on{opacity:1}
+.jmood span{font-size:1.2rem;opacity:.4}.jmood span.on{opacity:1}
 .jtext{font-size:11px;color:var(--text2);line-height:1.55;margin-bottom:8px}
 .jtags{display:flex;gap:5px;flex-wrap:wrap}
 .jtag{padding:3px 8px;border-radius:99px;font-size:8px;font-weight:600;background:rgba(255,107,53,.1);color:var(--orange);border:1px solid rgba(255,107,53,.2)}
-/* Split layout */
 .split{display:flex;gap:32px;align-items:center;justify-content:center;flex-wrap:wrap;width:100%;max-width:900px}
 .split-text{flex:1;min-width:240px;max-width:400px;text-align:left}
 .split-text h2{text-align:left}
 .split-text .tagline{text-align:left;max-width:none}
-/* Nav tabs demo */
 .tabs-demo{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:640px}
-.tab-demo{padding:12px 14px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);text-align:center;min-width:84px}
+.tab-demo{padding:12px 16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);text-align:center;min-width:90px}
 .tab-demo.on{border-color:rgba(255,107,53,.4);background:rgba(255,107,53,.08)}
 .tab-demo.sos{border-color:rgba(255,59,48,.35);background:rgba(255,59,48,.08)}
 .tab-ic{font-size:22px;margin-bottom:4px}.tab-nm{font-size:10px;font-weight:700;color:var(--text2)}
 .tab-demo.on .tab-nm{color:var(--orange)}.tab-demo.sos .tab-nm{color:var(--red)}
-/* System bars */
 .sys-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);width:100%;max-width:400px}
 .sys-row:last-child{border-bottom:none}
 .sys-ic{font-size:14px;width:24px;text-align:center}
 .sys-lbl{font-size:11px;color:var(--text2);width:80px}
 .sys-bar{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
-.sys-fill{height:100%;border-radius:2px}
+.sys-fill{height:100%;border-radius:2px;transition:width 1.2s ease}
 .sys-pct{font-size:10px;font-weight:700;width:32px;text-align:right;color:var(--teal)}
-/* Med schedule */
-.med-schedule{display:flex;flex-direction:column;gap:10px;max-width:320px;width:100%}
-.med-time-block{background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px}
-.med-time-head{display:flex;justify-content:space-between;margin-bottom:8px}
-.med-time-label{font-size:11px;font-weight:700}
-.med-time-count{font-size:9px;color:var(--text3)}
-.med-pill-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px}
-.med-pill-row:last-child{border-bottom:none}
-.med-pill-icon{font-size:14px}.med-pill-name{flex:1;font-weight:600}
-.med-pill-dose{font-size:9px;color:var(--text3)}
-/* Learn */
-.learn-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:600px;width:100%}
-.learn-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:left}
-.learn-cat{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
-.learn-title{font-size:12px;font-weight:700;margin-bottom:3px}
-.learn-desc{font-size:10px;color:var(--text2);line-height:1.45}
-/* Privacy */
-.sec-specs{display:flex;flex-direction:column;gap:10px;max-width:520px;width:100%;margin-top:16px}
-.spec-item{background:rgba(6,214,160,.04);border:1px solid rgba(6,214,160,.15);border-radius:var(--r-sm);padding:14px 18px;display:flex;align-items:center;gap:14px;text-align:left}
-.spec-check{font-size:1.3rem;flex-shrink:0}
-.spec-text{font-size:13px;font-weight:600}
-.spec-detail{font-size:11px;color:var(--text2);margin-top:2px}
-/* Terminal */
 .terminal{background:var(--bg3);border:1px solid rgba(255,107,53,.2);border-radius:var(--r);padding:20px 22px;font-family:var(--mono);font-size:12px;line-height:1.85;max-width:540px;width:100%;text-align:left}
 .terminal .path{color:var(--orange);font-weight:600}
-.terminal .dim{color:var(--text3)}.terminal .hl{color:var(--green)}.terminal .teal{color:var(--teal)}
-/* Roadmap */
-.roadmap{display:flex;flex-direction:column;gap:0;max-width:520px;width:100%}
-.road-item{display:flex;gap:16px;padding:16px 0;border-left:2px solid rgba(255,107,53,.2);margin-left:14px;padding-left:24px;position:relative;text-align:left}
-.road-item::before{content:'';position:absolute;left:-7px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--orange);box-shadow:0 0 12px rgba(255,107,53,.5)}
-.road-item.future::before{background:var(--text3);box-shadow:none}
-.road-q{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:3px}
-.road-item.future .road-q{color:var(--text3)}
-.road-title{font-size:13px;font-weight:700;margin-bottom:3px}
-.road-desc{font-size:11px;color:var(--text2);line-height:1.5}
-/* Pillar cards */
-.pillar-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:560px;width:100%}
-.pillar{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:left}
-.pillar-ic{font-size:28px;margin-bottom:8px}
-.pillar-t{font-size:14px;font-weight:700;margin-bottom:4px}
-.pillar-d{font-size:11px;color:var(--text2);line-height:1.45}
-/* CTA */
-.link-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;border:none;transition:all .25s;font-family:var(--font)}
-.link-btn-orange{background:linear-gradient(135deg,var(--orange),rgba(255,107,53,.7));color:#fff;box-shadow:0 0 30px rgba(255,107,53,.3)}
-.link-btn-teal{background:linear-gradient(135deg,var(--teal),rgba(78,205,196,.7));color:#000;box-shadow:0 0 30px rgba(78,205,196,.25)}
-.link-btn:hover{transform:translateY(-2px);filter:brightness(1.12)}
-.cta-quote{font-size:clamp(14px,2vw,18px);font-style:italic;color:var(--text2);max-width:480px;line-height:1.65;border-left:3px solid var(--orange);padding-left:18px;text-align:left;margin-bottom:20px}
-@media(max-width:700px){.slide{padding:36px 20px}.grid2,.grid3,.hgrid,.pillar-grid,.learn-grid{grid-template-columns:1fr 1fr}.phone{width:240px;height:480px}}
-@media(max-width:480px){.grid2,.grid3,.hgrid,.pillar-grid,.learn-grid{grid-template-columns:1fr}.split{flex-direction:column}}
+.terminal .dim{color:var(--text3)}.terminal .hl{color:var(--green)}
+.qr-box{background:#fff;border-radius:12px;padding:12px;width:120px;height:120px}
+.sos-phase{display:flex;gap:8px;justify-content:center;margin:16px 0}
+.sos-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s ease}
+.sos-dot.done{background:var(--green)}
+.sos-dot.active{background:var(--orange);width:24px;border-radius:4px}
+.article-mock{padding:14px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r);text-align:left;max-width:280px;width:100%}
+.a-cat{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.a-title{font-size:12px;font-weight:700;margin-top:5px;line-height:1.3}
+.a-prev{font-size:10px;color:var(--text3);margin-top:5px;line-height:1.45}
+.profile-stat{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:280px;width:100%}
+.pstat{padding:14px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);text-align:center}
+.pstat-v{font-size:1.4rem;font-weight:800}.pstat-l{font-size:8px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+.s1-glow{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,.08) 0%,transparent 70%);pointer-events:none}
+@media(max-width:700px){.slide{padding:40px 20px}.grid2,.grid3{grid-template-columns:1fr}.phone{width:250px;height:500px}}
 </style>
 </head>
 <body>
-
 <canvas id="particles"></canvas>
 <div id="progress"></div>
 <div id="counter">01 / 21</div>
 <div id="dots"></div>
 <button id="fsBtn" onclick="toggleFS()">⛶ Fullscreen</button>
-
 <div id="deck">
 
-<!-- s0: Title -->
+
+<!-- 1 Title -->
+
 <div class="slide" id="s0">
-  <div class="s1-glow"></div>
-  <div class="anim label">Personal Recovery · 2026</div>
-  <div class="anim" style="font-size:clamp(56px,10vw,96px);font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:12px" id="titleLetters"></div>
-  <div class="anim tagline" style="color:var(--text);font-size:clamp(16px,2.2vw,22px);font-weight:500;margin-bottom:6px">Personal Recovery Operating System</div>
-  <div class="anim tagline" style="font-size:clamp(13px,1.6vw,16px)">Habits · Recovery Score · Emergency SOS · Journal</div>
-  <div class="anim" style="margin-top:24px"><a class="url-big" href="https://shamikhahmed.github.io/DisciplineOS/" target="_blank" rel="noopener">shamikhahmed.github.io/DisciplineOS</a></div>
-  <div class="anim" style="margin-top:20px;font-size:12px;color:var(--text3);letter-spacing:.06em">Press → or tap right · Shamikh Ahmed</div>
+<div class="s1-glow">
 </div>
 
-<!-- s1: Problem -->
-<div class="slide" id="s1" style="align-items:flex-start;">
-  <div class="anim label">The Problem</div>
-  <div class="anim" style="font-size:clamp(28px,5vw,56px);font-weight:800;letter-spacing:-.04em;line-height:1.1">Recovery tools are</div>
-  <div class="anim" style="font-size:clamp(28px,5vw,56px);font-weight:800;letter-spacing:-.04em;color:var(--red);line-height:1.1;margin-bottom:20px">fragmented.</div>
-  <div class="pain" id="painList">
-    <div class="pain-item"><span>🔄</span> Habit apps don't understand cravings or body healing.</div>
-    <div class="pain-item"><span>📓</span> Journals don't connect to trigger patterns or forecasts.</div>
-    <div class="pain-item"><span>🆘</span> Crisis moments need one tap — not five apps and a login.</div>
-    <div class="pain-item"><span>☁️</span> Cloud-dependent tools fail when you need them most.</div>
-  </div>
+<div class="anim label">Personal Recovery · 2026
 </div>
 
-<!-- s2: Solution -->
+<div class="anim" id="titleLetters" style="margin-bottom:12px">
+</div>
+
+<div class="anim tagline" style="color:var(--text);font-size:clamp(16px,2.2vw,22px);font-weight:600">Personal Recovery Operating System
+</div>
+
+<div class="anim tagline">Habits · Recovery Score · Emergency SOS · Journal · Trigger Intelligence
+</div>
+
+<div class="anim divider">
+</div>
+
+<div class="anim"><a class="url-big" href="https://shamikhahmed.github.io/DisciplineOS/" target="_blank" rel="noopener">shamikhahmed.github.io/DisciplineOS</a>
+</div>
+
+<div class="anim pills">
+<div class="pill">Offline PWA
+</div>
+<div class="pill">Zero Servers
+</div>
+<div class="pill">SF Pro UI
+
+</div>
+</div>
+<div class="credit anim">Built by Shamikh Ahmed<br>DisciplineOS © 2026
+
+</div>
+</div>
+<!-- 2 Problem -->
+
+<div class="slide" id="s1" style="align-items:flex-start">
+
+<div class="anim label">The Problem
+</div>
+
+<div class="anim" style="font-size:clamp(32px,5.5vw,64px);font-weight:800;letter-spacing:-.04em;line-height:1.1">Recovery tools are
+</div>
+
+<div class="anim" style="font-size:clamp(32px,5.5vw,64px);font-weight:800;letter-spacing:-.04em;color:var(--red);line-height:1.1;margin-bottom:20px">fragmented.
+</div>
+<div class="pain anim" id="painList">
+
+<div class="pain-item"><span>📱</span> Habit apps don't understand cravings — they track streaks, not crisis moments.
+</div>
+
+<div class="pain-item"><span>📓</span> Journals don't connect to triggers — insights stay locked in notes.
+</div>
+
+<div class="pain-item"><span>🆘</span> Crisis moments need <strong style="color:var(--text)">one tap</strong>, not five apps and a login.
+</div>
+
+<div class="pain-item"><span>💊</span> Medicines, skincare, and hair routines live in separate reminder apps.
+</div>
+
+<div class="pain-item"><span>🫁</span> Body-healing progress is invisible — you can't see hour-by-hour recovery.
+</div>
+
+</div>
+
+<div class="anim tagline" style="margin-top:18px;text-align:left;max-width:560px">People in recovery deserve a single, private command centre.
+
+</div>
+</div>
+<!-- 3 Solution -->
+
 <div class="slide" id="s2">
-  <div class="anim label">The Solution</div>
-  <div id="solWords" style="text-align:center">
-    <div class="big-word" id="w-one" style="color:#fff">One OS.</div>
-    <div class="big-word" id="w-off" style="color:var(--teal)">Offline.</div>
-    <div class="big-word" id="w-private" style="color:var(--green)">Private.</div>
-  </div>
-  <div class="anim pillar-grid" style="margin-top:24px">
-    <div class="pillar"><div class="pillar-ic">📊</div><div class="pillar-t">Score</div><div class="pillar-d">0–100 recovery compass from real behaviour</div></div>
-    <div class="pillar"><div class="pillar-ic">🔥</div><div class="pillar-t">Habits</div><div class="pillar-d">Streaks + timelines, not guilt</div></div>
-    <div class="pillar"><div class="pillar-ic">🆘</div><div class="pillar-t">Emergency</div><div class="pillar-d">Phased SOS for high-risk moments</div></div>
-    <div class="pillar"><div class="pillar-ic">🧠</div><div class="pillar-t">Intelligence</div><div class="pillar-d">Craving forecast from journal patterns</div></div>
-  </div>
+
+<div class="anim label">The Solution
 </div>
 
-<!-- s3: Today command centre -->
+<div id="solWords" style="text-align:center">
+
+<div class="big-word" id="w-score" style="color:var(--orange)">Score.
+</div>
+
+<div class="big-word" id="w-sos" style="color:var(--teal)">SOS.
+</div>
+
+<div class="big-word" id="w-private" style="color:var(--green)">Private.
+
+</div>
+</div>
+
+<div class="anim tagline" style="margin-top:20px;margin-bottom:24px"><strong style="color:var(--text)">DisciplineOS</strong> unifies recovery into one offline PWA on your phone.
+</div>
+
+<div class="anim grid2">
+
+<div class="feat"><div class="feat-ic">🧭
+</div><div class="feat-t">Recovery Score
+</div><div class="feat-d">0–100 compass from real behaviour — habits, routines, journal, streaks.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">🔥
+</div><div class="feat-t">12+ Habits
+</div><div class="feat-d">Streaks + hourly timelines — science-informed, not guilt-driven.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">🆘
+</div><div class="feat-t">Emergency SOS
+</div><div class="feat-d">Phased protocol for high-risk craving moments. One thumb.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">🔮
+</div><div class="feat-t">Trigger Intelligence
+</div><div class="feat-d">Craving forecast from journal patterns — know risk before it hits.
+
+</div>
+</div>
+
+
+</div>
+</div>
+<!-- 4 Six-tab navigation -->
+
 <div class="slide" id="s3">
-  <div class="anim label">Today</div>
-  <div class="split">
-    <div class="split-text">
-      <h2 class="anim">Your daily command centre.</h2>
-      <p class="anim tagline">Medicines, skincare, hair routines, and habit progress in one checklist. One-tap SOS. Gentle nudges. Designed for glances, not scrolling.</p>
-      <div class="anim tabs-demo" style="margin-top:12px">
-        <div class="tab-demo on"><div class="tab-ic">☀️</div><div class="tab-nm">Today</div></div>
-        <div class="tab-demo"><div class="tab-ic">🧬</div><div class="tab-nm">Recovery</div></div>
-        <div class="tab-demo sos"><div class="tab-ic">🆘</div><div class="tab-nm">SOS</div></div>
-        <div class="tab-demo"><div class="tab-ic">📚</div><div class="tab-nm">Learn</div></div>
-        <div class="tab-demo"><div class="tab-ic">📓</div><div class="tab-nm">Journal</div></div>
-        <div class="tab-demo"><div class="tab-ic">👤</div><div class="tab-nm">You</div></div>
-      </div>
-    </div>
-    <div class="anim phone">
-      <div class="phone-notch"></div>
-      <div class="phone-screen">
-        <div class="phone-scroll">
-          <div class="m-greet">Good morning ☀️</div>
-          <div class="m-pill">4/7 today's tasks done</div>
-          <div class="m-sos"><span class="m-sos-ic">🆘</span><div><div class="m-sos-t">Emergency SOS</div><div class="m-sos-s">Tap when cravings hit</div></div></div>
-          <div class="m-sec">Today's Routines</div>
-          <div class="m-group">
-            <div class="m-ghead"><span>💊 Medicines</span><span class="m-gprog">2/3</span></div>
-            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Bupropion</div><div class="m-sub">8:00 AM · 150mg</div></div></div>
-            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Omega-3</div><div class="m-sub">8:00 AM · with food</div></div></div>
-            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Melatonin</div><div class="m-sub">10:00 PM</div></div><span class="m-badge">Due soon</span></div>
-          </div>
-          <div class="m-group">
-            <div class="m-ghead"><span>✨ Skincare AM</span><span class="m-gprog">1/2</span></div>
-            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Gentle cleanser</div></div></div>
-            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">SPF 50</div></div></div>
-          </div>
-          <div class="m-sec">Habit Progress</div>
-          <div class="m-group">
-            <div class="m-row"><div style="font-size:1.2rem">🚬</div><div><div class="m-lbl">No smoking</div><div class="m-sub">Day 14 · 12 day streak</div></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="phone-nav">
-        <div class="pnav on"><span class="pnav-ic">☀️</span>Today</div>
-        <div class="pnav"><span class="pnav-ic">🧬</span>Recovery</div>
-        <div class="pnav sos"><span class="pnav-ic">🆘</span>SOS</div>
-        <div class="pnav"><span class="pnav-ic">📚</span>Learn</div>
-        <div class="pnav"><span class="pnav-ic">📓</span>Journal</div>
-      </div>
-    </div>
-  </div>
+
+<div class="anim label">Navigation
 </div>
 
-<!-- s4: Recovery score ring 87 -->
+<div class="anim"><h2>Six tabs. One recovery OS.</h2>
+</div>
+
+<div class="anim tagline" style="margin-bottom:24px">Designed for glances, not scrolling. Every pillar one tap away.
+</div>
+
+<div class="anim tabs-demo">
+<div class="tab-demo on"><div class="tab-ic">☀️
+</div><div class="tab-nm">Today
+
+</div>
+</div>
+
+<div class="tab-demo"><div class="tab-ic">🫁
+</div><div class="tab-nm">Recovery
+
+</div>
+</div>
+<div class="tab-demo sos"><div class="tab-ic">🆘
+</div><div class="tab-nm">SOS
+
+</div>
+</div>
+
+<div class="tab-demo"><div class="tab-ic">📚
+</div><div class="tab-nm">Learn
+
+</div>
+</div>
+
+<div class="tab-demo"><div class="tab-ic">📝
+</div><div class="tab-nm">Journal
+
+</div>
+</div>
+
+<div class="tab-demo"><div class="tab-ic">👤
+</div><div class="tab-nm">You
+
+</div>
+</div>
+</div>
+
+<div class="anim grid3" style="margin-top:24px">
+
+<div class="feat"><div class="feat-t">☀️ Today
+</div><div class="feat-d">Routines checklist, habit progress, one-tap SOS, gentle nudges.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-t">🫁 Recovery
+</div><div class="feat-d">Hourly + daily body-healing timelines, craving forecast.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-t">🆘 SOS
+</div><div class="feat-d">Emergency craving protocol, grounding tools, breathe timer.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-t">📚 Learn
+</div><div class="feat-d">Recovery knowledge library with evidence-tagged articles.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-t">📝 Journal
+</div><div class="feat-d">Daily entries, mood, triggers — feeds craving forecasts.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-t">👤 You
+</div><div class="feat-d">Medicines, skincare/hair, habits, settings, export/import.
+
+</div>
+</div>
+
+
+</div>
+</div>
+<!-- 5 Today phone mock -->
+
 <div class="slide" id="s4">
-  <div class="anim label">Recovery Score</div>
-  <div class="split">
-    <div class="anim" style="display:flex;flex-direction:column;align-items:center;gap:16px">
-      <div class="score-ring lg">
-        <div class="score-inner">
-          <div class="score-num">87</div>
-          <div class="score-lbl">Recovery</div>
-        </div>
-      </div>
-      <div class="rings-row">
-        <div class="ring-cell"><div class="mini-ring" style="border-color:var(--orange);color:var(--orange)">91</div><div class="ring-cell-name">Physical</div></div>
-        <div class="ring-cell"><div class="mini-ring" style="border-color:var(--teal);color:var(--teal)">84</div><div class="ring-cell-name">Mental</div></div>
-        <div class="ring-cell"><div class="mini-ring" style="border-color:var(--green);color:var(--green)">88</div><div class="ring-cell-name">Sleep</div></div>
-        <div class="ring-cell"><div class="mini-ring" style="border-color:var(--gold);color:var(--gold)">72</div><div class="ring-cell-name">Craving</div></div>
-      </div>
-    </div>
-    <div class="split-text">
-      <h2 class="anim">Your recovery compass.</h2>
-      <p class="anim tagline">A 0–100 score built from real behaviour — streaks, routines, journal patterns. Body system scores track physical recovery. Not a streak. A system.</p>
-      <div class="anim" style="margin-top:12px">
-        <div class="sys-row"><span class="sys-ic">🫁</span><span class="sys-lbl">Lungs</span><div class="sys-bar"><div class="sys-fill" style="width:85%;background:var(--teal)"></div></div><span class="sys-pct">85%</span></div>
-        <div class="sys-row"><span class="sys-ic">🧠</span><span class="sys-lbl">Brain</span><div class="sys-bar"><div class="sys-fill" style="width:72%;background:var(--orange)"></div></div><span class="sys-pct">72%</span></div>
-        <div class="sys-row"><span class="sys-ic">❤️</span><span class="sys-lbl">Heart</span><div class="sys-bar"><div class="sys-fill" style="width:91%;background:var(--green)"></div></div><span class="sys-pct">91%</span></div>
-        <div class="sys-row"><span class="sys-ic">🩸</span><span class="sys-lbl">Blood</span><div class="sys-bar"><div class="sys-fill" style="width:78%;background:var(--teal)"></div></div><span class="sys-pct">78%</span></div>
-      </div>
-    </div>
-  </div>
+<div class="anim label">Today Tab
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>Your daily command centre.</h2>
+<div class="tagline">Greeting, progress pill "3/7 tasks", routine checklist rows with checkboxes, orange SOS button — mirrors app.css Today screen.
 </div>
 
-<!-- s5: Hourly timeline -->
+<div class="pills" style="justify-content:flex-start;margin-top:16px">
+<div class="pill">3/7 tasks
+</div>
+<div class="pill">Gentle nudges
+</div>
+<div class="pill">One-tap SOS
+
+</div>
+</div>
+</div>
+<div class="phone-wrap anim">
+<div class="phone">
+<div class="phone-notch">
+</div>
+<div class="phone-screen">
+<div class="phone-scroll">
+
+<div class="m-greet">Good morning,<br>Shamikh
+</div>
+
+<div class="m-pill">3 / 7 tasks done
+</div>
+
+<div class="m-sos"><span class="m-sos-ic">🆘</span><div><div class="m-sos-t">Emergency SOS
+</div><div class="m-sos-s">One tap when cravings hit
+
+</div>
+</div>
+</div>
+
+<div class="m-sec">Today's Routines
+</div>
+
+<div class="m-group">
+<div class="m-ghead"><span>💊 Medicines</span><span class="m-gprog">2/3</span>
+</div>
+
+<div class="m-row"><div class="m-box on">✓
+</div><div><div class="m-lbl">Sertraline 50mg
+</div><div class="m-sub">Morning dose
+
+</div>
+</div><span class="m-badge">08:00</span>
+</div>
+
+<div class="m-row"><div class="m-box on">✓
+</div><div><div class="m-lbl">Vitamin D3
+</div><div class="m-sub">With breakfast
+
+</div>
+</div><span class="m-badge">08:00</span>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div><div class="m-lbl">Ibuprofen
+</div><div class="m-sub">As needed
+
+</div>
+</div><span class="m-badge asneeded">PRN</span>
+
+</div>
+</div>
+
+<div class="m-group">
+<div class="m-ghead"><span>✨ Skincare AM</span><span class="m-gprog">1/4</span>
+</div>
+
+<div class="m-row"><div class="m-box on">✓
+</div><div class="m-lbl">Gentle cleanser
+
+</div>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">Vitamin C serum
+
+</div>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">SPF 50 moisturiser
+
+</div>
+</div>
+</div>
+
+<div class="m-group">
+<div class="m-ghead"><span>💇 Hair AM</span><span class="m-gprog">0/2</span>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">Minoxidil foam
+
+</div>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">Scalp massage
+
+</div>
+</div>
+</div>
+
+<div class="m-sec">Habit Progress
+</div>
+
+<div class="m-group" style="text-align:center;padding:14px"><div style="font-size:10px;color:var(--text3)">RECOVERY SCORE
+</div>
+<div style="font-size:28px;font-weight:800;color:var(--orange)">87
+</div>
+<div style="font-size:9px;color:var(--teal);margin-top:4px">Vape · Day 14
+
+</div>
+</div>
+
+
+</div>
+</div>
+<div class="phone-nav"><div class="pnav on"><span class="pnav-ic">☀️</span>Today
+</div><div class="pnav"><span class="pnav-ic">🫁</span>Recovery
+</div><div class="pnav sos"><span class="pnav-ic">🆘</span>SOS
+</div><div class="pnav"><span class="pnav-ic">📚</span>Learn
+</div><div class="pnav"><span class="pnav-ic">📝</span>Journal
+</div><div class="pnav"><span class="pnav-ic">👤</span>You
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+<!-- 6 Recovery score -->
+
 <div class="slide" id="s5">
-  <div class="anim label">Recovery Engine</div>
-  <div class="split">
-    <div class="split-text">
-      <h2 class="anim">Hourly body-healing timeline.</h2>
-      <p class="anim tagline">Science-informed milestones for the first 72 hours per habit type — then daily and weekly beyond. See exactly what your body is doing right now.</p>
-    </div>
-    <div class="anim tl">
-      <div class="tl-item">
-        <div class="tl-time">20m</div>
-        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
-        <div class="tl-body"><div class="tl-title">Heart rate normalises</div><div class="tl-desc">Blood pressure and pulse begin dropping toward baseline.</div><div class="tl-sys">Cardiovascular</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">8h</div>
-        <div class="tl-dot-col"><div class="tl-dot" style="background:var(--teal)"></div><div class="tl-line"></div></div>
-        <div class="tl-body"><div class="tl-title">Oxygen levels rise</div><div class="tl-desc">Carbon monoxide clears. Blood oxygen returns to normal.</div><div class="tl-sys">Respiratory</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">24h</div>
-        <div class="tl-dot-col"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-line"></div></div>
-        <div class="tl-body"><div class="tl-title">Nicotine fully eliminated</div><div class="tl-desc">Withdrawal peaks — SOS protocol most valuable here.</div><div class="tl-sys">Neurological</div></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-time">72h</div>
-        <div class="tl-dot-col"><div class="tl-dot"></div></div>
-        <div class="tl-body"><div class="tl-title">Bronchial tubes relax</div><div class="tl-desc">Breathing eases. Energy begins returning. Milestone unlocked.</div><div class="tl-sys">Respiratory</div></div>
-      </div>
-    </div>
-  </div>
+<div class="anim label">Recovery Score
+</div>
+<div class="anim split">
+<div class="score-ring anim"><div style="display:flex;flex-direction:column;align-items:center"><div class="score-num">87
+</div><div class="score-lbl">Recovery
+
+</div>
+</div>
 </div>
 
-<!-- s6: SOS Emergency -->
+<div class="split-text"><h2>Your 0–100 recovery compass.</h2>
+<div class="tagline">Conic gradient ring — orange for habits, teal for routines — mirrors the live Recovery tab hero metric.
+</div>
+
+<div class="feat" style="margin-top:16px"><div class="feat-t">What feeds the score
+</div>
+<div class="feat-d" style="margin-top:8px">✓ Habit streaks &amp; daily check-ins<br>✓ Medicine &amp; routine completion<br>✓ Journal consistency<br>✓ Milestone progress on timelines
+
+</div>
+</div>
+
+<div class="stat-row" style="justify-content:flex-start;margin-top:14px">
+
+<div class="stat"><div class="sv">14
+</div><div class="sk">Day Streak
+
+</div>
+</div>
+
+<div class="stat"><div class="sv">3
+</div><div class="sk">Active Habits
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+<!-- 7 Medicines -->
+
 <div class="slide" id="s6">
-  <div class="anim label">Emergency SOS</div>
-  <div class="split">
-    <div class="anim" style="text-align:center">
-      <div class="breath-ring">
-        <div><div class="breath-num">4</div><div style="font-size:10px;color:var(--text2);font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.08em">Inhale</div></div>
-      </div>
-      <div class="sos-phases">
-        <div class="sos-phase active"><div class="sos-phase-num">01</div><div class="sos-phase-label">Pause</div></div>
-        <div class="sos-phase"><div class="sos-phase-num">02</div><div class="sos-phase-label">Ground</div></div>
-        <div class="sos-phase"><div class="sos-phase-num">03</div><div class="sos-phase-label">Breathe</div></div>
-        <div class="sos-phase"><div class="sos-phase-num">04</div><div class="sos-phase-label">Decide</div></div>
-      </div>
-    </div>
-    <div class="split-text">
-      <h2 class="anim">Built for the moment you can't think straight.</h2>
-      <p class="anim tagline">Phased flow: Pause → Ground → Breathe → Decide. 5-4-3-2-1 grounding, breathing timer, crisis contacts. One-thumb, full-screen, no distractions.</p>
-      <div class="anim flow" style="margin-top:12px">
-        <div class="flow-node">⏸ Pause</div><div class="flow-arrow">→</div>
-        <div class="flow-node">🌍 Ground</div><div class="flow-arrow">→</div>
-        <div class="flow-node">🫁 Breathe</div><div class="flow-arrow">→</div>
-        <div class="flow-node">✅ Decide</div>
-      </div>
-    </div>
-  </div>
+<div class="anim label">Medicines
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>Fixed times or as-needed.</h2>
+<div class="tagline">Configure in Profile. Check off on Today. Push notifications + in-app toasts when doses are due.
+
+</div>
 </div>
 
-<!-- s7: Medicines -->
+<div class="anim" style="max-width:320px;width:100%">
+<div class="m-group" style="margin:0">
+
+<div class="m-ghead"><span>💊 Daily Medicines</span><span class="m-gprog">2/4</span>
+</div>
+
+<div class="m-row"><div class="m-box on">✓
+</div><div><div class="m-lbl">Sertraline 50mg
+</div><div class="m-sub">SSRI · morning with food
+
+</div>
+</div><span class="m-badge">08:00</span>
+</div>
+
+<div class="m-row"><div class="m-box on">✓
+</div><div><div class="m-lbl">Vitamin D3 2000IU
+</div><div class="m-sub">With breakfast
+
+</div>
+</div><span class="m-badge">08:00</span>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div><div class="m-lbl">Melatonin 3mg
+</div><div class="m-sub">Sleep aid
+
+</div>
+</div><span class="m-badge">22:00</span>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div><div class="m-lbl">Ibuprofen 400mg
+</div><div class="m-sub">Pain relief
+
+</div>
+</div><span class="m-badge asneeded">As needed</span>
+
+</div>
+</div>
+
+<div class="feat" style="margin-top:12px"><div class="feat-d">🟢 Teal time badges for scheduled doses<br>🟣 Purple PRN pill for as-needed entries<br>🔔 iOS 16.4+ push reminders when installed as PWA
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<!-- 8 Skincare/hair -->
+
 <div class="slide" id="s7">
-  <div class="anim label">Medicines</div>
-  <div class="split">
-    <div class="split-text">
-      <h2 class="anim">Never miss a dose.</h2>
-      <p class="anim tagline">Configure fixed times or as-needed scheduling in Profile. Push notifications plus in-app toasts. Add, edit, enable/disable any entry.</p>
-      <div class="anim stat-row" style="margin-top:12px">
-        <div class="stat"><div class="sv">Push</div><div class="sk">Reminders</div></div>
-        <div class="stat"><div class="sv">Fixed</div><div class="sk">Or as-needed</div></div>
-        <div class="stat"><div class="sv">0</div><div class="sk">Servers</div></div>
-      </div>
-    </div>
-    <div class="anim med-schedule">
-      <div class="med-time-block">
-        <div class="med-time-head"><span class="med-time-label">🌅 8:00 AM</span><span class="med-time-count">2 items</span></div>
-        <div class="med-pill-row"><span class="med-pill-icon">💊</span><span class="med-pill-name">Bupropion</span><span class="med-pill-dose">150mg</span></div>
-        <div class="med-pill-row"><span class="med-pill-icon">🐟</span><span class="med-pill-name">Omega-3</span><span class="med-pill-dose">1000mg</span></div>
-      </div>
-      <div class="med-time-block">
-        <div class="med-time-head"><span class="med-time-label">🌙 10:00 PM</span><span class="med-time-count">1 item</span></div>
-        <div class="med-pill-row"><span class="med-pill-icon">💊</span><span class="med-pill-name">Melatonin</span><span class="med-pill-dose">3mg · as needed</span></div>
-      </div>
-      <div class="med-time-block">
-        <div class="med-time-head"><span class="med-time-label">📅 Weekly</span><span class="med-time-count">Hair care</span></div>
-        <div class="med-pill-row"><span class="med-pill-icon">🧖</span><span class="med-pill-name">Deep conditioning mask</span></div>
-      </div>
-    </div>
-  </div>
+<div class="anim label">Skincare &amp; Hair
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>AM / PM + weekly steps.</h2>
+<div class="tagline">Set once in Profile. Check off daily on Today. Weekly deep-care chips for masks and treatments.
+
+</div>
 </div>
 
-<!-- s8: Skincare AM/PM -->
+<div class="anim" style="max-width:320px;width:100%">
+<span class="m-chip" style="background:rgba(255,107,53,.1);color:var(--orange);border-color:rgba(255,107,53,.25)">☀️ AM</span>
+<span class="m-chip">🌙 PM</span><span class="m-chip">📅 Weekly</span>
+
+<div class="m-group" style="margin:10px 0">
+<div class="m-ghead"><span>✨ Skincare AM</span><span class="m-gprog">2/4</span>
+</div>
+
+<div class="m-row"><div class="m-box on">✓
+</div><div class="m-lbl">Gentle cleanser
+
+</div>
+</div>
+
+<div class="m-row"><div class="m-box on">✓
+</div><div class="m-lbl">Vitamin C serum
+
+</div>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">Hyaluronic acid
+
+</div>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">SPF 50 moisturiser
+
+</div>
+</div>
+</div>
+
+<div class="m-group" style="margin:0 0 10px">
+<div class="m-ghead"><span>🌙 Skincare PM</span><span class="m-gprog">0/3</span>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">Double cleanse
+
+</div>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">Retinol 0.3%
+
+</div>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">Night moisturiser
+
+</div>
+</div>
+</div>
+
+<div class="m-group" style="margin:0">
+<div class="m-ghead"><span>💇 Hair AM</span><span class="m-gprog">1/2</span>
+</div>
+
+<div class="m-row"><div class="m-box on">✓
+</div><div class="m-lbl">Minoxidil foam
+
+</div>
+</div>
+
+<div class="m-row"><div class="m-box">
+</div><div class="m-lbl">Scalp massage (3 min)
+
+</div>
+</div>
+</div>
+<div style="margin-top:10px"><span class="m-chip">Clay mask · Sun</span><span class="m-chip">Deep condition · Wed</span><span class="m-chip">Scalp scrub · Sat</span>
+
+</div>
+</div>
+
+</div>
+</div>
+<!-- 9 Habits -->
+
 <div class="slide" id="s8">
-  <div class="anim label">Routines</div>
-  <div class="split">
-    <div class="anim phone phone-sm">
-      <div class="phone-notch"></div>
-      <div class="phone-screen">
-        <div class="phone-scroll">
-          <div class="m-greet" style="font-size:1.1rem">You · Routines 👤</div>
-          <div class="m-sec">Skincare AM</div>
-          <div class="m-group">
-            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Gentle cleanser</div></div></div>
-            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Vitamin C serum</div></div></div>
-            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">SPF 50</div></div></div>
-          </div>
-          <div class="m-sec">Skincare PM</div>
-          <div class="m-group">
-            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Double cleanse</div></div></div>
-            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Retinol</div><div class="m-sub">Alternate nights</div></div></div>
-            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Moisturiser</div></div></div>
-          </div>
-          <div class="m-sec">Hair · Weekly</div>
-          <div class="m-group">
-            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Deep conditioning mask</div></div></div>
-          </div>
-        </div>
-      </div>
-      <div class="phone-nav">
-        <div class="pnav"><span class="pnav-ic">☀️</span>Today</div>
-        <div class="pnav"><span class="pnav-ic">🧬</span>Recovery</div>
-        <div class="pnav sos"><span class="pnav-ic">🆘</span>SOS</div>
-        <div class="pnav"><span class="pnav-ic">📚</span>Learn</div>
-        <div class="pnav on"><span class="pnav-ic">👤</span>You</div>
-      </div>
-    </div>
-    <div class="split-text">
-      <h2 class="anim">Skincare AM/PM + hair routines.</h2>
-      <p class="anim tagline">AM / PM checklists per category. Weekly steps for deeper care. Set once in Profile, check off daily on Today.</p>
-      <div class="anim grid2" style="margin-top:12px">
-        <div class="feat"><div class="feat-ic">✨</div><div class="feat-t">Skincare AM/PM</div><div class="feat-d">Per-category checklists</div></div>
-        <div class="feat"><div class="feat-ic">💇</div><div class="feat-t">Hair care</div><div class="feat-d">Daily + weekly steps</div></div>
-        <div class="feat"><div class="feat-ic">🔔</div><div class="feat-t">Gentle nudges</div><div class="feat-d">In-app reminders for missed times</div></div>
-        <div class="feat"><div class="feat-ic">☀️</div><div class="feat-t">Today sync</div><div class="feat-d">All routines in one checklist</div></div>
-      </div>
-    </div>
-  </div>
+<div class="anim label">Habits
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>12 built-in + custom habits.</h2>
+<div class="tagline">Vape, cigarettes, porn, social media, and more. Streaks and recovery score update as you log progress.
 </div>
 
-<!-- s9: Habits -->
+<div class="stat-row" style="justify-content:flex-start;margin-top:14px">
+
+<div class="stat"><div class="sv">12+
+</div><div class="sk">Built-in
+
+</div>
+</div>
+
+<div class="stat"><div class="sv">∞
+</div><div class="sk">Custom
+
+</div>
+</div>
+
+</div>
+</div>
+<div class="hgrid anim">
+<div class="hchip sel"><div class="hchip-ic">💨
+</div><div class="hchip-nm">Vape
+
+</div>
+</div>
+<div class="hchip sel"><div class="hchip-ic">🚬
+</div><div class="hchip-nm">Cigarettes
+
+</div>
+</div>
+
+<div class="hchip"><div class="hchip-ic">🍺
+</div><div class="hchip-nm">Alcohol
+
+</div>
+</div>
+<div class="hchip sel"><div class="hchip-ic">🔞
+</div><div class="hchip-nm">Porn
+
+</div>
+</div>
+<div class="hchip sel"><div class="hchip-ic">📱
+</div><div class="hchip-nm">Social Media
+
+</div>
+</div>
+
+<div class="hchip"><div class="hchip-ic">🌿
+</div><div class="hchip-nm">Weed
+
+</div>
+</div>
+
+<div class="hchip"><div class="hchip-ic">🎮
+</div><div class="hchip-nm">Gaming
+
+</div>
+</div>
+
+<div class="hchip"><div class="hchip-ic">☕
+</div><div class="hchip-nm">Caffeine
+
+</div>
+</div>
+
+<div class="hchip"><div class="hchip-ic">🍬
+</div><div class="hchip-nm">Sugar
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<!-- 10 Recovery engine -->
+
 <div class="slide" id="s9">
-  <div class="anim label">Habits</div>
-  <h2 class="anim">12 built-in habits + custom.</h2>
-  <p class="anim tagline">Smoking, vape, alcohol, porn, social media, weed, gaming, sugar, caffeine, and more. Streaks and recovery score update as you log progress.</p>
-  <div class="anim hgrid" style="margin-top:16px">
-    <div class="hchip sel"><span class="hchip-ic">🚬</span><span class="hchip-nm">Smoking</span></div>
-    <div class="hchip"><span class="hchip-ic">💨</span><span class="hchip-nm">Vape</span></div>
-    <div class="hchip"><span class="hchip-ic">🍺</span><span class="hchip-nm">Alcohol</span></div>
-    <div class="hchip"><span class="hchip-ic">📱</span><span class="hchip-nm">Social media</span></div>
-    <div class="hchip"><span class="hchip-ic">🎮</span><span class="hchip-nm">Gaming</span></div>
-    <div class="hchip"><span class="hchip-ic">🌿</span><span class="hchip-nm">Weed</span></div>
-    <div class="hchip"><span class="hchip-ic">🍬</span><span class="hchip-nm">Sugar</span></div>
-    <div class="hchip"><span class="hchip-ic">☕</span><span class="hchip-nm">Caffeine</span></div>
-    <div class="hchip"><span class="hchip-ic">🔞</span><span class="hchip-nm">Porn</span></div>
-    <div class="hchip"><span class="hchip-ic">✋</span><span class="hchip-nm">Masturbation</span></div>
-    <div class="hchip"><span class="hchip-ic">🛒</span><span class="hchip-nm">Shopping</span></div>
-    <div class="hchip" style="border-style:dashed"><span class="hchip-ic">➕</span><span class="hchip-nm">Custom</span></div>
-  </div>
+<div class="anim label">Recovery Engine
 </div>
 
-<!-- s10: Trigger forecast -->
+<div class="anim"><h2>Science-informed. Human-centred.</h2>
+</div>
+
+<div class="anim tagline" style="margin-bottom:24px">Per-habit recovery timelines, body engine, craving forecast, knowledge-linked protocols.
+</div>
+
+<div class="anim flow">
+
+<div class="flow-node">🔥 Quit Date
+</div><div class="flow-arrow">→
+</div>
+
+<div class="flow-node">⏱️ Hourly 72h
+</div><div class="flow-arrow">→
+</div>
+
+<div class="flow-node">📅 Daily/Weekly
+</div><div class="flow-arrow">→
+</div>
+
+<div class="flow-node">🧬 Body Systems
+</div><div class="flow-arrow">→
+</div>
+
+<div class="flow-node">🔮 Forecast
+
+</div>
+</div>
+
+<div class="anim grid3" style="margin-top:20px">
+
+<div class="feat"><div class="feat-ic">🫁
+</div><div class="feat-t">Lungs &amp; Cardio
+</div><div class="feat-d">CO clearance, oxygen saturation, heart rate normalising — hour by hour.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">🧠
+</div><div class="feat-t">Neurological
+</div><div class="feat-d">Nicotine halving, dopamine recalibration, craving wave patterns.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">🌙
+</div><div class="feat-t">Sleep &amp; Mental
+</div><div class="feat-d">REM rebound, anxiety plateau, irritability peaks — all mapped.
+
+</div>
+</div>
+
+
+</div>
+</div>
+<!-- 11 Hourly timeline -->
+
 <div class="slide" id="s10">
-  <div class="anim label">Trigger Intelligence</div>
-  <div class="split">
-    <div class="split-text">
-      <h2 class="anim">Craving forecast.</h2>
-      <p class="anim tagline">Journal data feeds craving forecasts and recovery insights — connecting what you feel to when you're most vulnerable.</p>
-      <div class="anim forecast" style="max-width:100%">
-        <div class="fc-head"><div class="fc-title">Today's forecast</div><div class="fc-risk high">High risk</div></div>
-        <div class="fc-bar"><div class="fc-fill" style="width:78%"></div></div>
-        <div class="fc-triggers">Peak risk: 6–9 PM · Triggers: work stress, after meals, social settings. Evening entries mention "work stress" 4× this week.</div>
-      </div>
-    </div>
-    <div class="anim" style="display:flex;flex-direction:column;gap:12px;align-items:center">
-      <div class="forecast">
-        <div class="fc-head"><div class="fc-title">Pattern detected</div><div class="fc-risk med">Medium</div></div>
-        <div class="fc-bar"><div class="fc-fill" style="width:58%"></div></div>
-        <div class="fc-triggers">HALT state: Hungry + Alone. Craving forecast elevated after 5 PM.</div>
-      </div>
-      <div class="pills">
-        <div class="pill">work stress</div>
-        <div class="pill">afternoon</div>
-        <div class="pill">social settings</div>
-        <div class="pill">after meals</div>
-      </div>
-    </div>
-  </div>
+<div class="anim label">Hourly Timeline
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>First 72 hours, hour by hour.</h2>
+<div class="tagline">Body-healing milestones from timelines-hourly.js — see what's happening inside while you stay clean.
 </div>
 
-<!-- s11: Journal -->
+<div class="pill" style="display:inline-block;margin-top:12px">Active: Vape · Day 0
+
+</div>
+</div>
+<div class="tl anim">
+
+<div class="tl-item">
+<div class="tl-time">1h
+</div>
+<div class="tl-body"><div class="tl-title">Nicotine Declining
+</div><div class="tl-desc">Blood nicotine from your last puff dropping rapidly. First craving wave may hit within 60 minutes.
+</div><div class="tl-sys">🧠 Neurological
+
+</div>
+</div>
+</div>
+
+<div class="tl-item">
+<div class="tl-time">2h
+</div>
+<div class="tl-body"><div class="tl-title">Heart Rate Dropping
+</div><div class="tl-desc">Cardiovascular system responding to reduced stimulant load. Resting heart rate normalising.
+</div><div class="tl-sys">❤️ Cardiovascular
+
+</div>
+</div>
+</div>
+
+<div class="tl-item">
+<div class="tl-time">4h
+</div>
+<div class="tl-body"><div class="tl-title">Hand-to-Mouth Urge
+</div><div class="tl-desc">The behavioural habit of raising device to mouth peaks. Keep hands busy with water or a fidget.
+</div><div class="tl-sys">✋ Behavioural
+
+</div>
+</div>
+</div>
+
+<div class="tl-item">
+<div class="tl-time">6h
+</div>
+<div class="tl-body"><div class="tl-title">Cotinine Processing
+</div><div class="tl-desc">Liver metabolising nicotine into cotinine. Metabolic clearance accelerating.
+</div><div class="tl-sys">🔬 Metabolic
+
+</div>
+</div>
+</div>
+
+<div class="tl-item">
+<div class="tl-time">8h
+</div>
+<div class="tl-body"><div class="tl-title">Oxygen Normalising
+</div><div class="tl-desc">CO levels decreasing. Oxygen delivery to tissues improving — lungs beginning recovery.
+</div><div class="tl-sys">🫁 Lungs
+
+</div>
+</div>
+</div>
+
+<div class="tl-item">
+<div class="tl-time">18h
+</div>
+<div class="tl-body"><div class="tl-title">Airway Recovery Begins
+</div><div class="tl-desc">Vaping-related airway irritation starting to resolve. Deep breaths feel slightly easier.
+</div><div class="tl-sys">🫁 Lungs
+
+</div>
+</div>
+</div>
+
+<div class="tl-item">
+<div class="tl-time">36h
+</div>
+<div class="tl-body"><div class="tl-title">Dopamine Crash
+</div><div class="tl-desc">Dopamine baseline at its lowest. The flatline feeling is your brain recalibrating — temporary.
+</div><div class="tl-sys">📉 Neurological
+
+</div>
+</div>
+</div>
+
+<div class="tl-item">
+<div class="tl-time">60h
+</div>
+<div class="tl-body"><div class="tl-title">Taste Buds Waking
+</div><div class="tl-desc">Taste receptor recovery accelerating. Food may start tasting noticeably richer.
+</div><div class="tl-sys">👅 Sensory
+
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+<!-- 12 Body systems -->
+
 <div class="slide" id="s11">
-  <div class="anim label">Journal</div>
-  <div class="split">
-    <div class="split-text">
-      <h2 class="anim">Log mood, triggers, reflections.</h2>
-      <p class="anim tagline">Daily entries feed craving forecasts and recovery insights. Your patterns become your early warning system.</p>
-      <div class="anim stat-row" style="margin-top:12px">
-        <div class="stat"><div class="sv">Mood</div><div class="sk">Tracking</div></div>
-        <div class="stat"><div class="sv">Tags</div><div class="sk">Triggers</div></div>
-        <div class="stat"><div class="sv">AI</div><div class="sk">Forecast feed</div></div>
-      </div>
-    </div>
-    <div class="anim jcard">
-      <div class="jdate">Wednesday · Day 14</div>
-      <div class="jmood"><span>😔</span><span class="on">😤</span><span>😌</span><span>😰</span><span>💪</span></div>
-      <div class="jtext">Tough afternoon after the team meeting. Felt the pull around 5 PM but used the breathing exercise instead. Proud I didn't reach for it.</div>
-      <div class="jtags">
-        <span class="jtag">work stress</span>
-        <span class="jtag">afternoon</span>
-        <span class="jtag">craving resisted</span>
-        <span class="jtag">meeting</span>
-      </div>
-    </div>
-  </div>
+<div class="anim label">Body Systems
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>Physical recovery tracking.</h2>
+<div class="tagline">System scores update as milestones unlock — lungs, cardiovascular, neurological, sleep, and more.
+
+</div>
 </div>
 
-<!-- s12: Recovery tab mock -->
+<div class="anim" style="max-width:400px;width:100%">
+
+<div class="sys-row"><span class="sys-ic">🫁</span><span class="sys-lbl">Lungs</span><div class="sys-bar"><div class="sys-fill" data-w="72%" style="width:0;background:var(--teal)">
+
+</div>
+</div><span class="sys-pct">72%</span>
+</div>
+
+<div class="sys-row"><span class="sys-ic">❤️</span><span class="sys-lbl">Cardio</span><div class="sys-bar"><div class="sys-fill" data-w="85%" style="width:0;background:var(--green)">
+
+</div>
+</div><span class="sys-pct">85%</span>
+</div>
+
+<div class="sys-row"><span class="sys-ic">🧠</span><span class="sys-lbl">Neuro</span><div class="sys-bar"><div class="sys-fill" data-w="58%" style="width:0;background:var(--orange)">
+
+</div>
+</div><span class="sys-pct">58%</span>
+</div>
+
+<div class="sys-row"><span class="sys-ic">🌙</span><span class="sys-lbl">Sleep</span><div class="sys-bar"><div class="sys-fill" data-w="45%" style="width:0;background:var(--purple)">
+
+</div>
+</div><span class="sys-pct">45%</span>
+</div>
+
+<div class="sys-row"><span class="sys-ic">🧘</span><span class="sys-lbl">Mental</span><div class="sys-bar"><div class="sys-fill" data-w="63%" style="width:0;background:var(--teal)">
+
+</div>
+</div><span class="sys-pct">63%</span>
+</div>
+
+<div class="sys-row"><span class="sys-ic">⚡</span><span class="sys-lbl">Energy</span><div class="sys-bar"><div class="sys-fill" data-w="51%" style="width:0;background:var(--gold)">
+
+</div>
+</div><span class="sys-pct">51%</span>
+</div>
+
+
+</div>
+</div>
+</div>
+<!-- 13 Trigger forecast -->
+
 <div class="slide" id="s12">
-  <div class="anim label">Recovery Tab</div>
-  <div class="split">
-    <div class="anim phone phone-sm">
-      <div class="phone-notch"></div>
-      <div class="phone-screen">
-        <div class="phone-scroll">
-          <div class="m-greet" style="font-size:1.1rem">Recovery 🧬</div>
-          <div class="m-pill">Day 14 · No smoking</div>
-          <div style="padding:12px 14px;text-align:center">
-            <div style="font-size:2.5rem;font-weight:800;color:var(--orange);line-height:1">336<span style="font-size:1rem;color:var(--text3)">h</span></div>
-            <div style="font-size:9px;color:var(--text3);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:4px">Since quit</div>
-          </div>
-          <div class="m-sec">Next milestone</div>
-          <div class="m-group">
-            <div style="font-size:11px;font-weight:700;margin-bottom:4px">Circulation improves</div>
-            <div style="font-size:9px;color:var(--text2);line-height:1.5">Walking becomes easier. Skin tone improves noticeably.</div>
-          </div>
-          <div class="m-sec">Body systems</div>
-          <div class="m-group">
-            <div class="sys-row"><span class="sys-ic">🫁</span><span class="sys-lbl">Lungs</span><div class="sys-bar"><div class="sys-fill" style="width:85%;background:var(--teal)"></div></div><span class="sys-pct">85%</span></div>
-            <div class="sys-row"><span class="sys-ic">🧠</span><span class="sys-lbl">Brain</span><div class="sys-bar"><div class="sys-fill" style="width:72%;background:var(--orange)"></div></div><span class="sys-pct">72%</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="phone-nav">
-        <div class="pnav"><span class="pnav-ic">☀️</span>Today</div>
-        <div class="pnav on"><span class="pnav-ic">🧬</span>Recovery</div>
-        <div class="pnav sos"><span class="pnav-ic">🆘</span>SOS</div>
-        <div class="pnav"><span class="pnav-ic">📚</span>Learn</div>
-        <div class="pnav"><span class="pnav-ic">📓</span>Journal</div>
-      </div>
-    </div>
-    <div class="split-text">
-      <h2 class="anim">Full recovery timeline.</h2>
-      <p class="anim tagline">Hourly milestones for 72h, then daily and weekly. Body engine tracks physical recovery. Knowledge-linked protocols per habit type.</p>
-      <div class="anim pills">
-        <div class="pill">Body Engine</div>
-        <div class="pill">Dopamine Engine</div>
-        <div class="pill">Trigger Engine</div>
-        <div class="pill">Recovery Engine</div>
-      </div>
-    </div>
-  </div>
+<div class="anim label">Trigger Forecast
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>Know risk before it hits.</h2>
+<div class="tagline">Journal trigger patterns feed a craving forecast card with colour-coded risk levels.
+
+</div>
+</div>
+<div class="forecast anim">
+<div class="fc-head"><div class="fc-title">🔮 Craving Forecast
+</div><span class="fc-risk high">HIGH RISK</span>
+</div>
+<div style="font-size:10px;color:var(--text3);margin-bottom:6px">Thursday · 8–10 PM window
 </div>
 
-<!-- s13: Learn library -->
+<div class="fc-bar"><div class="fc-fill" data-w="78%" style="width:0">
+
+</div>
+</div>
+<div class="fc-triggers"><strong style="color:var(--text)">Top triggers:</strong><br>• Alone at home after work<br>• Boredom + phone in hand<br>• Stress from deadlines
+
+</div>
+</div>
+<div class="forecast anim" style="margin-top:10px">
+<div class="fc-head"><div class="fc-title">Tomorrow
+</div><span class="fc-risk med">MEDIUM</span>
+</div>
+
+<div class="fc-bar"><div class="fc-fill" data-w="45%" style="width:0">
+
+</div>
+</div>
+<div class="fc-triggers">Weekend pattern — risk rises Saturday afternoons.
+
+</div>
+</div>
+<div class="forecast anim" style="margin-top:10px">
+<div class="fc-head"><div class="fc-title">Sunday
+</div><span class="fc-risk low">LOW</span>
+</div>
+
+<div class="fc-bar"><div class="fc-fill" data-w="22%" style="width:0">
+
+</div>
+</div>
+<div class="fc-triggers">Gym + journal streak lowers forecast score.
+
+</div>
+</div>
+
+</div>
+</div>
+<!-- 14 SOS protocol -->
+
 <div class="slide" id="s13">
-  <div class="anim label">Learn</div>
-  <h2 class="anim">Recovery knowledge library.</h2>
-  <p class="anim tagline">Science-informed, human-centred. Protocols linked to your habits and milestones.</p>
-  <div class="anim learn-grid" style="margin-top:16px">
-    <div class="learn-card"><div class="learn-cat">Withdrawal</div><div class="learn-title">What happens in 72 hours</div><div class="learn-desc">Hour-by-hour breakdown of nicotine elimination.</div></div>
-    <div class="learn-card"><div class="learn-cat">Cravings</div><div class="learn-title">The 7-minute wave</div><div class="learn-desc">Why cravings peak and pass — ride them out.</div></div>
-    <div class="learn-card"><div class="learn-cat">Sleep</div><div class="learn-title">Recovery and rest</div><div class="learn-desc">How quitting affects sleep cycles.</div></div>
-    <div class="learn-card"><div class="learn-cat">Triggers</div><div class="learn-title">Mapping your patterns</div><div class="learn-desc">Identify HALT states before they hit.</div></div>
-  </div>
+<div class="anim label">Emergency SOS
 </div>
 
-<!-- s14: Privacy -->
+<div class="anim"><h2>Built for the moment you can't think straight.</h2>
+</div>
+
+<div class="anim tagline" style="margin-bottom:20px">Phased flow: Pause → Ground → Breathe → Decide. One-thumb, full-screen, no distractions.
+</div>
+
+<div class="anim flow">
+
+<div class="flow-node" style="border-color:rgba(255,59,48,.3)">⏸️ Pause
+</div><div class="flow-arrow">→
+</div>
+
+<div class="flow-node" style="border-color:rgba(255,107,53,.3)">🌍 Ground
+</div><div class="flow-arrow">→
+</div>
+
+<div class="flow-node" style="border-color:rgba(78,205,196,.3)">🫁 Breathe
+</div><div class="flow-arrow">→
+</div>
+
+<div class="flow-node" style="border-color:rgba(6,214,160,.3)">✅ Decide
+
+</div>
+</div>
+
+<div class="anim sos-phase"><div class="sos-dot done">
+</div><div class="sos-dot done">
+</div><div class="sos-dot active">
+</div>
+<div class="sos-dot">
+
+</div>
+</div>
+
+<div class="anim grid2" style="margin-top:16px">
+
+<div class="feat"><div class="feat-ic">5️⃣
+</div><div class="feat-t">5-4-3-2-1 Grounding
+</div><div class="feat-d">5 see, 4 hear, 3 touch, 2 smell, 1 taste.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">⏱️
+</div><div class="feat-t">Breathing Timer
+</div><div class="feat-d">Animated breathe ring — inhale, hold, exhale cycles.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">📞
+</div><div class="feat-t">Crisis Contacts
+</div><div class="feat-d">One-tap call or text without leaving the flow.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">👍
+</div><div class="feat-t">One-Thumb Design
+</div><div class="feat-d">From Today tab or red SOS nav button.
+
+</div>
+</div>
+
+
+</div>
+</div>
+<!-- 15 SOS breathe demo -->
+
 <div class="slide" id="s14">
-  <div class="anim label">Privacy</div>
-  <h2 class="anim green">Privacy by design.</h2>
-  <p class="anim tagline">Zero servers. No accounts. No analytics. Orange-on-obsidian UI — calm, not clinical.</p>
-  <div class="anim sec-specs">
-    <div class="spec-item"><span class="spec-check">📱</span><div><div class="spec-text">localStorage only</div><div class="spec-detail">Your recovery data never leaves your phone</div></div></div>
-    <div class="spec-item"><span class="spec-check">✈️</span><div><div class="spec-text">Offline-first PWA</div><div class="spec-detail">Service worker caches app shell after first load</div></div></div>
-    <div class="spec-item"><span class="spec-check">🔕</span><div><div class="spec-text">No accounts · No tracking</div><div class="spec-detail">No sign-up, no analytics, no backdoors</div></div></div>
-    <div class="spec-item"><span class="spec-check">📦</span><div><div class="spec-text">Export / import JSON</div><div class="spec-detail">Full backup you own — restore on any device</div></div></div>
-  </div>
+<div class="anim label">SOS · Breathe
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>Live breathe ring demo.</h2>
+<div class="tagline">Inhale · Hold · Exhale cycles automatically — same animation states as app.css breath-ring.
 </div>
 
-<!-- s15: Tech stack -->
+<div class="pills" style="justify-content:flex-start;margin-top:14px">
+
+<div class="pill" style="border-color:rgba(78,205,196,.4);color:var(--teal)">Inhale 4s
+</div>
+
+<div class="pill">Hold 4s
+</div>
+
+<div class="pill" style="border-color:rgba(78,205,196,.3);color:var(--teal)">Exhale 6s
+
+</div>
+</div>
+</div>
+
+<div class="anim" style="text-align:center">
+
+<div class="breath-ring" id="breathRing"><div class="breath-num" id="breathCount">4
+</div><div class="breath-label" id="breathLabel">Inhale
+
+</div>
+</div>
+<div style="margin-top:20px;font-size:12px;color:var(--text2)">Follow the ring. Each craving wave passes in ~3 minutes.
+
+</div>
+</div>
+
+</div>
+</div>
+<!-- 16 Journal -->
+
 <div class="slide" id="s15">
-  <div class="anim label">Engineering</div>
-  <h2 class="anim">Zero dependencies. <span class="accent">Maximum care.</span></h2>
-  <p class="anim tagline">No framework. No build step. Ship from index.html.</p>
-  <div class="anim terminal" style="margin-top:16px">
-    <div><span class="path">DisciplineOS/</span></div>
-    <div class="dim">├── index.html          <span class="hl"># PWA entry</span></div>
-    <div class="dim">├── css/app.css         <span class="hl"># Design system</span></div>
-    <div class="dim">├── js/modules/         <span class="hl"># dashboard · recovery · emergency</span></div>
-    <div class="dim">├── js/engines/         <span class="hl"># body · dopamine · trigger</span></div>
-    <div class="dim">├── sw.js               <span class="hl"># Service worker</span></div>
-    <div class="dim">└── manifest.json       <span class="hl"># Installable PWA</span></div>
-    <div style="margin-top:10px"><span class="teal">Storage</span>  → localStorage</div>
-    <div><span class="teal">Design</span>   → <span class="hl">#FF6B35</span> accent · dark glass UI</div>
-    <div><span class="teal">Deploy</span>   → GitHub Pages · zero backend</div>
-  </div>
-  <div class="anim stat-row" style="margin-top:16px">
-    <div class="stat"><div class="sv">0</div><div class="sk">Servers</div></div>
-    <div class="stat"><div class="sv">0</div><div class="sk">Accounts</div></div>
-    <div class="stat"><div class="sv">0</div><div class="sk">Build step</div></div>
-  </div>
+<div class="anim label">Journal
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>Log mood, triggers, reflections.</h2>
+<div class="tagline">Journal data feeds craving forecasts and recovery insights. Private entries stay on your device.
+
+</div>
+</div>
+<div class="jcard anim"><div class="jdate">Wednesday, June 10 · 9:42 PM
 </div>
 
-<!-- s16: iPhone PWA -->
+<div class="jmood"><span>😫</span><span>😕</span><span>😐</span><span class="on">🙂</span><span>😊</span>
+</div>
+<div class="jtext">Craving hit hard after dinner — sat on the couch with phone in hand. Did 5-4-3-2-1 grounding instead of opening Instagram. Feeling proud but restless.
+</div>
+
+<div class="jtags"><span class="jtag">Boredom</span><span class="jtag">Evening</span><span class="jtag">Phone</span><span class="jtag">Resisted ✓</span>
+
+</div>
+</div>
+<div class="jcard anim" style="margin-top:10px"><div class="jdate">Tuesday, June 9 · 7:15 PM
+</div>
+
+<div class="jmood"><span>😫</span><span>😕</span><span class="on">😐</span><span>🙂</span><span>😊</span>
+</div>
+<div class="jtext">Stressful day at work. Almost reached for vape on the drive home. Used SOS breathe instead.
+</div>
+
+<div class="jtags"><span class="jtag">Stress</span><span class="jtag">Commute</span><span class="jtag">Vape urge</span>
+
+</div>
+</div>
+
+</div>
+</div>
+<!-- 17 Learn library -->
+
 <div class="slide" id="s16">
-  <div class="anim label">Platform</div>
-  <h2 class="anim">iPhone-native feel.</h2>
-  <p class="anim tagline">Safe area aware. Add to Home Screen → full-screen. Works offline after first load.</p>
-  <div class="anim grid3" style="margin-top:16px">
-    <div class="feat"><div class="feat-ic">📲</div><div class="feat-t">Add to Home Screen</div><div class="feat-d">Safari → Share → full-screen PWA</div></div>
-    <div class="feat"><div class="feat-ic">📴</div><div class="feat-t">Offline-first</div><div class="feat-d">Service worker caches everything</div></div>
-    <div class="feat"><div class="feat-ic">👆</div><div class="feat-t">One-thumb design</div><div class="feat-d">touch-action: manipulation on all controls</div></div>
-    <div class="feat"><div class="feat-ic">🔔</div><div class="feat-t">Push reminders</div><div class="feat-d">Medicine alerts · iOS 16.4+ PWA</div></div>
-    <div class="feat"><div class="feat-ic">🔒</div><div class="feat-t">Notch + home indicator</div><div class="feat-d">Safe area aware layouts</div></div>
-    <div class="feat"><div class="feat-ic">📦</div><div class="feat-t">JSON backup</div><div class="feat-d">Export / import your full recovery data</div></div>
-  </div>
+<div class="anim label">Learn Library
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>Recovery knowledge, evidence-tagged.</h2>
+<div class="tagline">Searchable library with categories, article reader, scientific vs reported evidence levels.
+</div>
+<div style="margin-top:14px"><span class="m-chip" style="background:rgba(255,107,53,.1);color:var(--orange)">All</span><span class="m-chip">Neuroscience</span><span class="m-chip">Cravings</span><span class="m-chip">Sleep</span>
+
+</div>
 </div>
 
-<!-- s17: Navigation -->
+<div class="anim" style="display:flex;flex-direction:column;gap:10px">
+
+<div class="article-mock"><div class="a-cat">Neuroscience
+</div><div class="a-title">Why Craving Waves Peak Every 1–2 Hours
+</div><div class="a-prev">Nicotine withdrawal cravings arrive in waves, not constant pressure. Each wave lasts 3–5 minutes...
+</div><div style="font-size:9px;color:var(--green);margin-top:6px;font-weight:600">● Scientific evidence
+
+</div>
+</div>
+
+<div class="article-mock"><div class="a-cat">Behavioural
+</div><div class="a-title">The Hand-to-Mouth Habit Loop
+</div><div class="a-prev">Vaping isn't just nicotine — it's a deeply ingrained motor pattern...
+</div><div style="font-size:9px;color:var(--gold);margin-top:6px;font-weight:600">● Reported evidence
+
+</div>
+</div>
+
+<div class="article-mock"><div class="a-cat">Sleep
+</div><div class="a-title">REM Rebound After Quitting
+</div><div class="a-prev">Nicotine suppresses REM sleep. Vivid dreams and fragmented nights are normal...
+</div><div style="font-size:9px;color:var(--green);margin-top:6px;font-weight:600">● Scientific evidence
+
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+<!-- 18 Profile/data -->
+
 <div class="slide" id="s17">
-  <div class="anim label">Navigation</div>
-  <h2 class="anim">Six tabs. One recovery OS.</h2>
-  <p class="anim tagline">Today · Recovery · SOS · Learn · Journal · You — each purpose-built for recovery workflows.</p>
-  <div class="anim tabs-demo" style="margin-top:20px">
-    <div class="tab-demo on"><div class="tab-ic">☀️</div><div class="tab-nm">Today</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Checklist + SOS</div></div>
-    <div class="tab-demo"><div class="tab-ic">🧬</div><div class="tab-nm">Recovery</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Timelines</div></div>
-    <div class="tab-demo sos"><div class="tab-ic">🆘</div><div class="tab-nm">SOS</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Emergency</div></div>
-    <div class="tab-demo"><div class="tab-ic">📚</div><div class="tab-nm">Learn</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Knowledge</div></div>
-    <div class="tab-demo"><div class="tab-ic">📓</div><div class="tab-nm">Journal</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Mood + triggers</div></div>
-    <div class="tab-demo"><div class="tab-ic">👤</div><div class="tab-nm">You</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Profile + settings</div></div>
-  </div>
+<div class="anim label">Profile &amp; Data
+</div>
+<div class="anim split">
+
+<div class="split-text"><h2>Your recovery settings hub.</h2>
+<div class="tagline">Manage medicines, routines, habits. Export/import JSON backup. Push reminder permissions.
+
+</div>
 </div>
 
-<!-- s18: Roadmap -->
+<div class="anim" style="max-width:300px;width:100%">
+
+<div class="profile-stat">
+
+<div class="pstat"><div class="pstat-v" style="color:var(--orange)">87
+</div><div class="pstat-l">Recovery Score
+
+</div>
+</div>
+
+<div class="pstat"><div class="pstat-v" style="color:var(--teal)">14
+</div><div class="pstat-l">Best Streak
+
+</div>
+</div>
+
+<div class="pstat"><div class="pstat-v" style="color:var(--green)">4
+</div><div class="pstat-l">Medicines
+
+</div>
+</div>
+
+<div class="pstat"><div class="pstat-v">23
+</div><div class="pstat-l">Journal Entries
+
+</div>
+</div>
+</div>
+
+<div class="m-group" style="margin-top:12px">
+
+<div class="m-row" style="border:none"><span>💊</span><div class="m-lbl">Medicines
+</div><span style="margin-left:auto;font-size:10px;color:var(--text3)">4 active →</span>
+</div>
+
+<div class="m-row" style="border:none"><span>✨</span><div class="m-lbl">Skincare &amp; Hair
+</div><span style="margin-left:auto;font-size:10px;color:var(--text3)">AM/PM →</span>
+</div>
+
+<div class="m-row" style="border:none"><span>🔥</span><div class="m-lbl">Habits
+</div><span style="margin-left:auto;font-size:10px;color:var(--text3)">4 tracking →</span>
+</div>
+
+<div class="m-row" style="border:none"><span>📤</span><div class="m-lbl">Export / Import
+</div><span style="margin-left:auto;font-size:10px;color:var(--teal)">JSON backup</span>
+</div>
+
+<div class="m-row" style="border:none"><span>🔔</span><div class="m-lbl">Push Reminders
+</div><span style="margin-left:auto;font-size:10px;color:var(--green)">Enabled</span>
+</div>
+
+
+</div>
+</div>
+
+</div>
+</div>
+<!-- 19 Privacy -->
+
 <div class="slide" id="s18">
-  <div class="anim label">Roadmap</div>
-  <h2 class="anim">Recovery is not a streak. It's a system.</h2>
-  <div class="anim roadmap" style="margin-top:16px">
-    <div class="road-item"><div><div class="road-q">Shipped · v2</div><div class="road-title">Recovery score + hourly timelines</div><div class="road-desc">Body system scores, 72h milestones, craving forecast.</div></div></div>
-    <div class="road-item"><div><div class="road-q">Shipped · v2</div><div class="road-title">Today command centre</div><div class="road-desc">Medicines, skincare, hair, habit progress unified.</div></div></div>
-    <div class="road-item future"><div><div class="road-q">Next</div><div class="road-title">Deeper trigger intelligence</div><div class="road-desc">Pattern learning from journal history.</div></div></div>
-    <div class="road-item future"><div><div class="road-q">Future</div><div class="road-title">Therapist-friendly PDF export</div><div class="road-desc">Share progress reports with your support team.</div></div></div>
-  </div>
+<div class="anim label">Privacy by Design
 </div>
 
-<!-- s19: Metrics -->
+<div class="anim"><h2>Your data never leaves your phone.</h2>
+</div>
+
+<div class="anim tagline" style="margin-bottom:24px">Zero servers. Offline-first PWA. No accounts. Orange-on-obsidian UI — calm, not clinical.
+</div>
+
+<div class="anim stat-row">
+<div class="stat"><div class="sv">0
+</div><div class="sk">Servers
+
+</div>
+</div>
+
+<div class="stat"><div class="sv">0
+</div><div class="sk">Accounts
+
+</div>
+</div>
+
+<div class="stat"><div class="sv">0
+</div><div class="sk">Analytics
+
+</div>
+</div>
+</div>
+
+<div class="anim grid2" style="margin-top:20px">
+
+<div class="feat"><div class="feat-ic">💾
+</div><div class="feat-t">localStorage Only
+</div><div class="feat-d">All recovery data stored on-device. Export JSON when you want a backup.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">✈️
+</div><div class="feat-t">Offline After First Load
+</div><div class="feat-d">Service worker caches app shell. Airplane mode works.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">🔒
+</div><div class="feat-t">No Tracking
+</div><div class="feat-d">No analytics, no telemetry, no third-party SDKs.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">🎨
+</div><div class="feat-t">Calm Dark UI
+</div><div class="feat-d">#080808 obsidian + #FF6B35 orange. Glass cards, SF Pro typography.
+
+</div>
+</div>
+
+
+</div>
+</div>
+<!-- 20 Tech + iPhone PWA -->
+
 <div class="slide" id="s19">
-  <div class="anim label">By The Numbers</div>
-  <h2 class="anim">DisciplineOS at a glance.</h2>
-  <div class="anim grid3" style="margin-top:20px;max-width:660px">
-    <div class="stat" style="min-width:0"><div class="sv">12</div><div class="sk">Built-in habits</div></div>
-    <div class="stat" style="min-width:0"><div class="sv">72h</div><div class="sk">Hourly milestones</div></div>
-    <div class="stat" style="min-width:0"><div class="sv">6</div><div class="sk">Nav tabs</div></div>
-    <div class="stat" style="min-width:0"><div class="sv">0</div><div class="sk">Servers</div></div>
-    <div class="stat" style="min-width:0"><div class="sv">0</div><div class="sk">Dependencies</div></div>
-    <div class="stat" style="min-width:0"><div class="sv">100</div><div class="sk">Recovery score</div></div>
-  </div>
+<div class="anim label">Tech Stack
 </div>
 
-<!-- s20: CTA -->
+<div class="anim"><h2>iPhone-native feel. Zero framework.</h2>
+</div>
+
+<div class="anim tagline" style="margin-bottom:20px">Vanilla JS PWA. No build step. Ship from index.html.
+</div>
+
+<div class="anim terminal">
+<div><span class="path">DisciplineOS/</span>
+</div>
+<div><span class="dim">├──</span> index.html <span class="dim">· PWA shell + safe areas</span>
+</div>
+<div><span class="dim">├──</span> sw.js <span class="dim">· Service worker offline cache</span>
+</div>
+<div><span class="dim">├──</span> css/app.css <span class="dim">· Design system</span>
+</div>
+<div><span class="dim">├──</span> js/modules/ <span class="dim">· Today, Recovery, SOS, Journal...</span>
+</div>
+<div><span class="dim">├──</span> js/data/timelines-hourly.js <span class="hl">· 72h milestones</span>
+</div>
+<div><span class="dim">└──</span> manifest.json <span class="dim">· Add to Home Screen</span>
+
+</div>
+</div>
+
+<div class="anim grid3" style="margin-top:20px">
+
+<div class="feat"><div class="feat-ic">📱
+</div><div class="feat-t">Safe Area Aware
+</div><div class="feat-d">Notch + home indicator. Full-screen after Add to Home Screen.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">👆
+</div><div class="feat-t">touch-action
+</div><div class="feat-d">manipulation on all controls — no 300ms tap delay.
+
+</div>
+</div>
+
+<div class="feat"><div class="feat-ic">🔔
+</div><div class="feat-t">Push Reminders
+</div><div class="feat-d">iOS 16.4+ PWA notifications for medicine alerts.
+
+</div>
+</div>
+
+</div>
+
+<div class="anim pills">
+<div class="pill">Vanilla JS
+</div>
+<div class="pill">localStorage
+</div>
+<div class="pill">Service Worker
+</div>
+<div class="pill">No npm
+</div>
+<div class="pill">#FF6B35
+
+</div>
+</div>
+
+</div>
+<!-- 21 Try now / close -->
+
 <div class="slide" id="s20">
-  <div class="s1-glow"></div>
-  <div class="anim label">Try It Now</div>
-  <div class="anim" style="font-size:clamp(40px,7vw,72px);font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:12px" class="grad">DisciplineOS</div>
-  <div class="anim cta-quote">Recovery is not a streak. It's a system.</div>
-  <div class="anim" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:20px">
-    <a class="link-btn link-btn-orange" href="https://shamikhahmed.github.io/DisciplineOS/" target="_blank" rel="noopener">🌐 Open App</a>
-    <a class="link-btn link-btn-teal" href="https://github.com/shamikhahmed/DisciplineOS" target="_blank" rel="noopener">📁 GitHub</a>
-  </div>
-  <div class="anim" style="font-size:13px;color:var(--text3)">📱 Safari → Share → Add to Home Screen</div>
-  <div class="anim credit" style="position:static;margin-top:24px;font-size:11px;color:var(--text3)">Built by Shamikh Ahmed · shamikhahmed.github.io/DisciplineOS</div>
+<div class="s1-glow">
 </div>
 
-</div><!-- /deck -->
+<div class="anim label">Try It Now
+</div>
 
+<div class="anim" style="font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.03em;margin-bottom:8px;text-align:center">Recovery is not a streak.
+</div>
+
+<div class="anim" style="font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.03em;color:var(--orange);margin-bottom:20px;text-align:center">It's a system.
+</div>
+<a class="anim url-big" href="https://shamikhahmed.github.io/DisciplineOS/" target="_blank" rel="noopener">shamikhahmed.github.io/DisciplineOS</a>
+
+<div class="anim tagline" style="margin-top:16px;margin-bottom:28px">📱 Safari → Share → Add to Home Screen &nbsp;·&nbsp; 📁 github.com/shamikhahmed/DisciplineOS
+</div>
+
+<div class="anim" style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;justify-content:center">
+
+<div class="qr-box"><svg width="96" height="96" viewBox="0 0 96 96" fill="none"><rect x="4" y="4" width="32" height="32" rx="3" stroke="#000" stroke-width="2.5" fill="none"/><rect x="12" y="12" width="16" height="16" rx="2" fill="#000"/><rect x="60" y="4" width="32" height="32" rx="3" stroke="#000" stroke-width="2.5" fill="none"/><rect x="68" y="12" width="16" height="16" rx="2" fill="#000"/><rect x="4" y="60" width="32" height="32" rx="3" stroke="#000" stroke-width="2.5" fill="none"/><rect x="12" y="68" width="16" height="16" rx="2" fill="#000"/></svg>
+</div>
+<div style="text-align:left;font-size:13px;color:var(--text2);line-height:1.8">1. Open in Safari on iPhone<br>2. Complete onboarding<br>3. Share → Add to Home Screen<br>4. Enable push reminders in Profile
+
+</div>
+</div>
+<div class="credit anim"><strong style="color:var(--text)">DisciplineOS</strong> — your recovery OS.<br>Built by Shamikh Ahmed · June 2026
+
+</div>
+</div>
+</div><!-- /deck -->
 <script>
 (function(){
-'use strict';
-
-/* Particles — orange/teal network */
-var canvas=document.getElementById('particles');
-var ctx=canvas.getContext('2d');
-var W,H,dots=[];
-function resize(){
-  W=canvas.width=window.innerWidth;
-  H=canvas.height=window.innerHeight;
-  dots=[];
-  for(var i=0;i<55;i++){
-    dots.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.8+1});
-  }
-}
-function draw(){
-  ctx.clearRect(0,0,W,H);
-  dots.forEach(function(d){
-    d.x+=d.vx;d.y+=d.vy;
-    if(d.x<0||d.x>W)d.vx*=-1;
-    if(d.y<0||d.y>H)d.vy*=-1;
-    ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
-    ctx.fillStyle='rgba(255,107,53,.55)';ctx.fill();
-  });
-  dots.forEach(function(a,i){
-    dots.forEach(function(b,j){
-      if(j<=i)return;
-      var dx=a.x-b.x,dy=a.y-b.y,dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<90){
-        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-        ctx.strokeStyle='rgba(78,205,196,'+((1-dist/90)*.35)+')';
-        ctx.lineWidth=.6;ctx.stroke();
-      }
-    });
-  });
-  requestAnimationFrame(draw);
-}
-window.addEventListener('resize',resize);
-resize();draw();
-
-/* Slide engine */
-var total=21;
-var cur=0;
-var slides=document.querySelectorAll('.slide');
-var progress=document.getElementById('progress');
-var counter=document.getElementById('counter');
-var dotsEl=document.getElementById('dots');
-
-for(var i=0;i<total;i++){
-  var d=document.createElement('div');
-  d.className='dot';
-  d.onclick=function(n){return function(){go(n);};}(i);
-  dotsEl.appendChild(d);
-}
-
-function updateDots(){
-  document.querySelectorAll('.dot').forEach(function(el,i){
-    el.classList.toggle('on',i===cur);
-  });
-}
-
-function triggerSlideAnims(idx){
-  if(idx===1){
-    slides[1].querySelectorAll('.pain-item').forEach(function(el,i){
-      setTimeout(function(){el.classList.add('show');},400+i*180);
-    });
-  }
-  if(idx===2){
-    ['w-one','w-off','w-private'].forEach(function(id,i){
-      setTimeout(function(){
-        var el=document.getElementById(id);
-        if(el)el.classList.add('show');
-      },300+i*320);
-    });
-  }
-  if(idx===0)initTitleLetters();
-}
-
-function resetSlideAnims(idx){
-  if(idx===1){
-    slides[1].querySelectorAll('.pain-item').forEach(function(el){el.classList.remove('show');});
-  }
-  if(idx===2){
-    ['w-one','w-off','w-private'].forEach(function(id){
-      var el=document.getElementById(id);
-      if(el)el.classList.remove('show');
-    });
-  }
-}
-
-function go(n){
-  if(n===cur||n<0||n>=total)return;
-  var oldSlide=slides[cur];
-  oldSlide.classList.remove('active');
-  oldSlide.classList.add('out');
-  setTimeout(function(){oldSlide.classList.remove('out');},450);
-  resetSlideAnims(cur);
-  cur=n;
-  slides[cur].classList.add('active');
-  triggerSlideAnims(cur);
-  progress.style.width=((cur+1)/total*100)+'%';
-  counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
-  updateDots();
-}
-
-function initTitleLetters(){
-  var el=document.getElementById('titleLetters');
-  if(!el||el.dataset.built)return;
-  el.dataset.built='1';
-  var text='DisciplineOS';
-  el.innerHTML='';
-  text.split('').forEach(function(ch,i){
-    var sp=document.createElement('span');
-    sp.className='letter grad';
-    sp.style.animationDelay=(i*50)+'ms';
-    sp.style.fontSize='inherit';
-    sp.style.fontWeight='900';
-    sp.textContent=ch;
-    el.appendChild(sp);
-  });
-}
-
-/* Touch swipe */
-var tx=0;
-document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
-document.addEventListener('touchend',function(e){
-  var dx=tx-e.changedTouches[0].clientX;
-  if(Math.abs(dx)>50)go(dx>0?cur+1:cur-1);
-});
-
-/* Click left/right */
-document.addEventListener('click',function(e){
-  var tag=e.target.tagName.toLowerCase();
-  if(['button','a','input','select'].includes(tag))return;
-  if(e.target.closest('.dot'))return;
-  if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);
-});
-
-/* Keyboard */
-document.addEventListener('keydown',function(e){
-  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(cur+1);}
-  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(cur-1);}
-  else if(e.key==='f'||e.key==='F')toggleFS();
-});
-
-function toggleFS(){
-  if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();
-  else document.exitFullscreen?.();
-}
-window.toggleFS=toggleFS;
-
+const total=21;let cur=0;
+const slides=document.querySelectorAll('.slide');
+const progress=document.getElementById('progress');
+const counter=document.getElementById('counter');
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot';d.onclick=()=>go(i);dotsEl.appendChild(d);}
+function updateDots(){document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));}
+let breathInterval=null;
+const breathPhases=[{cls:'inhale',label:'Inhale',secs:4},{cls:'hold',label:'Hold',secs:4},{cls:'exhale',label:'Exhale',secs:6}];
+let breathIdx=0,breathSec=4;
+function startBreath(){stopBreath();const ring=document.getElementById('breathRing'),count=document.getElementById('breathCount'),label=document.getElementById('breathLabel');if(!ring)return;breathIdx=0;breathSec=breathPhases[0].secs;function apply(){const p=breathPhases[breathIdx];ring.className='breath-ring '+p.cls;if(label)label.textContent=p.label;if(count)count.textContent=breathSec;}apply();breathInterval=setInterval(()=>{breathSec--;if(count)count.textContent=breathSec;if(breathSec<=0){breathIdx=(breathIdx+1)%breathPhases.length;breathSec=breathPhases[breathIdx].secs;apply();}},1000);}
+function stopBreath(){if(breathInterval){clearInterval(breathInterval);breathInterval=null;}}
+function animateBars(sel){document.querySelectorAll(sel).forEach(b=>{const w=b.dataset.w||b.style.width;b.style.width='0';setTimeout(()=>{b.style.width=w;},300);});}
+function triggerSlideAnims(idx){const s=slides[idx];
+if(idx===1)s.querySelectorAll('.pain-item').forEach((el,i)=>setTimeout(()=>el.classList.add('show'),400+i*180));
+if(idx===2)['w-score','w-sos','w-private'].forEach((id,i)=>setTimeout(()=>document.getElementById(id)?.classList.add('show'),300+i*350));
+if(idx===11)animateBars('#s11 .sys-fill');
+if(idx===12)animateBars('#s12 .fc-fill');
+if(idx===14)startBreath();}
+function resetSlideAnims(idx){if(idx===1)slides[1].querySelectorAll('.pain-item').forEach(el=>el.classList.remove('show'));
+if(idx===2)['w-score','w-sos','w-private'].forEach(id=>document.getElementById(id)?.classList.remove('show'));
+if(idx===14)stopBreath();}
+function go(n){if(n===cur||n<0||n>=total)return;const old=slides[cur];old.classList.remove('active');old.classList.add('out');setTimeout(()=>old.classList.remove('out'),450);resetSlideAnims(cur);cur=n;slides[cur].classList.add('active');triggerSlideAnims(cur);progress.style.width=((cur+1)/total*100)+'%';counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');updateDots();if(cur===0)initTitleLetters();}
+function initTitleLetters(){const el=document.getElementById('titleLetters');if(!el||el.dataset.built)return;el.dataset.built='1';'DisciplineOS'.split('').forEach((ch,i)=>{const sp=document.createElement('span');sp.className='letter';sp.style.cssText='font-size:clamp(44px,7vw,80px);font-weight:800;letter-spacing:-.04em;line-height:1;animation-delay:'+(i*55)+'ms';if(ch==='O'&&i>0)sp.style.color='var(--orange)';sp.textContent=ch;el.appendChild(sp);});}
+let tx=0;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{const dx=tx-e.changedTouches[0].clientX;if(Math.abs(dx)>50)go(dx>0?cur+1:cur-1);});
+document.addEventListener('click',e=>{const t=e.target.tagName.toLowerCase();if(['button','a','input','select'].includes(t))return;if(e.target.closest('.dot'))return;if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(cur+1);}else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(cur-1);}});
+window.toggleFS=function(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.();};
+(function(){const c=document.getElementById('particles'),x=c.getContext('2d');let W,H,dots=[];const cols=['rgba(255,107,53,','rgba(78,205,196,'];
+function resize(){W=c.width=innerWidth;H=c.height=innerHeight;dots=[];for(let i=0;i<70;i++)dots.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*2.2+1,c:cols[Math.random()>.45?0:1]});}
+function draw(){x.clearRect(0,0,W,H);dots.forEach(d=>{d.x+=d.vx;d.y+=d.vy;if(d.x<0||d.x>W)d.vx*=-1;if(d.y<0||d.y>H)d.vy*=-1;x.beginPath();x.arc(d.x,d.y,d.r,0,Math.PI*2);x.fillStyle=d.c+'0.55)';x.fill();});dots.forEach((a,i)=>dots.forEach((b,j)=>{if(j<=i)return;const dx=a.x-b.x,dy=a.y-b.y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<110){x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.strokeStyle=a.c+((1-dist/110)*.35)+')';x.lineWidth=.6;x.stroke();}}));requestAnimationFrame(draw);}
+addEventListener('resize',resize);resize();draw();})();
 go(0);
 })();
 </script>
