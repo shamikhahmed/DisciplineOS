@@ -4,1025 +4,324 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>DisciplineOS — Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-
-/* ── Reset & Base ─────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #080808;
-  --bg2: #0F0F0F;
-  --bg3: #161616;
-  --bg4: #1C1C1E;
-  --glass: rgba(255,255,255,0.04);
-  --glass2: rgba(255,255,255,0.07);
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.13);
-  --orange: #FF6B35;
-  --teal: #4ECDC4;
-  --green: #06D6A0;
-  --red: #FF3B30;
-  --blue: #0A84FF;
-  --gold: #FFD60A;
-  --purple: #BF5AF2;
-  --text: #F7F7F7;
-  --text2: #AEAEB2;
-  --text3: #636366;
-  --muted: rgba(247,247,247,.55);
-  --dim: rgba(247,247,247,.25);
-  --r: 20px;
-  --r-sm: 12px;
-  --r-lg: 28px;
-  font-size: 16px;
-}
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overflow-y: scroll;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-::selection { background: rgba(255,107,53,.35); }
-
-/* ── Section Base ─────────────────────────────────────────────── */
-.slide {
-  position: relative;
-  width: 100%;
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 80px 48px;
-}
-@media(max-width:600px){ .slide { padding: 64px 24px; } }
-
-.reveal { opacity: 0; transform: translateY(48px) scale(0.97); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
-.reveal.visible { opacity: 1; transform: none; }
-.reveal-left { opacity: 0; transform: translateX(-60px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
-.reveal-left.visible { opacity: 1; transform: none; }
-.reveal-right { opacity: 0; transform: translateX(60px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
-.reveal-right.visible { opacity: 1; transform: none; }
-.reveal-scale { opacity: 0; transform: scale(0.8); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
-.reveal-scale.visible { opacity: 1; transform: scale(1); }
-.delay-1 { transition-delay: .1s; }
-.delay-2 { transition-delay: .2s; }
-.delay-3 { transition-delay: .35s; }
-.delay-4 { transition-delay: .5s; }
-.delay-5 { transition-delay: .65s; }
-.delay-6 { transition-delay: .8s; }
-
-.section-title {
-  font-size: clamp(1.8rem, 4.5vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -.03em;
-  margin-bottom: 1rem;
-  line-height: 1.1;
-}
-.section-sub {
-  max-width: 580px;
-  color: var(--text2);
-  font-size: clamp(.9rem, 2vw, 1.1rem);
-  line-height: 1.7;
-  margin: 0 auto 2.5rem;
-}
-.accent { color: var(--orange); }
-.teal { color: var(--teal); }
-.green { color: var(--green); }
-
-/* ── Fixed UI ─────────────────────────────────────────────────── */
-#nav-dots {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.nav-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.25);
-  cursor: pointer;
-  transition: all .3s;
-  border: none;
-}
-.nav-dot.active { background: var(--orange); transform: scale(1.4); box-shadow: 0 0 12px rgba(255,107,53,.5); }
-.nav-dot:hover { background: rgba(255,107,53,.6); }
-
-#export-btn {
-  position: fixed;
-  top: 20px; right: 20px;
-  z-index: 1000;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,107,53,.25);
-  color: var(--text);
-  padding: 10px 18px;
-  border-radius: 100px;
-  font-size: .8rem;
-  font-weight: 600;
-  cursor: pointer;
-  backdrop-filter: blur(12px);
-  letter-spacing: .04em;
-  transition: background .2s, border-color .2s;
-  font-family: inherit;
-}
-#export-btn:hover { background: rgba(255,107,53,.12); border-color: rgba(255,107,53,.45); }
-
-@media(max-width:600px){
-  #nav-dots { right: 10px; }
-  .nav-dot { width: 6px; height: 6px; }
-  #export-btn { display: none; }
-}
-
-/* ── SECTION 1 — OPENER ───────────────────────────────────────── */
-#s1 {
-  background: var(--bg);
-  text-align: center;
-  flex-direction: column;
-}
-#s1-gradient {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(255,107,53,.18) 0%, transparent 70%),
-              radial-gradient(ellipse 50% 40% at 70% 20%, rgba(78,205,196,.12) 0%, transparent 60%),
-              radial-gradient(ellipse 40% 40% at 20% 80%, rgba(6,214,160,.08) 0%, transparent 60%);
-  animation: gradshift 8s ease-in-out infinite alternate;
-}
-@keyframes gradshift {
-  0%   { opacity: .7; transform: scale(1); }
-  100% { opacity: 1; transform: scale(1.05); }
-}
-#canvas-particles { position: absolute; inset: 0; z-index: 1; }
-.s1-content { position: relative; z-index: 2; }
-.s1-logo-icon { font-size: clamp(4rem, 10vw, 7rem); animation: float 4s ease-in-out infinite; display: block; }
-@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-.s1-logo-text {
-  font-size: clamp(3.5rem, 13vw, 9rem);
-  font-weight: 900;
-  letter-spacing: -.04em;
-  line-height: 1;
-  background: linear-gradient(135deg, var(--text) 20%, var(--orange) 55%, var(--teal) 85%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: .1em 0 .3em;
-}
-.s1-tag {
-  font-size: clamp(1rem, 2.5vw, 1.35rem);
-  font-weight: 500;
-  color: var(--text2);
-  letter-spacing: .04em;
-  margin-bottom: .5rem;
-}
-.s1-sub {
-  font-size: clamp(.85rem, 2vw, 1rem);
-  font-weight: 400;
-  color: var(--text3);
-  letter-spacing: .08em;
-  margin-bottom: 3rem;
-}
-.s1-scroll {
-  font-size: .85rem;
-  color: var(--dim);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  animation: pulse 2.5s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
-
-/* ── SECTION 2 — PROBLEM ──────────────────────────────────────── */
-#s2 {
-  background: radial-gradient(ellipse 100% 80% at 50% 100%, rgba(255,59,48,.12) 0%, transparent 70%),
-              radial-gradient(ellipse 60% 50% at 80% 20%, rgba(255,107,53,.1) 0%, transparent 60%),
-              var(--bg);
-  flex-direction: column;
-  text-align: center;
-}
-.s2-headline {
-  font-size: clamp(1.8rem, 5vw, 3.6rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -.03em;
-  margin-bottom: 1.5rem;
-  max-width: 820px;
-}
-.s2-headline span { color: var(--orange); }
-.s2-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  max-width: 820px;
-}
-.s2-card {
-  background: var(--glass);
-  border: 1px solid rgba(255,107,53,.2);
-  border-radius: var(--r);
-  padding: 24px 28px;
-  min-width: 180px;
-  flex: 1;
-  max-width: 260px;
-  text-align: left;
-  backdrop-filter: blur(8px);
-  transition: border-color .3s, transform .3s;
-}
-.s2-card:hover { border-color: rgba(255,107,53,.45); transform: translateY(-4px); }
-.s2-card-emoji { font-size: 2rem; display: block; margin-bottom: .5rem; }
-.s2-card-label { font-size: .95rem; font-weight: 700; margin-bottom: .35rem; }
-.s2-card-sub { font-size: .82rem; color: var(--text2); line-height: 1.55; }
-
-/* ── SECTION 3 — REALITY CYCLER ───────────────────────────────── */
-#s3 {
-  background: var(--bg2);
-  flex-direction: column;
-  text-align: center;
-}
-#s3-bg {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,107,53,.06) 0%, transparent 70%);
-  animation: throb 3s ease-in-out infinite alternate;
-}
-@keyframes throb { 0% { opacity: .5; } 100% { opacity: 1; } }
-.s3-cycle-wrap {
-  min-height: 2.5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
-  margin-bottom: 2.5rem;
-  padding: 0 24px;
-}
-#s3-cycler {
-  font-size: clamp(1.4rem, 4.5vw, 2.8rem);
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -.03em;
-  transition: opacity .4s, transform .4s;
-  max-width: 820px;
-  text-align: center;
-}
-#s3-cycler.fade-out { opacity: 0; transform: translateY(-20px); }
-.s3-bottom {
-  position: relative; z-index: 2;
-  font-size: clamp(1rem, 2.5vw, 1.4rem);
-  font-weight: 700;
-  color: var(--teal);
-  letter-spacing: .02em;
-}
-.glitch { position: relative; }
-.glitch::before, .glitch::after {
-  content: attr(data-text);
-  position: absolute; left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: transparent;
-}
-.glitch::before {
-  color: var(--orange);
-  clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
-  animation: glitch1 .8s steps(1) infinite;
-  opacity: .5;
-}
-.glitch::after {
-  color: var(--teal);
-  clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
-  animation: glitch2 1.2s steps(1) infinite;
-  opacity: .4;
-}
-@keyframes glitch1 {
-  0%,100% { transform: translate(0); } 20% { transform: translate(-3px, 1px); }
-  40% { transform: translate(3px, -1px); } 60% { transform: translate(-1px, 2px); }
-  80% { transform: translate(2px, -2px); }
-}
-@keyframes glitch2 {
-  0%,100% { transform: translate(0); } 15% { transform: translate(3px, 2px); }
-  35% { transform: translate(-3px, -1px); } 55% { transform: translate(2px, 1px); }
-  75% { transform: translate(-2px, -2px); }
-}
-
-/* ── SECTION 4 — SOLUTION INTRO ───────────────────────────────── */
-#s4 {
-  background: var(--bg);
-  flex-direction: column;
-  text-align: center;
-}
-#s4-nebula {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,107,53,.15) 0%, rgba(78,205,196,.06) 40%, transparent 70%),
-              radial-gradient(ellipse 40% 40% at 70% 30%, rgba(6,214,160,.08) 0%, transparent 60%);
-  animation: nebula 6s ease-in-out infinite alternate;
-}
-@keyframes nebula {
-  0%   { transform: scale(1) rotate(0deg); }
-  100% { transform: scale(1.08) rotate(2deg); }
-}
-.s4-icon-wrap { position: relative; display: inline-block; z-index: 2; margin-bottom: .5rem; }
-.s4-icon { font-size: clamp(3rem, 8vw, 5.5rem); display: block; }
-.s4-icon-glow {
-  position: absolute; inset: -30px;
-  background: radial-gradient(circle, rgba(255,107,53,.4) 0%, transparent 70%);
-  animation: glow-pulse 2.5s ease-in-out infinite alternate;
-  border-radius: 50%;
-  pointer-events: none;
-}
-@keyframes glow-pulse { 0% { opacity: .4; transform: scale(.8); } 100% { opacity: 1; transform: scale(1.2); } }
-.s4-name {
-  position: relative; z-index: 2;
-  font-size: clamp(3rem, 12vw, 7rem);
-  font-weight: 900;
-  letter-spacing: -.05em;
-  line-height: 1;
-  color: var(--text);
-  text-shadow: 0 0 80px rgba(255,107,53,.35);
-}
-.s4-tagline {
-  position: relative; z-index: 2;
-  font-size: clamp(.85rem, 2vw, 1.1rem);
-  font-weight: 400;
-  color: var(--text2);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin: 1rem 0 2.5rem;
-}
-.pillar-grid {
-  position: relative; z-index: 2;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  max-width: 880px;
-  width: 100%;
-}
-@media(max-width:800px){ .pillar-grid { grid-template-columns: repeat(2, 1fr); } }
-@media(max-width:420px){ .pillar-grid { grid-template-columns: 1fr; } }
-.pillar-card {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 22px 18px;
-  text-align: center;
-  transition: border-color .3s, transform .3s;
-}
-.pillar-card:hover { border-color: rgba(255,107,53,.35); transform: translateY(-4px); }
-.pillar-icon { font-size: 1.8rem; margin-bottom: .6rem; display: block; }
-.pillar-title { font-size: .9rem; font-weight: 700; margin-bottom: .3rem; }
-.pillar-sub { font-size: .75rem; color: var(--text2); line-height: 1.5; }
-
-/* ── PHONE MOCK (shared) ──────────────────────────────────────── */
-.phone-wrap {
-  display: flex;
-  gap: 28px;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 960px;
-}
-.phone {
-  width: 280px;
-  height: 560px;
-  background: var(--bg2);
-  border: 2px solid var(--border2);
-  border-radius: 36px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,107,53,.08), inset 0 1px 0 rgba(255,255,255,.08);
-  position: relative;
-  flex-shrink: 0;
-}
-.phone-notch {
-  width: 100px; height: 26px;
-  background: #000;
-  border-radius: 0 0 14px 14px;
-  margin: 0 auto;
-  flex-shrink: 0;
-}
-.phone-screen {
-  flex: 1;
-  overflow: hidden;
-  position: relative;
-  background: var(--bg);
-}
-.phone-scroll {
-  height: 100%;
-  overflow-y: auto;
-  padding-bottom: 58px;
-  scrollbar-width: none;
-}
-.phone-scroll::-webkit-scrollbar { display: none; }
-.phone-nav {
-  height: 54px;
-  background: rgba(8,8,8,.95);
-  border-top: 1px solid var(--border);
-  display: flex;
-  flex-shrink: 0;
-}
-.pnav {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  color: var(--text3);
-  font-size: 9px;
-  font-weight: 600;
-}
-.pnav.on { color: var(--orange); }
-.pnav.sos { color: var(--red); }
-.pnav.sos.on { color: var(--red); }
-.pnav-ic { font-size: 16px; }
-
-/* Today mock internals */
-.m-greet { padding: 14px 16px 8px; font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; }
-.m-pill {
-  display: inline-block;
-  margin: 0 16px 10px;
-  padding: 5px 11px;
-  background: rgba(255,107,53,.12);
-  border: 1px solid rgba(255,107,53,.25);
-  border-radius: 99px;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--orange);
-}
-.m-sos {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 14px 12px;
-  padding: 12px 14px;
-  background: linear-gradient(135deg, rgba(255,59,48,.18), rgba(255,107,53,.08));
-  border: 1px solid rgba(255,59,48,.35);
-  border-radius: var(--r);
-}
-.m-sos-ic { font-size: 1.4rem; }
-.m-sos-t { font-size: 12px; font-weight: 800; color: var(--red); }
-.m-sos-s { font-size: 9px; color: var(--text2); margin-top: 2px; }
-.m-sec {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--text3);
-  padding: 8px 16px 6px;
-}
-.m-group {
-  margin: 0 14px 10px;
-  padding: 10px;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-}
-.m-ghead { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
-.m-gprog { font-size: 9px; color: var(--teal); font-weight: 600; }
-.m-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
-.m-row:last-child { border-bottom: none; }
-.m-box {
-  width: 20px; height: 20px;
-  border-radius: 6px;
-  border: 2px solid var(--border2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 800;
-  flex-shrink: 0;
-}
-.m-box.on { background: rgba(6,214,160,.15); border-color: var(--green); color: var(--green); }
-.m-lbl { font-size: 11px; font-weight: 600; }
-.m-sub { font-size: 9px; color: var(--text3); margin-top: 1px; }
-.m-badge {
-  padding: 3px 8px;
-  border-radius: 99px;
-  font-size: 8px;
-  font-weight: 700;
-  background: rgba(78,205,196,.12);
-  color: var(--teal);
-  border: 1px solid rgba(78,205,196,.25);
-  margin-left: auto;
-  flex-shrink: 0;
-}
-.m-badge.asneeded {
-  background: rgba(191,90,242,.12);
-  color: var(--purple);
-  border-color: rgba(191,90,242,.25);
-}
-
-/* Score ring */
-.score-ring {
-  width: 130px; height: 130px;
-  border-radius: 50%;
-  background: conic-gradient(var(--orange) 0% 52%, var(--teal) 52% 87%, rgba(255,255,255,.06) 87% 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  flex-shrink: 0;
-}
-.score-ring::before {
-  content: '';
-  position: absolute;
-  inset: 12px;
-  border-radius: 50%;
-  background: var(--bg2);
-}
-.score-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.score-num { font-size: 36px; font-weight: 800; letter-spacing: -.04em; line-height: 1; }
-.score-lbl { font-size: 8px; font-weight: 700; letter-spacing: .1em; color: var(--text3); text-transform: uppercase; margin-top: 2px; }
-
-/* Mini rings row */
-.rings-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  max-width: 320px;
-  width: 100%;
-}
-.ring-cell { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.mini-ring {
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  border: 3px solid rgba(255,255,255,.06);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 700;
-}
-.ring-cell-name { font-size: 8px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .04em; }
-
-/* Timeline */
-.tl { display: flex; flex-direction: column; gap: 0; max-width: 520px; width: 100%; }
-.tl-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
-.tl-item:last-child { border-bottom: none; }
-.tl-time { font-family: 'SF Mono', Menlo, monospace; font-size: 11px; font-weight: 700; color: var(--orange); width: 52px; flex-shrink: 0; padding-top: 2px; }
-.tl-body { flex: 1; }
-.tl-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
-.tl-desc { font-size: 10px; color: var(--text2); line-height: 1.45; }
-.tl-sys { font-size: 8px; color: var(--teal); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-top: 3px; }
-.tl-dot-col { display: flex; flex-direction: column; align-items: center; width: 12px; flex-shrink: 0; padding-top: 4px; }
-.tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 8px rgba(255,107,53,.5); }
-.tl-line { width: 2px; flex: 1; background: linear-gradient(var(--orange), var(--teal)); min-height: 20px; margin-top: 4px; opacity: .4; }
-
-/* Habit chips */
-.hgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 480px; width: 100%; }
-@media(max-width:600px){ .hgrid { grid-template-columns: repeat(3, 1fr); } }
-.hchip {
-  padding: 14px 8px;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  transition: border-color .3s, background .3s;
-}
-.hchip.sel { background: rgba(255,107,53,.1); border-color: var(--orange); }
-.hchip-ic { font-size: 1.4rem; }
-.hchip-nm { font-size: 9px; font-weight: 600; color: var(--text2); text-align: center; line-height: 1.3; }
-.hchip.sel .hchip-nm { color: var(--orange); }
-
-/* Forecast */
-.forecast {
-  padding: 16px;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  max-width: 320px;
-  width: 100%;
-}
-.fc-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.fc-title { font-size: 12px; font-weight: 700; }
-.fc-risk { padding: 4px 10px; border-radius: 99px; font-size: 9px; font-weight: 700; }
-.fc-risk.high { background: rgba(255,59,48,.15); color: var(--red); border: 1px solid rgba(255,59,48,.3); }
-.fc-risk.med { background: rgba(255,107,53,.12); color: var(--orange); border: 1px solid rgba(255,107,53,.3); }
-.fc-risk.low { background: rgba(6,214,160,.12); color: var(--green); border: 1px solid rgba(6,214,160,.3); }
-.fc-bar { height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; margin: 8px 0; }
-.fc-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--green), var(--orange), var(--red)); }
-.fc-triggers { font-size: 10px; color: var(--text2); line-height: 1.5; }
-
-/* Breath / SOS */
-.breath-ring {
-  width: 160px; height: 160px;
-  border-radius: 50%;
-  border: 3px solid rgba(78,205,196,.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all .6s ease;
-  margin: 0 auto;
-}
-.breath-ring.inhale { border-color: var(--teal); box-shadow: 0 0 40px rgba(78,205,196,.35); transform: scale(1.15); }
-.breath-ring.hold { border-color: var(--orange); box-shadow: 0 0 40px rgba(255,107,53,.3); transform: scale(1.08); }
-.breath-ring.exhale { border-color: rgba(78,205,196,.3); transform: scale(.92); }
-.breath-num { font-size: 3rem; font-weight: 800; color: var(--orange); line-height: 1; }
-.sos-phases { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 560px; margin-top: 1.5rem; }
-.sos-phase {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  padding: 14px 18px;
-  text-align: center;
-  min-width: 110px;
-  flex: 1;
-}
-.sos-phase.active { border-color: rgba(255,107,53,.4); background: rgba(255,107,53,.08); }
-.sos-phase-num { font-size: 1.5rem; font-weight: 900; color: var(--orange); opacity: .35; line-height: 1; }
-.sos-phase-label { font-size: .85rem; font-weight: 700; margin-top: 4px; }
-
-/* Journal */
-.jcard {
-  padding: 16px;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  max-width: 320px;
-  width: 100%;
-  text-align: left;
-}
-.jdate { font-size: 9px; color: var(--text3); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 6px; }
-.jmood { display: flex; gap: 6px; margin-bottom: 8px; }
-.jmood span { font-size: 1.2rem; opacity: .35; }
-.jmood span.on { opacity: 1; }
-.jtext { font-size: 11px; color: var(--text2); line-height: 1.55; margin-bottom: 8px; }
-.jtags { display: flex; gap: 5px; flex-wrap: wrap; }
-.jtag {
-  padding: 3px 8px;
-  border-radius: 99px;
-  font-size: 8px;
-  font-weight: 600;
-  background: rgba(255,107,53,.1);
-  color: var(--orange);
-  border: 1px solid rgba(255,107,53,.2);
-}
-
-/* Split layout */
-.split {
-  display: flex;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 960px;
-}
-.split-text { flex: 1; min-width: 260px; max-width: 420px; text-align: left; }
-.split-text .section-title { text-align: left; }
-.split-text .section-sub { text-align: left; margin-left: 0; }
-
-/* Feature cards */
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  max-width: 840px;
-  width: 100%;
-}
-@media(max-width:700px){ .feature-grid { grid-template-columns: repeat(2,1fr); } }
-@media(max-width:420px){ .feature-grid { grid-template-columns: 1fr; } }
-.feat-card {
-  background: rgba(255,107,53,.04);
-  border: 1px solid rgba(255,107,53,.15);
-  border-radius: var(--r);
-  padding: 22px 20px;
-  text-align: left;
-  transition: border-color .3s, background .3s, transform .3s;
-}
-.feat-card:hover { border-color: rgba(255,107,53,.4); background: rgba(255,107,53,.08); transform: translateY(-4px); }
-.feat-card-icon { font-size: 1.8rem; display: block; margin-bottom: .75rem; }
-.feat-card-title { font-size: .95rem; font-weight: 700; margin-bottom: .35rem; }
-.feat-card-sub { font-size: .8rem; color: var(--text2); line-height: 1.5; }
-
-/* System bars */
-.sys-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); width: 100%; }
-.sys-row:last-child { border-bottom: none; }
-.sys-ic { font-size: 14px; width: 24px; text-align: center; }
-.sys-lbl { font-size: 11px; color: var(--text2); width: 80px; }
-.sys-bar { flex: 1; height: 4px; background: rgba(255,255,255,.06); border-radius: 2px; overflow: hidden; }
-.sys-fill { height: 100%; border-radius: 2px; }
-.sys-pct { font-size: 10px; font-weight: 700; width: 32px; text-align: right; color: var(--teal); }
-
-/* Learn library */
-.learn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 640px; width: 100%; }
-.learn-card {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 18px;
-  text-align: left;
-  transition: border-color .3s;
-}
-.learn-card:hover { border-color: rgba(78,205,196,.35); }
-.learn-cat { font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
-.learn-title { font-size: .9rem; font-weight: 700; margin-bottom: 4px; }
-.learn-desc { font-size: .75rem; color: var(--text2); line-height: 1.5; }
-
-/* Privacy specs */
-.sec-specs { display: flex; flex-direction: column; gap: 14px; max-width: 560px; margin: 2rem auto 0; width: 100%; }
-.spec-item {
-  background: rgba(6,214,160,.04);
-  border: 1px solid rgba(6,214,160,.15);
-  border-radius: var(--r-sm);
-  padding: 18px 22px;
-  display: flex; align-items: center; gap: 16px;
-  text-align: left;
-  transition: border-color .3s, background .3s;
-}
-.spec-item:hover { border-color: rgba(6,214,160,.35); background: rgba(6,214,160,.08); }
-.spec-check { font-size: 1.4rem; flex-shrink: 0; }
-.spec-text { font-size: .95rem; font-weight: 600; }
-.spec-detail { font-size: .78rem; color: var(--text2); margin-top: 2px; }
-
-/* Tech stack terminal */
-.terminal {
-  background: var(--bg3);
-  border: 1px solid rgba(255,107,53,.2);
-  border-radius: var(--r);
-  padding: 24px 26px;
-  font-family: 'SF Mono', Menlo, monospace;
-  font-size: 12px;
-  line-height: 1.9;
-  max-width: 560px;
-  width: 100%;
-  text-align: left;
-}
-.terminal .path { color: var(--orange); font-weight: 600; }
-.terminal .dim { color: var(--text3); }
-.terminal .hl { color: var(--green); }
-.terminal .teal { color: var(--teal); }
-
-/* Roadmap */
-.roadmap { display: flex; flex-direction: column; gap: 0; max-width: 560px; width: 100%; position: relative; }
-.road-item {
-  display: flex;
-  gap: 20px;
-  padding: 20px 0;
-  border-left: 2px solid rgba(255,107,53,.2);
-  margin-left: 16px;
-  padding-left: 28px;
-  position: relative;
-  text-align: left;
-}
-.road-item::before {
-  content: '';
-  position: absolute;
-  left: -7px; top: 24px;
-  width: 12px; height: 12px;
-  border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 12px rgba(255,107,53,.5);
-}
-.road-item.future::before { background: var(--text3); box-shadow: none; }
-.road-q { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
-.road-item.future .road-q { color: var(--text3); }
-.road-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-.road-desc { font-size: .82rem; color: var(--text2); line-height: 1.55; }
-
-/* CTA */
-#s16 {
-  background: var(--bg);
-  flex-direction: column;
-  text-align: center;
-  overflow: hidden;
-}
-#s16-gradient {
-  position: absolute; inset: 0;
-  animation: cta-shift 5s ease-in-out infinite alternate;
-}
-@keyframes cta-shift {
-  0%   { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(255,107,53,.2) 0%, transparent 70%); }
-  33%  { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(78,205,196,.15) 0%, transparent 70%); }
-  66%  { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(6,214,160,.12) 0%, transparent 70%); }
-  100% { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(255,107,53,.18) 0%, transparent 70%); }
-}
-.s16-content { position: relative; z-index: 2; }
-.cta-quote {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  font-style: italic;
-  color: var(--text2);
-  max-width: 520px;
-  margin: 0 auto 2rem;
-  line-height: 1.7;
-  border-left: 3px solid var(--orange);
-  padding-left: 20px;
-  text-align: left;
-}
-.cta-big {
-  font-size: clamp(2.5rem, 10vw, 6rem);
-  font-weight: 900;
-  letter-spacing: -.05em;
-  line-height: 1;
-  margin-bottom: .5rem;
-}
-.cta-sub {
-  font-size: clamp(.9rem, 2vw, 1.2rem);
-  color: var(--text2);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-weight: 400;
-  margin-bottom: 2.5rem;
-}
-.cta-buttons { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-bottom: 2.5rem; }
-.btn-primary {
-  background: linear-gradient(135deg, var(--orange), rgba(255,107,53,.75));
-  color: #fff;
-  border: none;
-  padding: 18px 36px;
-  border-radius: 100px;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: none;
-  letter-spacing: .02em;
-  transition: transform .2s, box-shadow .2s;
-  display: inline-flex; align-items: center; gap: 10px;
-  box-shadow: 0 8px 32px rgba(255,107,53,.3);
-  font-family: inherit;
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,107,53,.45); }
-.btn-secondary {
-  background: rgba(255,255,255,.06);
-  color: var(--text);
-  border: 1px solid var(--border2);
-  padding: 18px 36px;
-  border-radius: 100px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  letter-spacing: .02em;
-  transition: background .2s, transform .2s;
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: inherit;
-  backdrop-filter: blur(8px);
-}
-.btn-secondary:hover { background: rgba(255,255,255,.1); transform: translateY(-2px); }
-.cta-copyright { margin-top: 2rem; font-size: .75rem; color: var(--dim); letter-spacing: .08em; }
-.cta-copyright a { color: var(--orange); text-decoration: none; }
-
-/* Section backgrounds */
-#s5 {
-  background: radial-gradient(ellipse 70% 60% at 30% 50%, rgba(255,107,53,.08) 0%, transparent 60%),
-              var(--bg);
-}
-#s6 {
-  background: radial-gradient(ellipse 80% 70% at 70% 40%, rgba(78,205,196,.1) 0%, transparent 65%),
-              var(--bg2);
-}
-#s7 {
-  background: radial-gradient(ellipse 60% 50% at 20% 60%, rgba(255,107,53,.1) 0%, transparent 60%),
-              var(--bg);
-}
-#s8 {
-  background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(255,59,48,.12) 0%, transparent 65%),
-              var(--bg2);
-}
-#s9 {
-  background: radial-gradient(ellipse 70% 60% at 60% 70%, rgba(78,205,196,.08) 0%, transparent 60%),
-              var(--bg);
-}
-#s10 {
-  background: radial-gradient(ellipse 60% 50% at 40% 50%, rgba(255,107,53,.1) 0%, transparent 65%),
-              var(--bg2);
-}
-#s11 {
-  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(191,90,242,.08) 0%, transparent 65%),
-              var(--bg);
-}
-#s12 {
-  background: radial-gradient(ellipse 60% 50% at 30% 40%, rgba(78,205,196,.1) 0%, transparent 60%),
-              var(--bg2);
-}
-#s13 {
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(6,214,160,.08) 0%, transparent 70%),
-              var(--bg);
-}
-#s14 {
-  background: var(--bg2);
-}
-#s15 {
-  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255,107,53,.08) 0%, transparent 65%),
-              var(--bg);
-}
-#privacy-canvas { position: absolute; inset: 0; opacity: .08; z-index: 1; }
-
-/* Medicine schedule mock */
-.med-schedule { max-width: 340px; width: 100%; }
-.med-time-block {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  padding: 12px 14px;
-  margin-bottom: 10px;
-}
-.med-time-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.med-time-label { font-size: 11px; font-weight: 700; color: var(--orange); }
-.med-time-count { font-size: 9px; color: var(--teal); font-weight: 600; }
-.med-pill-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
-.med-pill-icon { font-size: 1rem; }
-.med-pill-name { font-size: 11px; font-weight: 600; flex: 1; }
-.med-pill-dose { font-size: 9px; color: var(--text3); }
-
-/* Nav tabs demo */
-.tabs-demo { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 680px; margin-top: 1.5rem; }
-.tab-demo {
-  padding: 14px 18px;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  text-align: center;
-  min-width: 90px;
-}
-.tab-demo.on { border-color: rgba(255,107,53,.4); background: rgba(255,107,53,.08); }
-.tab-demo.sos { border-color: rgba(255,59,48,.35); background: rgba(255,59,48,.08); }
-.tab-ic { font-size: 22px; margin-bottom: 4px; }
-.tab-nm { font-size: 10px; font-weight: 700; color: var(--text2); }
-.tab-demo.on .tab-nm { color: var(--orange); }
-.tab-demo.sos .tab-nm { color: var(--red); }
-
-/* Print */
-@media print {
-  .slide {
-    page-break-after: always;
-    height: auto !important;
-    min-height: 100vh;
-    padding: 60px 48px;
-    display: block;
-  }
-  #nav-dots, #export-btn { display: none !important; }
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-  .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1 !important; transform: none !important; }
-  canvas { display: none !important; }
-  #s1-gradient, #s4-nebula, #s3-bg, #s16-gradient { display: block; }
-}
-
-
-html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;overflow:hidden;user-select:none}
-#orb-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
-#progress{position:fixed;top:0;left:0;height:3px;z-index:200;width:5%;background:linear-gradient(90deg,var(--orange),var(--teal));box-shadow:0 0 12px rgba(255,107,53,.5);transition:width .5s}
-#deck{position:fixed;inset:0;z-index:10}
-.deck-slide{position:absolute;inset:0;opacity:0;transform:translateX(100%);transition:opacity .5s,transform .5s;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 40px 80px;overflow:hidden;text-align:center}
-.deck-slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
-.deck-slide.active .a1{animation:fadeUp .6s .1s both}.deck-slide.active .a2{animation:fadeUp .6s .2s both}.deck-slide.active .a3{animation:fadeUp .6s .3s both}.deck-slide.active .a4{animation:fadeUp .6s .4s both}.deck-slide.active .a5{animation:fadeUp .6s .5s both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
-#counter{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:200;font-size:13px;color:var(--text3);background:rgba(8,8,8,.85);padding:6px 14px;border-radius:20px;border:1px solid var(--border)}
-#arrow-left,#arrow-right{position:fixed;bottom:20px;z-index:200;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:rgba(8,8,8,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text3)}
-#arrow-left{left:20px}#arrow-right{right:20px}
-#arrow-left:hover,#arrow-right:hover{border-color:var(--orange);color:var(--orange)}
-#fullscreen-btn{position:fixed;top:14px;right:14px;z-index:200;width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:rgba(8,8,8,.85);cursor:pointer;color:var(--text3)}
-.overline{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);font-weight:600;margin-bottom:14px}
-.headline{font-size:clamp(1.6rem,4vw,2.8rem);font-weight:800;letter-spacing:-.03em;margin-bottom:10px}
-.grad{background:linear-gradient(135deg,var(--orange),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sub{font-size:clamp(.95rem,2vw,1.15rem);color:var(--text2);max-width:560px;line-height:1.55;margin-bottom:16px}
-.split{display:flex;gap:28px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:960px;width:100%}
-.split-text{text-align:left;max-width:400px}
-.link-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none}
-.link-orange{background:linear-gradient(135deg,var(--orange),#ff8c5a);color:#fff;box-shadow:0 8px 28px rgba(255,107,53,.35)}
-.pain-col{display:flex;flex-direction:column;gap:10px;max-width:580px;width:100%}
-.pain-row{display:flex;gap:12px;padding:14px;background:var(--glass);border:1px solid var(--border);border-radius:14px;text-align:left;font-size:13px;color:var(--text2)}
-.pain-row span{font-size:20px;flex-shrink:0}
-.stat-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.stat-box{background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2);border-radius:14px;padding:18px 22px;min-width:100px}
-.stat-box .n{font-size:1.8rem;font-weight:900;color:var(--orange)}
-.stat-box .l{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;--bg2:#0F0F0F;--bg3:#161616;--bg4:#1C1C1E;
+  --glass:rgba(255,255,255,0.04);--glass2:rgba(255,255,255,0.07);
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.13);
+  --text:#F7F7F7;--text2:#AEAEB2;--text3:#636366;
+  --orange:#FF6B35;--teal:#4ECDC4;--green:#06D6A0;--red:#FF3B30;
+  --blue:#0A84FF;--gold:#FFD60A;--purple:#BF5AF2;
+  --r:20px;--r-sm:12px;--r-lg:28px;
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  --mono:'SF Mono',Menlo,monospace;
+  --spring:cubic-bezier(0.34,1.56,0.64,1);
+}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:var(--font);overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.32}
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--teal));z-index:200;transition:width .45s ease;box-shadow:0 0 10px rgba(255,107,53,.5)}
+#counter{position:fixed;bottom:32px;right:36px;font-family:var(--mono);font-size:12px;color:var(--text3);z-index:200;letter-spacing:.08em}
+#dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:200;align-items:center;max-width:90vw;overflow-x:auto;padding:4px 8px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--text3);transition:all .3s var(--spring);cursor:pointer;flex-shrink:0}
+.dot.on{width:16px;border-radius:3px;background:var(--orange)}
+#fsBtn{position:fixed;top:24px;right:24px;z-index:200;background:var(--glass2);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:99px;font-size:11px;cursor:pointer;letter-spacing:.03em;font-family:var(--font)}
+#fsBtn:hover{background:rgba(255,255,255,.12)}
+#deck{position:relative;width:100vw;height:100vh;z-index:1}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:52px 72px;opacity:0;pointer-events:none;transform:scale(1.04);transition:opacity .4s ease,transform .4s var(--spring);overflow:hidden}
+.slide.active{opacity:1;pointer-events:auto;transform:scale(1)}
+.slide.out{opacity:0;transform:scale(.96)}
+.anim{opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s ease}
+.slide.active .anim{opacity:1;transform:translateY(0)}
+.slide.active .anim:nth-child(1){transition-delay:.05s}
+.slide.active .anim:nth-child(2){transition-delay:.12s}
+.slide.active .anim:nth-child(3){transition-delay:.2s}
+.slide.active .anim:nth-child(4){transition-delay:.28s}
+.slide.active .anim:nth-child(5){transition-delay:.36s}
+.slide.active .anim:nth-child(6){transition-delay:.44s}
+.slide.active .anim:nth-child(7){transition-delay:.52s}
+.slide.active .anim:nth-child(8){transition-delay:.6s}
+.label{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+h1{font-size:clamp(48px,7.5vw,88px);font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:16px}
+h2{font-size:clamp(24px,3.8vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.12;margin-bottom:14px}
+.tagline{font-size:clamp(14px,1.8vw,19px);color:var(--text2);line-height:1.55;max-width:640px;text-align:center}
+.accent{color:var(--orange)}.teal{color:var(--teal)}.green{color:var(--green)}.red{color:var(--red)}
+.grad{background:linear-gradient(135deg,var(--text) 20%,var(--orange) 55%,var(--teal) 85%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass{background:var(--glass);border:1px solid var(--border);border-radius:var(--r)}
+.stat-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.stat{background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.28);border-radius:14px;padding:14px 22px;text-align:center;min-width:110px}
+.sv{font-family:var(--mono);font-size:clamp(20px,2.8vw,28px);font-weight:700;color:var(--orange)}
+.sk{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+.pain{display:flex;flex-direction:column;gap:12px;max-width:560px;width:100%;margin-top:18px}
+.pain-item{background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 18px;font-size:14px;color:var(--text2);display:flex;align-items:center;gap:12px;opacity:0;transform:translateX(-24px);transition:opacity .4s,transform .4s var(--spring)}
+.pain-item.show{opacity:1;transform:translateX(0)}
+.pain-item span{font-size:20px;flex-shrink:0}
+.big-word{font-size:clamp(48px,7.5vw,80px);font-weight:800;letter-spacing:-.04em;opacity:0;transform:scale(.92);transition:opacity .4s,transform .5s var(--spring)}
+.big-word.show{opacity:1;transform:scale(1)}
+.pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.pill{background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.3);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--orange)}
+.flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.flow-node{background:var(--glass2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 16px;font-size:13px;font-weight:600;text-align:center}
+.flow-arrow{color:var(--teal);font-size:18px;margin:0 8px;opacity:.7}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:680px;width:100%}
-.fcard{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:18px;text-align:left}
-.fcard h3{font-size:14px;font-weight:700;margin-bottom:6px}
-.fcard p{font-size:12px;color:var(--text2);line-height:1.45}
-.slide .slide{min-height:auto;padding:0;position:static;opacity:1;transform:none;pointer-events:auto}
-@media(max-width:600px){.split{flex-direction:column}.grid2{grid-template-columns:1fr}.phone{width:250px;height:500px}}
-
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:720px;width:100%}
+.feat{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:left}
+.feat-ic{font-size:26px;margin-bottom:8px}
+.feat-t{font-size:13px;font-weight:700;margin-bottom:4px}
+.feat-d{font-size:11px;color:var(--text2);line-height:1.5}
+.url-big{font-family:var(--mono);font-size:clamp(13px,2vw,22px);color:var(--orange);text-decoration:none;border-bottom:2px solid var(--orange);padding-bottom:4px}
+.credit{position:absolute;bottom:36px;right:32px;font-size:11px;color:var(--text3)}
+.letter{display:inline-block;opacity:0;transform:translateY(36px);animation:letterUp .5s var(--spring) forwards}
+@keyframes letterUp{to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes breathPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.s1-glow{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,.08) 0%,transparent 70%);pointer-events:none;animation:float 4s ease-in-out infinite}
+/* Phone mock */
+.phone-wrap{display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap;width:100%;max-width:920px}
+.phone{width:280px;height:560px;background:var(--bg2);border:2px solid var(--border2);border-radius:36px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08);position:relative;flex-shrink:0}
+.phone-sm{width:250px;height:500px}
+.phone-notch{width:100px;height:26px;background:#000;border-radius:0 0 14px 14px;margin:0 auto;flex-shrink:0}
+.phone-screen{flex:1;overflow:hidden;position:relative;background:var(--bg)}
+.phone-scroll{height:100%;overflow-y:auto;padding-bottom:58px}
+.phone-nav{height:54px;background:rgba(8,8,8,.95);border-top:1px solid var(--border);display:flex;flex-shrink:0}
+.pnav{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text3);font-size:9px;font-weight:600}
+.pnav.on{color:var(--orange)}.pnav.sos{color:var(--red)}.pnav.sos.on{color:var(--red)}
+.pnav-ic{font-size:16px}
+.m-greet{padding:14px 16px 8px;font-size:1.3rem;font-weight:800;letter-spacing:-.02em}
+.m-pill{display:inline-block;margin:0 16px 10px;padding:5px 11px;background:rgba(255,107,53,.12);border:1px solid rgba(255,107,53,.25);border-radius:99px;font-size:10px;font-weight:600;color:var(--orange)}
+.m-sos{display:flex;align-items:center;gap:10px;margin:0 14px 12px;padding:12px 14px;background:linear-gradient(135deg,rgba(255,59,48,.18),rgba(255,107,53,.08));border:1px solid rgba(255,59,48,.35);border-radius:var(--r)}
+.m-sos-ic{font-size:1.4rem}.m-sos-t{font-size:12px;font-weight:800;color:var(--red)}.m-sos-s{font-size:9px;color:var(--text2);margin-top:2px}
+.m-sec{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:8px 16px 6px}
+.m-group{margin:0 14px 10px;padding:10px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm)}
+.m-ghead{display:flex;justify-content:space-between;font-size:11px;font-weight:700;margin-bottom:6px}
+.m-gprog{font-size:9px;color:var(--teal);font-weight:600}
+.m-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.m-row:last-child{border-bottom:none}
+.m-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.m-box.on{background:rgba(6,214,160,.15);border-color:var(--green);color:var(--green)}
+.m-lbl{font-size:11px;font-weight:600}.m-sub{font-size:9px;color:var(--text3);margin-top:1px}
+.m-badge{padding:3px 8px;border-radius:99px;font-size:8px;font-weight:700;background:rgba(78,205,196,.12);color:var(--teal);border:1px solid rgba(78,205,196,.25);margin-left:auto;flex-shrink:0}
+.m-badge.asneeded{background:rgba(191,90,242,.12);color:var(--purple);border-color:rgba(191,90,242,.25)}
+/* Score ring */
+.score-ring{width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--orange) 0% 52%,var(--teal) 52% 87%,rgba(255,255,255,.06) 87% 100%);display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+.score-ring.lg{width:160px;height:160px}
+.score-ring::before{content:'';position:absolute;inset:12px;border-radius:50%;background:var(--bg2)}
+.score-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.score-num{position:relative;z-index:1;font-size:36px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.score-ring.lg .score-num{font-size:44px}
+.score-lbl{position:relative;z-index:1;font-size:8px;font-weight:700;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-top:2px}
+.rings-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:320px;width:100%}
+.ring-cell{display:flex;flex-direction:column;align-items:center;gap:4px}
+.mini-ring{width:44px;height:44px;border-radius:50%;border:3px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.ring-cell-name{font-size:8px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em}
+/* Timeline */
+.tl{display:flex;flex-direction:column;gap:0;max-width:480px;width:100%}
+.tl-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.tl-item:last-child{border-bottom:none}
+.tl-time{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--orange);width:52px;flex-shrink:0;padding-top:2px}
+.tl-body{flex:1}.tl-title{font-size:12px;font-weight:700;margin-bottom:2px}.tl-desc{font-size:10px;color:var(--text2);line-height:1.45}
+.tl-sys{font-size:8px;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+.tl-dot-col{display:flex;flex-direction:column;align-items:center;width:12px;flex-shrink:0;padding-top:4px}
+.tl-dot{width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px rgba(255,107,53,.5)}
+.tl-line{width:2px;flex:1;background:linear-gradient(var(--orange),var(--teal));min-height:16px;margin-top:4px;opacity:.4}
+/* Habit chips */
+.hgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:480px;width:100%}
+.hchip{padding:12px 6px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);display:flex;flex-direction:column;align-items:center;gap:5px}
+.hchip.sel{background:rgba(255,107,53,.1);border-color:var(--orange)}
+.hchip-ic{font-size:1.4rem}.hchip-nm{font-size:9px;font-weight:600;color:var(--text2);text-align:center;line-height:1.3}
+.hchip.sel .hchip-nm{color:var(--orange)}
+/* Forecast */
+.forecast{padding:14px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r);max-width:300px;width:100%}
+.fc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.fc-title{font-size:12px;font-weight:700}
+.fc-risk{padding:4px 10px;border-radius:99px;font-size:9px;font-weight:700}
+.fc-risk.high{background:rgba(255,59,48,.15);color:var(--red);border:1px solid rgba(255,59,48,.3)}
+.fc-risk.med{background:rgba(255,107,53,.12);color:var(--orange);border:1px solid rgba(255,107,53,.3)}
+.fc-risk.low{background:rgba(6,214,160,.12);color:var(--green);border:1px solid rgba(6,214,160,.3)}
+.fc-bar{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin:8px 0}
+.fc-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--orange),var(--red))}
+.fc-triggers{font-size:10px;color:var(--text2);line-height:1.5}
+/* Breath ring */
+.breath-ring{width:160px;height:160px;border-radius:50%;border:3px solid rgba(78,205,196,.25);display:flex;align-items:center;justify-content:center;margin:0 auto;animation:breathPulse 4s ease-in-out infinite}
+.breath-num{font-size:3rem;font-weight:800;color:var(--orange);line-height:1}
+.sos-phases{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:520px;margin-top:16px}
+.sos-phase{background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;text-align:center;min-width:90px;flex:1}
+.sos-phase.active{border-color:rgba(255,107,53,.4);background:rgba(255,107,53,.08)}
+.sos-phase-num{font-size:1.2rem;font-weight:900;color:var(--orange);opacity:.35;line-height:1}
+.sos-phase-label{font-size:11px;font-weight:700;margin-top:4px}
+/* Journal */
+.jcard{padding:14px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r);max-width:300px;width:100%;text-align:left}
+.jdate{font-size:9px;color:var(--text3);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.jmood{display:flex;gap:6px;margin-bottom:8px}
+.jmood span{font-size:1.2rem;opacity:.35}.jmood span.on{opacity:1}
+.jtext{font-size:11px;color:var(--text2);line-height:1.55;margin-bottom:8px}
+.jtags{display:flex;gap:5px;flex-wrap:wrap}
+.jtag{padding:3px 8px;border-radius:99px;font-size:8px;font-weight:600;background:rgba(255,107,53,.1);color:var(--orange);border:1px solid rgba(255,107,53,.2)}
+/* Split layout */
+.split{display:flex;gap:32px;align-items:center;justify-content:center;flex-wrap:wrap;width:100%;max-width:900px}
+.split-text{flex:1;min-width:240px;max-width:400px;text-align:left}
+.split-text h2{text-align:left}
+.split-text .tagline{text-align:left;max-width:none}
+/* Nav tabs demo */
+.tabs-demo{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:640px}
+.tab-demo{padding:12px 14px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);text-align:center;min-width:84px}
+.tab-demo.on{border-color:rgba(255,107,53,.4);background:rgba(255,107,53,.08)}
+.tab-demo.sos{border-color:rgba(255,59,48,.35);background:rgba(255,59,48,.08)}
+.tab-ic{font-size:22px;margin-bottom:4px}.tab-nm{font-size:10px;font-weight:700;color:var(--text2)}
+.tab-demo.on .tab-nm{color:var(--orange)}.tab-demo.sos .tab-nm{color:var(--red)}
+/* System bars */
+.sys-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);width:100%;max-width:400px}
+.sys-row:last-child{border-bottom:none}
+.sys-ic{font-size:14px;width:24px;text-align:center}
+.sys-lbl{font-size:11px;color:var(--text2);width:80px}
+.sys-bar{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.sys-fill{height:100%;border-radius:2px}
+.sys-pct{font-size:10px;font-weight:700;width:32px;text-align:right;color:var(--teal)}
+/* Med schedule */
+.med-schedule{display:flex;flex-direction:column;gap:10px;max-width:320px;width:100%}
+.med-time-block{background:var(--glass);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px}
+.med-time-head{display:flex;justify-content:space-between;margin-bottom:8px}
+.med-time-label{font-size:11px;font-weight:700}
+.med-time-count{font-size:9px;color:var(--text3)}
+.med-pill-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px}
+.med-pill-row:last-child{border-bottom:none}
+.med-pill-icon{font-size:14px}.med-pill-name{flex:1;font-weight:600}
+.med-pill-dose{font-size:9px;color:var(--text3)}
+/* Learn */
+.learn-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:600px;width:100%}
+.learn-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:left}
+.learn-cat{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:4px}
+.learn-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.learn-desc{font-size:10px;color:var(--text2);line-height:1.45}
+/* Privacy */
+.sec-specs{display:flex;flex-direction:column;gap:10px;max-width:520px;width:100%;margin-top:16px}
+.spec-item{background:rgba(6,214,160,.04);border:1px solid rgba(6,214,160,.15);border-radius:var(--r-sm);padding:14px 18px;display:flex;align-items:center;gap:14px;text-align:left}
+.spec-check{font-size:1.3rem;flex-shrink:0}
+.spec-text{font-size:13px;font-weight:600}
+.spec-detail{font-size:11px;color:var(--text2);margin-top:2px}
+/* Terminal */
+.terminal{background:var(--bg3);border:1px solid rgba(255,107,53,.2);border-radius:var(--r);padding:20px 22px;font-family:var(--mono);font-size:12px;line-height:1.85;max-width:540px;width:100%;text-align:left}
+.terminal .path{color:var(--orange);font-weight:600}
+.terminal .dim{color:var(--text3)}.terminal .hl{color:var(--green)}.terminal .teal{color:var(--teal)}
+/* Roadmap */
+.roadmap{display:flex;flex-direction:column;gap:0;max-width:520px;width:100%}
+.road-item{display:flex;gap:16px;padding:16px 0;border-left:2px solid rgba(255,107,53,.2);margin-left:14px;padding-left:24px;position:relative;text-align:left}
+.road-item::before{content:'';position:absolute;left:-7px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--orange);box-shadow:0 0 12px rgba(255,107,53,.5)}
+.road-item.future::before{background:var(--text3);box-shadow:none}
+.road-q{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:3px}
+.road-item.future .road-q{color:var(--text3)}
+.road-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.road-desc{font-size:11px;color:var(--text2);line-height:1.5}
+/* Pillar cards */
+.pillar-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:560px;width:100%}
+.pillar{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);padding:18px;text-align:left}
+.pillar-ic{font-size:28px;margin-bottom:8px}
+.pillar-t{font-size:14px;font-weight:700;margin-bottom:4px}
+.pillar-d{font-size:11px;color:var(--text2);line-height:1.45}
+/* CTA */
+.link-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;border:none;transition:all .25s;font-family:var(--font)}
+.link-btn-orange{background:linear-gradient(135deg,var(--orange),rgba(255,107,53,.7));color:#fff;box-shadow:0 0 30px rgba(255,107,53,.3)}
+.link-btn-teal{background:linear-gradient(135deg,var(--teal),rgba(78,205,196,.7));color:#000;box-shadow:0 0 30px rgba(78,205,196,.25)}
+.link-btn:hover{transform:translateY(-2px);filter:brightness(1.12)}
+.cta-quote{font-size:clamp(14px,2vw,18px);font-style:italic;color:var(--text2);max-width:480px;line-height:1.65;border-left:3px solid var(--orange);padding-left:18px;text-align:left;margin-bottom:20px}
+@media(max-width:700px){.slide{padding:36px 20px}.grid2,.grid3,.hgrid,.pillar-grid,.learn-grid{grid-template-columns:1fr 1fr}.phone{width:240px;height:480px}}
+@media(max-width:480px){.grid2,.grid3,.hgrid,.pillar-grid,.learn-grid{grid-template-columns:1fr}.split{flex-direction:column}}
 </style>
 </head>
 <body>
-<canvas id="orb-canvas"></canvas>
+
+<canvas id="particles"></canvas>
 <div id="progress"></div>
-<button id="fullscreen-btn" title="Fullscreen">⛶</button>
-<div id="counter">1 / 20</div>
-<button id="arrow-left" onclick="prev()">←</button>
-<button id="arrow-right" onclick="next()">→</button>
+<div id="counter">01 / 21</div>
+<div id="dots"></div>
+<button id="fsBtn" onclick="toggleFS()">⛶ Fullscreen</button>
+
 <div id="deck">
-<div class="deck-slide active" id="s1" style="background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(255,107,53,.12) 0%,transparent 70%)"><div class="overline a1">2026 · Personal Recovery OS</div><div class="headline a2" style="font-size:clamp(3rem,7vw,5rem)"><span class="grad">DisciplineOS</span></div><div class="sub a3">Today routines · Medicines · Hourly body healing · SOS</div><div class="sub a4" style="font-size:13px">Habits · Journal · Trigger intelligence · Offline PWA</div><div class="a5" style="font-size:13px;color:var(--text3);margin-top:20px">Press → to begin</div></div><div class="deck-slide" id="s2"><div class="overline a1">The Problem</div><div class="headline a2">Recovery is <span class="grad">fragmented</span></div><div class="pain-col a3"><div class="pain-row"><span>📱</span><div><strong style="color:var(--text)">Five apps when cravings hit</strong><br>Habit trackers don't understand emergencies.</div></div><div class="pain-row"><span>💊</span><div><strong style="color:var(--text)">Medicines live elsewhere</strong><br>Skincare, hair, pills — separate reminders.</div></div><div class="pain-row"><span>🫁</span><div><strong style="color:var(--text)">Body healing invisible</strong><br>No hour-by-hour proof you're getting better.</div></div><div class="pain-row"><span>📓</span><div><strong style="color:var(--text)">Journal disconnected</strong><br>Triggers never feed back into forecasts.</div></div></div></div><div class="deck-slide" id="s3"><div class="overline a1">The Solution</div><div class="headline a2">One <span class="grad">command centre</span></div><div class="sub a3">DisciplineOS unifies daily discipline, recovery science, and crisis SOS — offline on your phone.</div><div class="stat-row a4"><div class="stat-box"><div class="n">0</div><div class="l">Servers</div></div><div class="stat-box"><div class="n">12+</div><div class="l">Habits</div></div><div class="stat-box"><div class="n">72h</div><div class="l">Hourly DB</div></div><div class="stat-box"><div class="n">PWA</div><div class="l">Install</div></div></div></div><div class="deck-slide" id="s4"><div class="overline a1">Today Tab</div><div class="headline a2">Your daily <span class="grad">command centre</span></div><div class="split a3"><div class="phone" style="width:280px;height:560px">
+
+<!-- s0: Title -->
+<div class="slide" id="s0">
+  <div class="s1-glow"></div>
+  <div class="anim label">Personal Recovery · 2026</div>
+  <div class="anim" style="font-size:clamp(56px,10vw,96px);font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:12px" id="titleLetters"></div>
+  <div class="anim tagline" style="color:var(--text);font-size:clamp(16px,2.2vw,22px);font-weight:500;margin-bottom:6px">Personal Recovery Operating System</div>
+  <div class="anim tagline" style="font-size:clamp(13px,1.6vw,16px)">Habits · Recovery Score · Emergency SOS · Journal</div>
+  <div class="anim" style="margin-top:24px"><a class="url-big" href="https://shamikhahmed.github.io/DisciplineOS/" target="_blank" rel="noopener">shamikhahmed.github.io/DisciplineOS</a></div>
+  <div class="anim" style="margin-top:20px;font-size:12px;color:var(--text3);letter-spacing:.06em">Press → or tap right · Shamikh Ahmed</div>
+</div>
+
+<!-- s1: Problem -->
+<div class="slide" id="s1" style="align-items:flex-start;">
+  <div class="anim label">The Problem</div>
+  <div class="anim" style="font-size:clamp(28px,5vw,56px);font-weight:800;letter-spacing:-.04em;line-height:1.1">Recovery tools are</div>
+  <div class="anim" style="font-size:clamp(28px,5vw,56px);font-weight:800;letter-spacing:-.04em;color:var(--red);line-height:1.1;margin-bottom:20px">fragmented.</div>
+  <div class="pain" id="painList">
+    <div class="pain-item"><span>🔄</span> Habit apps don't understand cravings or body healing.</div>
+    <div class="pain-item"><span>📓</span> Journals don't connect to trigger patterns or forecasts.</div>
+    <div class="pain-item"><span>🆘</span> Crisis moments need one tap — not five apps and a login.</div>
+    <div class="pain-item"><span>☁️</span> Cloud-dependent tools fail when you need them most.</div>
+  </div>
+</div>
+
+<!-- s2: Solution -->
+<div class="slide" id="s2">
+  <div class="anim label">The Solution</div>
+  <div id="solWords" style="text-align:center">
+    <div class="big-word" id="w-one" style="color:#fff">One OS.</div>
+    <div class="big-word" id="w-off" style="color:var(--teal)">Offline.</div>
+    <div class="big-word" id="w-private" style="color:var(--green)">Private.</div>
+  </div>
+  <div class="anim pillar-grid" style="margin-top:24px">
+    <div class="pillar"><div class="pillar-ic">📊</div><div class="pillar-t">Score</div><div class="pillar-d">0–100 recovery compass from real behaviour</div></div>
+    <div class="pillar"><div class="pillar-ic">🔥</div><div class="pillar-t">Habits</div><div class="pillar-d">Streaks + timelines, not guilt</div></div>
+    <div class="pillar"><div class="pillar-ic">🆘</div><div class="pillar-t">Emergency</div><div class="pillar-d">Phased SOS for high-risk moments</div></div>
+    <div class="pillar"><div class="pillar-ic">🧠</div><div class="pillar-t">Intelligence</div><div class="pillar-d">Craving forecast from journal patterns</div></div>
+  </div>
+</div>
+
+<!-- s3: Today command centre -->
+<div class="slide" id="s3">
+  <div class="anim label">Today</div>
+  <div class="split">
+    <div class="split-text">
+      <h2 class="anim">Your daily command centre.</h2>
+      <p class="anim tagline">Medicines, skincare, hair routines, and habit progress in one checklist. One-tap SOS. Gentle nudges. Designed for glances, not scrolling.</p>
+      <div class="anim tabs-demo" style="margin-top:12px">
+        <div class="tab-demo on"><div class="tab-ic">☀️</div><div class="tab-nm">Today</div></div>
+        <div class="tab-demo"><div class="tab-ic">🧬</div><div class="tab-nm">Recovery</div></div>
+        <div class="tab-demo sos"><div class="tab-ic">🆘</div><div class="tab-nm">SOS</div></div>
+        <div class="tab-demo"><div class="tab-ic">📚</div><div class="tab-nm">Learn</div></div>
+        <div class="tab-demo"><div class="tab-ic">📓</div><div class="tab-nm">Journal</div></div>
+        <div class="tab-demo"><div class="tab-ic">👤</div><div class="tab-nm">You</div></div>
+      </div>
+    </div>
+    <div class="anim phone">
       <div class="phone-notch"></div>
-      <div class="phone-screen"><div class="phone-scroll">
-        <div class="m-greet">Good morning ☀️</div>
-        <div class="m-pill">4/7 today's tasks done</div>
-        <div class="m-sos"><span class="m-sos-ic">🆘</span><div><div class="m-sos-t">Emergency SOS</div><div class="m-sos-s">Tap when cravings hit</div></div></div>
-        <div class="m-sec">Today's Routines</div>
-        <div class="m-group"><div class="m-ghead"><span>💊 Medicines</span><span class="m-gprog">2/3</span></div>
-          <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Bupropion</div><div class="m-sub">8:00 AM</div></div></div>
-          <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Melatonin</div><div class="m-sub">10:00 PM</div></div><span class="m-badge">Due soon</span></div></div>
-        <div class="m-group"><div class="m-ghead"><span>✨ Skincare AM</span><span class="m-gprog">1/2</span></div>
-          <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Gentle cleanser</div></div></div>
-          <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">SPF 50</div></div></div></div>
-        <div class="m-sec">Habit Progress</div>
-        <div class="m-group"><div class="m-row"><div style="font-size:1.2rem">🚬</div><div><div class="m-lbl">No smoking</div><div class="m-sub">Day 14 · 12 day streak</div></div></div></div>
-      </div></div>
+      <div class="phone-screen">
+        <div class="phone-scroll">
+          <div class="m-greet">Good morning ☀️</div>
+          <div class="m-pill">4/7 today's tasks done</div>
+          <div class="m-sos"><span class="m-sos-ic">🆘</span><div><div class="m-sos-t">Emergency SOS</div><div class="m-sos-s">Tap when cravings hit</div></div></div>
+          <div class="m-sec">Today's Routines</div>
+          <div class="m-group">
+            <div class="m-ghead"><span>💊 Medicines</span><span class="m-gprog">2/3</span></div>
+            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Bupropion</div><div class="m-sub">8:00 AM · 150mg</div></div></div>
+            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Omega-3</div><div class="m-sub">8:00 AM · with food</div></div></div>
+            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Melatonin</div><div class="m-sub">10:00 PM</div></div><span class="m-badge">Due soon</span></div>
+          </div>
+          <div class="m-group">
+            <div class="m-ghead"><span>✨ Skincare AM</span><span class="m-gprog">1/2</span></div>
+            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Gentle cleanser</div></div></div>
+            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">SPF 50</div></div></div>
+          </div>
+          <div class="m-sec">Habit Progress</div>
+          <div class="m-group">
+            <div class="m-row"><div style="font-size:1.2rem">🚬</div><div><div class="m-lbl">No smoking</div><div class="m-sub">Day 14 · 12 day streak</div></div></div>
+          </div>
+        </div>
+      </div>
       <div class="phone-nav">
         <div class="pnav on"><span class="pnav-ic">☀️</span>Today</div>
         <div class="pnav"><span class="pnav-ic">🧬</span>Recovery</div>
@@ -1030,49 +329,580 @@ html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-fam
         <div class="pnav"><span class="pnav-ic">📚</span>Learn</div>
         <div class="pnav"><span class="pnav-ic">📓</span>Journal</div>
       </div>
-    </div><div class="split-text"><div class="fcard" style="margin-bottom:10px"><h3>☀️ Today replaces Dashboard</h3><p>Greeting, progress pill, routines checklist, habit row, one-tap SOS.</p></div><div class="fcard"><h3>🔔 Gentle nudges</h3><p>Missed medicine? In-app banner — no guilt, just a tap to check off.</p></div></div></div></div><div class="deck-slide" id="s5"><div class="overline a1">Recovery Score</div><div class="headline a2">0–100 <span class="grad">compass</span></div><div class="split a3"><div><div class="score-ring"><div class="score-inner"><div class="score-num">72</div><div class="score-lbl">Recovery</div></div></div>
-    <div class="rings-row" style="margin-top:16px">
-      <div class="ring-cell"><div class="mini-ring" style="border-color:var(--green);color:var(--green)">88</div><div class="ring-cell-name">Lungs</div></div>
-      <div class="ring-cell"><div class="mini-ring" style="border-color:var(--teal);color:var(--teal)">76</div><div class="ring-cell-name">Heart</div></div>
-      <div class="ring-cell"><div class="mini-ring" style="border-color:var(--orange);color:var(--orange)">65</div><div class="ring-cell-name">Brain</div></div>
-      <div class="ring-cell"><div class="mini-ring" style="border-color:var(--purple);color:var(--purple)">54</div><div class="ring-cell-name">Dopamine</div></div>
-    </div></div><div class="split-text"><div class="fcard"><h3>Real behaviour, not guilt</h3><p>Streaks, check-ins, and habit logs feed the score.</p></div><div class="fcard" style="margin-top:10px"><h3>Body systems</h3><p>Lungs, heart, brain, dopamine — mini rings mirror Recovery tab.</p></div></div></div></div><div class="deck-slide" id="s6"><div class="overline a1">Medicines</div><div class="headline a2">Fixed times & <span class="grad">as-needed</span></div><div class="grid2 a3"><div class="fcard"><h3>💊 Bupropion 8:00 AM</h3><p>Fixed schedule · push notification · check off on Today</p></div><div class="fcard"><h3>🩹 Ibuprofen PRN</h3><p>As-needed badge · log when taken · no fixed alarm</p></div><div class="fcard"><h3>🔔 Push + in-app</h3><p>Notification API with permission · toast fallback</p></div><div class="fcard"><h3>✏️ Profile editor</h3><p>Add, edit, enable/disable — set once, tweak anytime</p></div></div></div><div class="deck-slide" id="s7"><div class="overline a1">Daily Routines</div><div class="headline a2">Skincare & <span class="grad">hair</span></div><div class="grid2 a3"><div class="fcard"><h3>🌅 AM Skincare</h3><p>Cleanser → vitamin C → SPF — checklist on Today</p></div><div class="fcard"><h3>🌙 PM Skincare</h3><p>Double cleanse → retinol → moisturiser</p></div><div class="fcard"><h3>💇 Hair AM/PM</h3><p>Minoxidil, oil treatment, weekly mask steps</p></div><div class="fcard"><h3>📅 Weekly</h3><p>Sunday mask · Wednesday scalp treatment — only shows on due day</p></div></div></div><div class="deck-slide" id="s8"><div class="overline a1">Habits</div><div class="headline a2">Built-in & <span class="grad">custom</span></div><div class="sub a3">12 built-in addictions + your own name, icon, quit date</div><div class="hgrid">
-<div class="hchip sel"><span class="hchip-ic">🚬</span><span class="hchip-nm">Smoking</span></div>
-<div class="hchip sel"><span class="hchip-ic">💨</span><span class="hchip-nm">Vaping</span></div>
-<div class="hchip"><span class="hchip-ic">🍺</span><span class="hchip-nm">Alcohol</span></div>
-<div class="hchip"><span class="hchip-ic">📱</span><span class="hchip-nm">Social media</span></div>
-<div class="hchip"><span class="hchip-ic">🎮</span><span class="hchip-nm">Gaming</span></div>
-<div class="hchip"><span class="hchip-ic">☕</span><span class="hchip-nm">Caffeine</span></div>
-<div class="hchip"><span class="hchip-ic">➕</span><span class="hchip-nm">Custom</span></div>
-</div></div><div class="deck-slide" id="s9"><div class="overline a1">Recovery Database</div><div class="headline a2">Hourly body <span class="grad">healing</span></div><div class="sub a3">First 72 hours per habit — then daily & weekly milestones</div><div class="a4" style="width:100%;display:flex;justify-content:center"><div class="tl"><div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-time">20m</div><div class="tl-body"><div class="tl-title">Heart rate normalises</div><div class="tl-desc">Blood pressure begins to drop</div><div class="tl-sys">Cardiovascular</div></div></div>
-<div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-time">8h</div><div class="tl-body"><div class="tl-title">Oxygen levels recover</div><div class="tl-desc">Carbon monoxide eliminated from blood</div><div class="tl-sys">Respiratory</div></div></div>
-<div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-time">24h</div><div class="tl-body"><div class="tl-title">Heart attack risk drops</div><div class="tl-desc">Nicotine fully leaves bloodstream</div><div class="tl-sys">Cardiovascular</div></div></div>
-<div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div></div><div class="tl-time">72h</div><div class="tl-body"><div class="tl-title">Breathing eases</div><div class="tl-desc">Bronchial tubes relax, energy returns</div><div class="tl-sys">Respiratory</div></div></div></div></div></div><div class="deck-slide" id="s10"><div class="overline a1">Recovery Tab</div><div class="headline a2">Full <span class="grad">timeline</span></div><div class="grid2 a3"><div class="fcard"><h3>🧬 Per-habit selector</h3><p>Switch between vape, smoking, social media — each has its own science</p></div><div class="fcard"><h3>📈 Trigger forecast</h3><p>Journal patterns → risk windows on Recovery + Today</p></div><div class="fcard"><h3>💰 Money saved</h3><p>Config cost per day · live counter since quit date</p></div><div class="fcard"><h3>🕌 Spiritual mode</h3><p>Optional faith-based insights in Profile</p></div></div></div><div class="deck-slide" id="s11"><div class="overline a1">Trigger Intelligence</div><div class="headline a2">Know your <span class="grad">patterns</span></div><div class="split a3"><div class="forecast"><div class="fc-head"><span class="fc-risk" style="color:var(--orange)">Medium Risk</span><span style="font-size:10px;color:var(--text3)">Trigger Intelligence</span></div>
-<div class="fc-insight"><span>🌙</span><span style="font-size:11px;color:var(--text2)">Evenings are your highest-risk window based on journal patterns</span></div>
-<div class="fc-insight"><span>☕</span><span style="font-size:11px;color:var(--text2)">Coffee + stress combo flagged 4 times this week</span></div></div><div class="split-text"><div class="fcard"><h3>Withdrawal alerts</h3><p>Orange banner when physical withdrawal likely</p></div><div class="fcard" style="margin-top:10px"><h3>Journal-fed</h3><p>Every craving log improves the forecast</p></div></div></div></div><div class="deck-slide" id="s12"><div class="overline a1">Emergency SOS</div><div class="headline a2">When you can't <span class="grad">think straight</span></div><div class="split a3"><div style="width:140px;height:140px;border-radius:50%;border:4px solid rgba(78,205,196,.4);display:flex;align-items:center;justify-content:center;margin:0 auto;background:rgba(78,205,196,.08);box-shadow:0 0 40px rgba(78,205,196,.2)"><div style="text-align:center"><div style="font-size:11px;color:var(--teal);font-weight:700;letter-spacing:.1em">EXHALE</div><div style="font-size:2rem;font-weight:800;margin-top:4px">4</div></div></div><div class="split-text"><div class="fcard"><h3>Phase flow</h3><p>Pause → Ground (5-4-3-2-1) → Breathe → Remember Why → Decide</p></div><div class="fcard" style="margin-top:10px"><h3>Your goals</h3><p>Profile goals surface in SOS — family, health, money</p></div><div class="fcard" style="margin-top:10px"><h3>One-thumb</h3><p>Full-screen red nav tab · always one tap away</p></div></div></div></div><div class="deck-slide" id="s13"><div class="overline a1">Journal</div><div class="headline a2">Log <span class="grad">triggers</span></div><div class="grid2 a3"><div class="fcard"><h3>📓 Daily entries</h3><p>Mood, triggers, reflections — separate localStorage store</p></div><div class="fcard"><h3>🔗 Feeds forecasts</h3><p>Craving log powers Trigger Intelligence</p></div><div class="fcard"><h3>📤 Export included</h3><p>Journal bundled in JSON backup</p></div><div class="fcard"><h3>🔒 Private</h3><p>Never leaves your device</p></div></div></div><div class="deck-slide" id="s14"><div class="overline a1">Learn</div><div class="headline a2">Recovery <span class="grad">knowledge</span></div><div class="sub a3">Science-informed articles linked to your habit type — dopamine, withdrawal, relapse prevention.</div><div class="grid2 a4"><div class="fcard"><h3>📚 Knowledge library</h3><p>Browse by topic from Learn tab</p></div><div class="fcard"><h3>🧠 Dopamine engine</h3><p>Thresholds per habit type inform insights</p></div></div></div><div class="deck-slide" id="s15"><div class="overline a1">Privacy</div><div class="headline a2">Zero <span class="grad">cloud</span></div><div class="pain-col a3"><div class="pain-row"><span>🔒</span><div>localStorage only — no account, no server</div></div><div class="pain-row"><span>📤</span><div>Export / import JSON — you own the file</div></div><div class="pain-row"><span>✈️</span><div>Works offline after first PWA load</div></div><div class="pain-row"><span>🔄</span><div>Service worker v5 — discipline-v5 cache</div></div></div></div><div class="deck-slide" id="s19"><div class="overline a1">Notifications</div><div class="headline a2">Push & <span class="grad">in-app</span></div><div class="grid2 a3"><div class="fcard"><h3>🔔 Medicine alarms</h3><p>Fixed time notifications — iOS 16.4+ PWA</p></div><div class="fcard"><h3>💬 In-app toasts</h3><p>Graceful fallback when push denied</p></div><div class="fcard"><h3>🟠 Nudge banner</h3><p>Overdue items on Today — supportive copy</p></div><div class="fcard"><h3>⚙️ Profile toggle</h3><p>Enable push reminders in You tab</p></div></div></div><div class="deck-slide" id="s16"><div class="overline a1">Install</div><div class="headline a2">iPhone <span class="grad">PWA</span></div><div class="sub a3">Safari → Share → Add to Home Screen · orange theme · standalone · no App Store</div><div class="stat-row a4"><div class="stat-box"><div class="n">6</div><div class="l">Tabs</div></div><div class="stat-box"><div class="n">7</div><div class="l">Screens</div></div><div class="stat-box"><div class="n">&lt;2MB</div><div class="l">Total</div></div></div></div><div class="deck-slide" id="s17"><div class="overline a1">By The Numbers</div><div class="headline a2">Full <span class="grad">picture</span></div><div class="stat-row a3"><div class="stat-box"><div class="n">12+</div><div class="l">Habits</div></div><div class="stat-box"><div class="n">72h</div><div class="l">Hourly milestones</div></div><div class="stat-box"><div class="n">6</div><div class="l">Nav tabs</div></div><div class="stat-box"><div class="n">0</div><div class="l">Servers</div></div><div class="stat-box"><div class="n">AES</div><div class="l">N/A — local</div></div></div></div><div class="deck-slide" id="s18"><div class="overline a1">Built By</div><div class="headline a2">Shamikh <span class="grad">Ahmed</span></div><div class="sub a3" style="font-style:italic">"Recovery deserves one private command centre — not five apps and a prayer."</div><div class="sub a4">Part of the OS family · VaultOS · PrismOS · FitnessOS · StundsOS</div></div><div class="deck-slide" id="s20" style="background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(255,107,53,.15) 0%,transparent 70%)"><div class="overline a1">Live Now</div><div class="headline a2"><span class="grad">DisciplineOS</span> awaits</div><div class="sub a3">Install on iPhone · Add to Home Screen · Works offline</div><div class="a4" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:24px 0"><a class="link-btn link-orange" href="https://shamikhahmed.github.io/DisciplineOS/" target="_blank" rel="noopener">🧡 Open App</a><a class="link-btn" style="background:var(--glass);border:1px solid var(--border);color:var(--text)" href="pitch.html">📊 Pitch Deck</a><a class="link-btn" style="background:var(--glass);border:1px solid var(--border);color:var(--text)" href="docs/GUIDE.md">📖 Guide</a></div><div class="a5" style="font-size:12px;color:var(--text3)">© 2026 Shamikh Ahmed</div></div>
+    </div>
+  </div>
 </div>
+
+<!-- s4: Recovery score ring 87 -->
+<div class="slide" id="s4">
+  <div class="anim label">Recovery Score</div>
+  <div class="split">
+    <div class="anim" style="display:flex;flex-direction:column;align-items:center;gap:16px">
+      <div class="score-ring lg">
+        <div class="score-inner">
+          <div class="score-num">87</div>
+          <div class="score-lbl">Recovery</div>
+        </div>
+      </div>
+      <div class="rings-row">
+        <div class="ring-cell"><div class="mini-ring" style="border-color:var(--orange);color:var(--orange)">91</div><div class="ring-cell-name">Physical</div></div>
+        <div class="ring-cell"><div class="mini-ring" style="border-color:var(--teal);color:var(--teal)">84</div><div class="ring-cell-name">Mental</div></div>
+        <div class="ring-cell"><div class="mini-ring" style="border-color:var(--green);color:var(--green)">88</div><div class="ring-cell-name">Sleep</div></div>
+        <div class="ring-cell"><div class="mini-ring" style="border-color:var(--gold);color:var(--gold)">72</div><div class="ring-cell-name">Craving</div></div>
+      </div>
+    </div>
+    <div class="split-text">
+      <h2 class="anim">Your recovery compass.</h2>
+      <p class="anim tagline">A 0–100 score built from real behaviour — streaks, routines, journal patterns. Body system scores track physical recovery. Not a streak. A system.</p>
+      <div class="anim" style="margin-top:12px">
+        <div class="sys-row"><span class="sys-ic">🫁</span><span class="sys-lbl">Lungs</span><div class="sys-bar"><div class="sys-fill" style="width:85%;background:var(--teal)"></div></div><span class="sys-pct">85%</span></div>
+        <div class="sys-row"><span class="sys-ic">🧠</span><span class="sys-lbl">Brain</span><div class="sys-bar"><div class="sys-fill" style="width:72%;background:var(--orange)"></div></div><span class="sys-pct">72%</span></div>
+        <div class="sys-row"><span class="sys-ic">❤️</span><span class="sys-lbl">Heart</span><div class="sys-bar"><div class="sys-fill" style="width:91%;background:var(--green)"></div></div><span class="sys-pct">91%</span></div>
+        <div class="sys-row"><span class="sys-ic">🩸</span><span class="sys-lbl">Blood</span><div class="sys-bar"><div class="sys-fill" style="width:78%;background:var(--teal)"></div></div><span class="sys-pct">78%</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s5: Hourly timeline -->
+<div class="slide" id="s5">
+  <div class="anim label">Recovery Engine</div>
+  <div class="split">
+    <div class="split-text">
+      <h2 class="anim">Hourly body-healing timeline.</h2>
+      <p class="anim tagline">Science-informed milestones for the first 72 hours per habit type — then daily and weekly beyond. See exactly what your body is doing right now.</p>
+    </div>
+    <div class="anim tl">
+      <div class="tl-item">
+        <div class="tl-time">20m</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+        <div class="tl-body"><div class="tl-title">Heart rate normalises</div><div class="tl-desc">Blood pressure and pulse begin dropping toward baseline.</div><div class="tl-sys">Cardiovascular</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">8h</div>
+        <div class="tl-dot-col"><div class="tl-dot" style="background:var(--teal)"></div><div class="tl-line"></div></div>
+        <div class="tl-body"><div class="tl-title">Oxygen levels rise</div><div class="tl-desc">Carbon monoxide clears. Blood oxygen returns to normal.</div><div class="tl-sys">Respiratory</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">24h</div>
+        <div class="tl-dot-col"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-line"></div></div>
+        <div class="tl-body"><div class="tl-title">Nicotine fully eliminated</div><div class="tl-desc">Withdrawal peaks — SOS protocol most valuable here.</div><div class="tl-sys">Neurological</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">72h</div>
+        <div class="tl-dot-col"><div class="tl-dot"></div></div>
+        <div class="tl-body"><div class="tl-title">Bronchial tubes relax</div><div class="tl-desc">Breathing eases. Energy begins returning. Milestone unlocked.</div><div class="tl-sys">Respiratory</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s6: SOS Emergency -->
+<div class="slide" id="s6">
+  <div class="anim label">Emergency SOS</div>
+  <div class="split">
+    <div class="anim" style="text-align:center">
+      <div class="breath-ring">
+        <div><div class="breath-num">4</div><div style="font-size:10px;color:var(--text2);font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:.08em">Inhale</div></div>
+      </div>
+      <div class="sos-phases">
+        <div class="sos-phase active"><div class="sos-phase-num">01</div><div class="sos-phase-label">Pause</div></div>
+        <div class="sos-phase"><div class="sos-phase-num">02</div><div class="sos-phase-label">Ground</div></div>
+        <div class="sos-phase"><div class="sos-phase-num">03</div><div class="sos-phase-label">Breathe</div></div>
+        <div class="sos-phase"><div class="sos-phase-num">04</div><div class="sos-phase-label">Decide</div></div>
+      </div>
+    </div>
+    <div class="split-text">
+      <h2 class="anim">Built for the moment you can't think straight.</h2>
+      <p class="anim tagline">Phased flow: Pause → Ground → Breathe → Decide. 5-4-3-2-1 grounding, breathing timer, crisis contacts. One-thumb, full-screen, no distractions.</p>
+      <div class="anim flow" style="margin-top:12px">
+        <div class="flow-node">⏸ Pause</div><div class="flow-arrow">→</div>
+        <div class="flow-node">🌍 Ground</div><div class="flow-arrow">→</div>
+        <div class="flow-node">🫁 Breathe</div><div class="flow-arrow">→</div>
+        <div class="flow-node">✅ Decide</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s7: Medicines -->
+<div class="slide" id="s7">
+  <div class="anim label">Medicines</div>
+  <div class="split">
+    <div class="split-text">
+      <h2 class="anim">Never miss a dose.</h2>
+      <p class="anim tagline">Configure fixed times or as-needed scheduling in Profile. Push notifications plus in-app toasts. Add, edit, enable/disable any entry.</p>
+      <div class="anim stat-row" style="margin-top:12px">
+        <div class="stat"><div class="sv">Push</div><div class="sk">Reminders</div></div>
+        <div class="stat"><div class="sv">Fixed</div><div class="sk">Or as-needed</div></div>
+        <div class="stat"><div class="sv">0</div><div class="sk">Servers</div></div>
+      </div>
+    </div>
+    <div class="anim med-schedule">
+      <div class="med-time-block">
+        <div class="med-time-head"><span class="med-time-label">🌅 8:00 AM</span><span class="med-time-count">2 items</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">💊</span><span class="med-pill-name">Bupropion</span><span class="med-pill-dose">150mg</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">🐟</span><span class="med-pill-name">Omega-3</span><span class="med-pill-dose">1000mg</span></div>
+      </div>
+      <div class="med-time-block">
+        <div class="med-time-head"><span class="med-time-label">🌙 10:00 PM</span><span class="med-time-count">1 item</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">💊</span><span class="med-pill-name">Melatonin</span><span class="med-pill-dose">3mg · as needed</span></div>
+      </div>
+      <div class="med-time-block">
+        <div class="med-time-head"><span class="med-time-label">📅 Weekly</span><span class="med-time-count">Hair care</span></div>
+        <div class="med-pill-row"><span class="med-pill-icon">🧖</span><span class="med-pill-name">Deep conditioning mask</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s8: Skincare AM/PM -->
+<div class="slide" id="s8">
+  <div class="anim label">Routines</div>
+  <div class="split">
+    <div class="anim phone phone-sm">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-scroll">
+          <div class="m-greet" style="font-size:1.1rem">You · Routines 👤</div>
+          <div class="m-sec">Skincare AM</div>
+          <div class="m-group">
+            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Gentle cleanser</div></div></div>
+            <div class="m-row"><div class="m-box on">✓</div><div><div class="m-lbl">Vitamin C serum</div></div></div>
+            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">SPF 50</div></div></div>
+          </div>
+          <div class="m-sec">Skincare PM</div>
+          <div class="m-group">
+            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Double cleanse</div></div></div>
+            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Retinol</div><div class="m-sub">Alternate nights</div></div></div>
+            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Moisturiser</div></div></div>
+          </div>
+          <div class="m-sec">Hair · Weekly</div>
+          <div class="m-group">
+            <div class="m-row"><div class="m-box"></div><div><div class="m-lbl">Deep conditioning mask</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-nav">
+        <div class="pnav"><span class="pnav-ic">☀️</span>Today</div>
+        <div class="pnav"><span class="pnav-ic">🧬</span>Recovery</div>
+        <div class="pnav sos"><span class="pnav-ic">🆘</span>SOS</div>
+        <div class="pnav"><span class="pnav-ic">📚</span>Learn</div>
+        <div class="pnav on"><span class="pnav-ic">👤</span>You</div>
+      </div>
+    </div>
+    <div class="split-text">
+      <h2 class="anim">Skincare AM/PM + hair routines.</h2>
+      <p class="anim tagline">AM / PM checklists per category. Weekly steps for deeper care. Set once in Profile, check off daily on Today.</p>
+      <div class="anim grid2" style="margin-top:12px">
+        <div class="feat"><div class="feat-ic">✨</div><div class="feat-t">Skincare AM/PM</div><div class="feat-d">Per-category checklists</div></div>
+        <div class="feat"><div class="feat-ic">💇</div><div class="feat-t">Hair care</div><div class="feat-d">Daily + weekly steps</div></div>
+        <div class="feat"><div class="feat-ic">🔔</div><div class="feat-t">Gentle nudges</div><div class="feat-d">In-app reminders for missed times</div></div>
+        <div class="feat"><div class="feat-ic">☀️</div><div class="feat-t">Today sync</div><div class="feat-d">All routines in one checklist</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s9: Habits -->
+<div class="slide" id="s9">
+  <div class="anim label">Habits</div>
+  <h2 class="anim">12 built-in habits + custom.</h2>
+  <p class="anim tagline">Smoking, vape, alcohol, porn, social media, weed, gaming, sugar, caffeine, and more. Streaks and recovery score update as you log progress.</p>
+  <div class="anim hgrid" style="margin-top:16px">
+    <div class="hchip sel"><span class="hchip-ic">🚬</span><span class="hchip-nm">Smoking</span></div>
+    <div class="hchip"><span class="hchip-ic">💨</span><span class="hchip-nm">Vape</span></div>
+    <div class="hchip"><span class="hchip-ic">🍺</span><span class="hchip-nm">Alcohol</span></div>
+    <div class="hchip"><span class="hchip-ic">📱</span><span class="hchip-nm">Social media</span></div>
+    <div class="hchip"><span class="hchip-ic">🎮</span><span class="hchip-nm">Gaming</span></div>
+    <div class="hchip"><span class="hchip-ic">🌿</span><span class="hchip-nm">Weed</span></div>
+    <div class="hchip"><span class="hchip-ic">🍬</span><span class="hchip-nm">Sugar</span></div>
+    <div class="hchip"><span class="hchip-ic">☕</span><span class="hchip-nm">Caffeine</span></div>
+    <div class="hchip"><span class="hchip-ic">🔞</span><span class="hchip-nm">Porn</span></div>
+    <div class="hchip"><span class="hchip-ic">✋</span><span class="hchip-nm">Masturbation</span></div>
+    <div class="hchip"><span class="hchip-ic">🛒</span><span class="hchip-nm">Shopping</span></div>
+    <div class="hchip" style="border-style:dashed"><span class="hchip-ic">➕</span><span class="hchip-nm">Custom</span></div>
+  </div>
+</div>
+
+<!-- s10: Trigger forecast -->
+<div class="slide" id="s10">
+  <div class="anim label">Trigger Intelligence</div>
+  <div class="split">
+    <div class="split-text">
+      <h2 class="anim">Craving forecast.</h2>
+      <p class="anim tagline">Journal data feeds craving forecasts and recovery insights — connecting what you feel to when you're most vulnerable.</p>
+      <div class="anim forecast" style="max-width:100%">
+        <div class="fc-head"><div class="fc-title">Today's forecast</div><div class="fc-risk high">High risk</div></div>
+        <div class="fc-bar"><div class="fc-fill" style="width:78%"></div></div>
+        <div class="fc-triggers">Peak risk: 6–9 PM · Triggers: work stress, after meals, social settings. Evening entries mention "work stress" 4× this week.</div>
+      </div>
+    </div>
+    <div class="anim" style="display:flex;flex-direction:column;gap:12px;align-items:center">
+      <div class="forecast">
+        <div class="fc-head"><div class="fc-title">Pattern detected</div><div class="fc-risk med">Medium</div></div>
+        <div class="fc-bar"><div class="fc-fill" style="width:58%"></div></div>
+        <div class="fc-triggers">HALT state: Hungry + Alone. Craving forecast elevated after 5 PM.</div>
+      </div>
+      <div class="pills">
+        <div class="pill">work stress</div>
+        <div class="pill">afternoon</div>
+        <div class="pill">social settings</div>
+        <div class="pill">after meals</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s11: Journal -->
+<div class="slide" id="s11">
+  <div class="anim label">Journal</div>
+  <div class="split">
+    <div class="split-text">
+      <h2 class="anim">Log mood, triggers, reflections.</h2>
+      <p class="anim tagline">Daily entries feed craving forecasts and recovery insights. Your patterns become your early warning system.</p>
+      <div class="anim stat-row" style="margin-top:12px">
+        <div class="stat"><div class="sv">Mood</div><div class="sk">Tracking</div></div>
+        <div class="stat"><div class="sv">Tags</div><div class="sk">Triggers</div></div>
+        <div class="stat"><div class="sv">AI</div><div class="sk">Forecast feed</div></div>
+      </div>
+    </div>
+    <div class="anim jcard">
+      <div class="jdate">Wednesday · Day 14</div>
+      <div class="jmood"><span>😔</span><span class="on">😤</span><span>😌</span><span>😰</span><span>💪</span></div>
+      <div class="jtext">Tough afternoon after the team meeting. Felt the pull around 5 PM but used the breathing exercise instead. Proud I didn't reach for it.</div>
+      <div class="jtags">
+        <span class="jtag">work stress</span>
+        <span class="jtag">afternoon</span>
+        <span class="jtag">craving resisted</span>
+        <span class="jtag">meeting</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s12: Recovery tab mock -->
+<div class="slide" id="s12">
+  <div class="anim label">Recovery Tab</div>
+  <div class="split">
+    <div class="anim phone phone-sm">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-scroll">
+          <div class="m-greet" style="font-size:1.1rem">Recovery 🧬</div>
+          <div class="m-pill">Day 14 · No smoking</div>
+          <div style="padding:12px 14px;text-align:center">
+            <div style="font-size:2.5rem;font-weight:800;color:var(--orange);line-height:1">336<span style="font-size:1rem;color:var(--text3)">h</span></div>
+            <div style="font-size:9px;color:var(--text3);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:4px">Since quit</div>
+          </div>
+          <div class="m-sec">Next milestone</div>
+          <div class="m-group">
+            <div style="font-size:11px;font-weight:700;margin-bottom:4px">Circulation improves</div>
+            <div style="font-size:9px;color:var(--text2);line-height:1.5">Walking becomes easier. Skin tone improves noticeably.</div>
+          </div>
+          <div class="m-sec">Body systems</div>
+          <div class="m-group">
+            <div class="sys-row"><span class="sys-ic">🫁</span><span class="sys-lbl">Lungs</span><div class="sys-bar"><div class="sys-fill" style="width:85%;background:var(--teal)"></div></div><span class="sys-pct">85%</span></div>
+            <div class="sys-row"><span class="sys-ic">🧠</span><span class="sys-lbl">Brain</span><div class="sys-bar"><div class="sys-fill" style="width:72%;background:var(--orange)"></div></div><span class="sys-pct">72%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-nav">
+        <div class="pnav"><span class="pnav-ic">☀️</span>Today</div>
+        <div class="pnav on"><span class="pnav-ic">🧬</span>Recovery</div>
+        <div class="pnav sos"><span class="pnav-ic">🆘</span>SOS</div>
+        <div class="pnav"><span class="pnav-ic">📚</span>Learn</div>
+        <div class="pnav"><span class="pnav-ic">📓</span>Journal</div>
+      </div>
+    </div>
+    <div class="split-text">
+      <h2 class="anim">Full recovery timeline.</h2>
+      <p class="anim tagline">Hourly milestones for 72h, then daily and weekly. Body engine tracks physical recovery. Knowledge-linked protocols per habit type.</p>
+      <div class="anim pills">
+        <div class="pill">Body Engine</div>
+        <div class="pill">Dopamine Engine</div>
+        <div class="pill">Trigger Engine</div>
+        <div class="pill">Recovery Engine</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- s13: Learn library -->
+<div class="slide" id="s13">
+  <div class="anim label">Learn</div>
+  <h2 class="anim">Recovery knowledge library.</h2>
+  <p class="anim tagline">Science-informed, human-centred. Protocols linked to your habits and milestones.</p>
+  <div class="anim learn-grid" style="margin-top:16px">
+    <div class="learn-card"><div class="learn-cat">Withdrawal</div><div class="learn-title">What happens in 72 hours</div><div class="learn-desc">Hour-by-hour breakdown of nicotine elimination.</div></div>
+    <div class="learn-card"><div class="learn-cat">Cravings</div><div class="learn-title">The 7-minute wave</div><div class="learn-desc">Why cravings peak and pass — ride them out.</div></div>
+    <div class="learn-card"><div class="learn-cat">Sleep</div><div class="learn-title">Recovery and rest</div><div class="learn-desc">How quitting affects sleep cycles.</div></div>
+    <div class="learn-card"><div class="learn-cat">Triggers</div><div class="learn-title">Mapping your patterns</div><div class="learn-desc">Identify HALT states before they hit.</div></div>
+  </div>
+</div>
+
+<!-- s14: Privacy -->
+<div class="slide" id="s14">
+  <div class="anim label">Privacy</div>
+  <h2 class="anim green">Privacy by design.</h2>
+  <p class="anim tagline">Zero servers. No accounts. No analytics. Orange-on-obsidian UI — calm, not clinical.</p>
+  <div class="anim sec-specs">
+    <div class="spec-item"><span class="spec-check">📱</span><div><div class="spec-text">localStorage only</div><div class="spec-detail">Your recovery data never leaves your phone</div></div></div>
+    <div class="spec-item"><span class="spec-check">✈️</span><div><div class="spec-text">Offline-first PWA</div><div class="spec-detail">Service worker caches app shell after first load</div></div></div>
+    <div class="spec-item"><span class="spec-check">🔕</span><div><div class="spec-text">No accounts · No tracking</div><div class="spec-detail">No sign-up, no analytics, no backdoors</div></div></div>
+    <div class="spec-item"><span class="spec-check">📦</span><div><div class="spec-text">Export / import JSON</div><div class="spec-detail">Full backup you own — restore on any device</div></div></div>
+  </div>
+</div>
+
+<!-- s15: Tech stack -->
+<div class="slide" id="s15">
+  <div class="anim label">Engineering</div>
+  <h2 class="anim">Zero dependencies. <span class="accent">Maximum care.</span></h2>
+  <p class="anim tagline">No framework. No build step. Ship from index.html.</p>
+  <div class="anim terminal" style="margin-top:16px">
+    <div><span class="path">DisciplineOS/</span></div>
+    <div class="dim">├── index.html          <span class="hl"># PWA entry</span></div>
+    <div class="dim">├── css/app.css         <span class="hl"># Design system</span></div>
+    <div class="dim">├── js/modules/         <span class="hl"># dashboard · recovery · emergency</span></div>
+    <div class="dim">├── js/engines/         <span class="hl"># body · dopamine · trigger</span></div>
+    <div class="dim">├── sw.js               <span class="hl"># Service worker</span></div>
+    <div class="dim">└── manifest.json       <span class="hl"># Installable PWA</span></div>
+    <div style="margin-top:10px"><span class="teal">Storage</span>  → localStorage</div>
+    <div><span class="teal">Design</span>   → <span class="hl">#FF6B35</span> accent · dark glass UI</div>
+    <div><span class="teal">Deploy</span>   → GitHub Pages · zero backend</div>
+  </div>
+  <div class="anim stat-row" style="margin-top:16px">
+    <div class="stat"><div class="sv">0</div><div class="sk">Servers</div></div>
+    <div class="stat"><div class="sv">0</div><div class="sk">Accounts</div></div>
+    <div class="stat"><div class="sv">0</div><div class="sk">Build step</div></div>
+  </div>
+</div>
+
+<!-- s16: iPhone PWA -->
+<div class="slide" id="s16">
+  <div class="anim label">Platform</div>
+  <h2 class="anim">iPhone-native feel.</h2>
+  <p class="anim tagline">Safe area aware. Add to Home Screen → full-screen. Works offline after first load.</p>
+  <div class="anim grid3" style="margin-top:16px">
+    <div class="feat"><div class="feat-ic">📲</div><div class="feat-t">Add to Home Screen</div><div class="feat-d">Safari → Share → full-screen PWA</div></div>
+    <div class="feat"><div class="feat-ic">📴</div><div class="feat-t">Offline-first</div><div class="feat-d">Service worker caches everything</div></div>
+    <div class="feat"><div class="feat-ic">👆</div><div class="feat-t">One-thumb design</div><div class="feat-d">touch-action: manipulation on all controls</div></div>
+    <div class="feat"><div class="feat-ic">🔔</div><div class="feat-t">Push reminders</div><div class="feat-d">Medicine alerts · iOS 16.4+ PWA</div></div>
+    <div class="feat"><div class="feat-ic">🔒</div><div class="feat-t">Notch + home indicator</div><div class="feat-d">Safe area aware layouts</div></div>
+    <div class="feat"><div class="feat-ic">📦</div><div class="feat-t">JSON backup</div><div class="feat-d">Export / import your full recovery data</div></div>
+  </div>
+</div>
+
+<!-- s17: Navigation -->
+<div class="slide" id="s17">
+  <div class="anim label">Navigation</div>
+  <h2 class="anim">Six tabs. One recovery OS.</h2>
+  <p class="anim tagline">Today · Recovery · SOS · Learn · Journal · You — each purpose-built for recovery workflows.</p>
+  <div class="anim tabs-demo" style="margin-top:20px">
+    <div class="tab-demo on"><div class="tab-ic">☀️</div><div class="tab-nm">Today</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Checklist + SOS</div></div>
+    <div class="tab-demo"><div class="tab-ic">🧬</div><div class="tab-nm">Recovery</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Timelines</div></div>
+    <div class="tab-demo sos"><div class="tab-ic">🆘</div><div class="tab-nm">SOS</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Emergency</div></div>
+    <div class="tab-demo"><div class="tab-ic">📚</div><div class="tab-nm">Learn</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Knowledge</div></div>
+    <div class="tab-demo"><div class="tab-ic">📓</div><div class="tab-nm">Journal</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Mood + triggers</div></div>
+    <div class="tab-demo"><div class="tab-ic">👤</div><div class="tab-nm">You</div><div style="font-size:9px;color:var(--text3);margin-top:4px">Profile + settings</div></div>
+  </div>
+</div>
+
+<!-- s18: Roadmap -->
+<div class="slide" id="s18">
+  <div class="anim label">Roadmap</div>
+  <h2 class="anim">Recovery is not a streak. It's a system.</h2>
+  <div class="anim roadmap" style="margin-top:16px">
+    <div class="road-item"><div><div class="road-q">Shipped · v2</div><div class="road-title">Recovery score + hourly timelines</div><div class="road-desc">Body system scores, 72h milestones, craving forecast.</div></div></div>
+    <div class="road-item"><div><div class="road-q">Shipped · v2</div><div class="road-title">Today command centre</div><div class="road-desc">Medicines, skincare, hair, habit progress unified.</div></div></div>
+    <div class="road-item future"><div><div class="road-q">Next</div><div class="road-title">Deeper trigger intelligence</div><div class="road-desc">Pattern learning from journal history.</div></div></div>
+    <div class="road-item future"><div><div class="road-q">Future</div><div class="road-title">Therapist-friendly PDF export</div><div class="road-desc">Share progress reports with your support team.</div></div></div>
+  </div>
+</div>
+
+<!-- s19: Metrics -->
+<div class="slide" id="s19">
+  <div class="anim label">By The Numbers</div>
+  <h2 class="anim">DisciplineOS at a glance.</h2>
+  <div class="anim grid3" style="margin-top:20px;max-width:660px">
+    <div class="stat" style="min-width:0"><div class="sv">12</div><div class="sk">Built-in habits</div></div>
+    <div class="stat" style="min-width:0"><div class="sv">72h</div><div class="sk">Hourly milestones</div></div>
+    <div class="stat" style="min-width:0"><div class="sv">6</div><div class="sk">Nav tabs</div></div>
+    <div class="stat" style="min-width:0"><div class="sv">0</div><div class="sk">Servers</div></div>
+    <div class="stat" style="min-width:0"><div class="sv">0</div><div class="sk">Dependencies</div></div>
+    <div class="stat" style="min-width:0"><div class="sv">100</div><div class="sk">Recovery score</div></div>
+  </div>
+</div>
+
+<!-- s20: CTA -->
+<div class="slide" id="s20">
+  <div class="s1-glow"></div>
+  <div class="anim label">Try It Now</div>
+  <div class="anim" style="font-size:clamp(40px,7vw,72px);font-weight:900;letter-spacing:-.04em;line-height:1;margin-bottom:12px" class="grad">DisciplineOS</div>
+  <div class="anim cta-quote">Recovery is not a streak. It's a system.</div>
+  <div class="anim" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:20px">
+    <a class="link-btn link-btn-orange" href="https://shamikhahmed.github.io/DisciplineOS/" target="_blank" rel="noopener">🌐 Open App</a>
+    <a class="link-btn link-btn-teal" href="https://github.com/shamikhahmed/DisciplineOS" target="_blank" rel="noopener">📁 GitHub</a>
+  </div>
+  <div class="anim" style="font-size:13px;color:var(--text3)">📱 Safari → Share → Add to Home Screen</div>
+  <div class="anim credit" style="position:static;margin-top:24px;font-size:11px;color:var(--text3)">Built by Shamikh Ahmed · shamikhahmed.github.io/DisciplineOS</div>
+</div>
+
+</div><!-- /deck -->
+
 <script>
 (function(){
-var canvas=document.getElementById('orb-canvas'),ctx=canvas.getContext('2d'),orbs=[];
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
-function init(){orbs=[];for(var i=0;i<8;i++)orbs.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:100+Math.random()*140,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,c:'rgba(255,107,53,',a:.04+Math.random()*.05})}
-function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);orbs.forEach(function(o){o.x+=o.vx;o.y+=o.vy;if(o.x<-o.r)o.x=canvas.width+o.r;if(o.x>canvas.width+o.r)o.x=-o.r;if(o.y<-o.r)o.y=canvas.height+o.r;if(o.y>canvas.height+o.r)o.y=-o.r;var g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);g.addColorStop(0,o.c+o.a+')');g.addColorStop(1,o.c+'0)');ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill()});requestAnimationFrame(draw)}
-resize();init();draw();addEventListener('resize',function(){resize();init()});
-var current=0,total=20,slides=Array.from(document.querySelectorAll('.deck-slide')),progressEl=document.getElementById('progress'),counterEl=document.getElementById('counter'),anim=false;
-function goTo(n){if(anim||n<0||n>=total||n===current)return;anim=true;var out=slides[current],inn=slides[n],fwd=n>current;
-inn.style.transition='none';inn.style.transform=fwd?'translateX(100%)':'translateX(-100%)';inn.style.opacity='0';inn.classList.remove('active');inn.getBoundingClientRect();inn.style.transition='';
-out.style.transform=fwd?'translateX(-100%)':'translateX(100%)';out.style.opacity='0';inn.style.transform='translateX(0)';inn.style.opacity='1';inn.classList.add('active');current=n;
-setTimeout(function(){out.classList.remove('active');out.style.transform='';out.style.opacity='';anim=false},520);
-progressEl.style.width=((current+1)/total*100)+'%';counterEl.textContent=(current+1)+' / '+total}
-function next(){goTo(current+1)}function prev(){goTo(current-1)}
-window.next=next;window.prev=prev;
-document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}if(e.key==='ArrowLeft'){e.preventDefault();prev()}if(e.key==='f'||e.key==='F')toggleFS()});
-document.getElementById('deck').addEventListener('click',function(e){if(e.target.closest('a,button'))return;if(e.clientX>innerWidth/2)next();else prev()});
-var tx=0;document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
-document.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){if(dx<0)next();else prev()}},{passive:true});
-function toggleFS(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.()}
-document.getElementById('fullscreen-btn').addEventListener('click',toggleFS);
-progressEl.style.width=(1/total*100)+'%';
+'use strict';
+
+/* Particles — orange/teal network */
+var canvas=document.getElementById('particles');
+var ctx=canvas.getContext('2d');
+var W,H,dots=[];
+function resize(){
+  W=canvas.width=window.innerWidth;
+  H=canvas.height=window.innerHeight;
+  dots=[];
+  for(var i=0;i<55;i++){
+    dots.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.8+1});
+  }
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  dots.forEach(function(d){
+    d.x+=d.vx;d.y+=d.vy;
+    if(d.x<0||d.x>W)d.vx*=-1;
+    if(d.y<0||d.y>H)d.vy*=-1;
+    ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,107,53,.55)';ctx.fill();
+  });
+  dots.forEach(function(a,i){
+    dots.forEach(function(b,j){
+      if(j<=i)return;
+      var dx=a.x-b.x,dy=a.y-b.y,dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<90){
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle='rgba(78,205,196,'+((1-dist/90)*.35)+')';
+        ctx.lineWidth=.6;ctx.stroke();
+      }
+    });
+  });
+  requestAnimationFrame(draw);
+}
+window.addEventListener('resize',resize);
+resize();draw();
+
+/* Slide engine */
+var total=21;
+var cur=0;
+var slides=document.querySelectorAll('.slide');
+var progress=document.getElementById('progress');
+var counter=document.getElementById('counter');
+var dotsEl=document.getElementById('dots');
+
+for(var i=0;i<total;i++){
+  var d=document.createElement('div');
+  d.className='dot';
+  d.onclick=function(n){return function(){go(n);};}(i);
+  dotsEl.appendChild(d);
+}
+
+function updateDots(){
+  document.querySelectorAll('.dot').forEach(function(el,i){
+    el.classList.toggle('on',i===cur);
+  });
+}
+
+function triggerSlideAnims(idx){
+  if(idx===1){
+    slides[1].querySelectorAll('.pain-item').forEach(function(el,i){
+      setTimeout(function(){el.classList.add('show');},400+i*180);
+    });
+  }
+  if(idx===2){
+    ['w-one','w-off','w-private'].forEach(function(id,i){
+      setTimeout(function(){
+        var el=document.getElementById(id);
+        if(el)el.classList.add('show');
+      },300+i*320);
+    });
+  }
+  if(idx===0)initTitleLetters();
+}
+
+function resetSlideAnims(idx){
+  if(idx===1){
+    slides[1].querySelectorAll('.pain-item').forEach(function(el){el.classList.remove('show');});
+  }
+  if(idx===2){
+    ['w-one','w-off','w-private'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el)el.classList.remove('show');
+    });
+  }
+}
+
+function go(n){
+  if(n===cur||n<0||n>=total)return;
+  var oldSlide=slides[cur];
+  oldSlide.classList.remove('active');
+  oldSlide.classList.add('out');
+  setTimeout(function(){oldSlide.classList.remove('out');},450);
+  resetSlideAnims(cur);
+  cur=n;
+  slides[cur].classList.add('active');
+  triggerSlideAnims(cur);
+  progress.style.width=((cur+1)/total*100)+'%';
+  counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+  updateDots();
+}
+
+function initTitleLetters(){
+  var el=document.getElementById('titleLetters');
+  if(!el||el.dataset.built)return;
+  el.dataset.built='1';
+  var text='DisciplineOS';
+  el.innerHTML='';
+  text.split('').forEach(function(ch,i){
+    var sp=document.createElement('span');
+    sp.className='letter grad';
+    sp.style.animationDelay=(i*50)+'ms';
+    sp.style.fontSize='inherit';
+    sp.style.fontWeight='900';
+    sp.textContent=ch;
+    el.appendChild(sp);
+  });
+}
+
+/* Touch swipe */
+var tx=0;
+document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',function(e){
+  var dx=tx-e.changedTouches[0].clientX;
+  if(Math.abs(dx)>50)go(dx>0?cur+1:cur-1);
+});
+
+/* Click left/right */
+document.addEventListener('click',function(e){
+  var tag=e.target.tagName.toLowerCase();
+  if(['button','a','input','select'].includes(tag))return;
+  if(e.target.closest('.dot'))return;
+  if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);
+});
+
+/* Keyboard */
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(cur+1);}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(cur-1);}
+  else if(e.key==='f'||e.key==='F')toggleFS();
+});
+
+function toggleFS(){
+  if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();
+  else document.exitFullscreen?.();
+}
+window.toggleFS=toggleFS;
+
+go(0);
 })();
 </script>
 </body>
