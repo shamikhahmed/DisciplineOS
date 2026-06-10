@@ -208,6 +208,12 @@ const Profile = (() => {
         </div>
       </div>
 
+      <div class="section-header"><span class="section-title">Enterprise Demo</span></div>
+      <div style="padding:0 20px 12px">
+        <p class="t-caption t-dim" style="margin-bottom:10px;line-height:1.5">Load anonymized sample habits, journal triggers, and craving history for investor demos — no code edits required.</p>
+        <button class="btn btn-primary" style="width:100%;margin-bottom:8px" onclick="Profile._loadDemo()">📦 Load Demo Recovery Profile</button>
+      </div>
+
       <div style="padding:0 20px;margin-bottom:8px">
         <button class="btn btn-ghost" style="width:100%;text-align:center;margin-bottom:8px" onclick="Profile._exportData()">Export Data (JSON)</button>
         <label class="btn btn-ghost" style="width:100%;text-align:center;display:block;cursor:pointer">
@@ -216,6 +222,9 @@ const Profile = (() => {
         </label>
       </div>
 
+      <div style="padding:0 20px 8px">
+        <div class="t-caption t-dim" style="text-align:center;margin-bottom:12px">DisciplineOS v2.0.0 · Local-only · Not a medical device</div>
+      </div>
       <div style="padding:0 20px 20px">
         <button class="btn btn-danger" onclick="Profile._reset()">Reset All Data</button>
       </div>
@@ -262,6 +271,71 @@ const Profile = (() => {
       }
     };
     reader.readAsText(file);
+  }
+
+  function _loadDemo() {
+    if (!confirm('Load demo recovery profile? Replaces current data with anonymized sample habits, journal entries, and craving log.')) return;
+    const day = 86400000;
+    const now = Date.now();
+    const quitTime = new Date(now - 47 * day).toISOString();
+    State.update(d => {
+      d.user = {
+        name: 'Alex (Demo)',
+        currency: 'USD',
+        goals: ['Stay smoke-free for my kids', 'Save $200/month', 'Run a 5K by summer'],
+        triggers: ['Stress', 'Evening'],
+        spiritualMode: false,
+        hairTreatment: 'minoxidil',
+      };
+      d.settings = { currency: 'USD', notificationsEnabled: false };
+      d.habits = [{
+        id: 'demo-smoking',
+        type: 'smoking',
+        quitTime,
+        config: { cigarettesPerDay: 12, yearsSmoked: 8, costPerPack: 9.5, cigarettesPerPack: 20 },
+        relapses: [{ at: new Date(now - 90 * day).toISOString(), note: 'Social event' }],
+        createdAt: quitTime,
+      }];
+      d.customHabits = [];
+      d.medicines = [{
+        id: 'demo-med-1', name: 'Nicotine patch', dose: '21mg', schedule: 'fixed',
+        times: ['08:00'], enabled: true,
+      }];
+      d.routines = {
+        skincare: { am: [{ id: 'r1', label: 'Gentle cleanser' }], pm: [{ id: 'r2', label: 'Moisturizer' }], weekly: [] },
+        hair: { am: [], pm: [{ id: 'r3', label: 'Minoxidil' }], weekly: [] },
+      };
+      d.cravingLog = [];
+      for (let i = 0; i < 14; i++) {
+        const evening = new Date(now - i * day);
+        evening.setHours(19 + (i % 3), 30, 0, 0);
+        d.cravingLog.push({
+          id: 'c' + i,
+          at: evening.toISOString(),
+          intensity: 3 + (i % 4),
+          survived: i !== 5,
+          trigger: ['Stress', 'Night', 'Social', 'Boredom'][i % 4],
+        });
+      }
+      d.onboardingComplete = true;
+    });
+    const journalEntries = [];
+    for (let i = 0; i < 12; i++) {
+      const d = new Date(now - i * day);
+      const ds = d.toISOString().slice(0, 10);
+      journalEntries.push({
+        date: ds,
+        text: i === 0 ? 'Cravings peaked after work but I walked instead.' : 'Day ' + (12 - i) + ' — staying accountable.',
+        mood: ['strong', 'ok', 'hard', 'ok'][i % 4],
+        triggers: [['Stress', 'Night'], ['Work'], ['Boredom', 'Evening'], ['Social']][i % 4],
+        ts: d.getTime(),
+      });
+    }
+    localStorage.setItem('dos_journal_v1', JSON.stringify(journalEntries));
+    App.showToast('Demo recovery profile loaded', 'success');
+    render();
+    if (window.Recovery) Recovery.render();
+    if (window.Dashboard) Dashboard.render();
   }
 
   function _reset() {
@@ -598,7 +672,7 @@ const Profile = (() => {
   }
 
   return {
-    render, _saveName, _saveCurrency, _saveGoals, _exportData, _importData, _reset,
+    render, _saveName, _saveCurrency, _saveGoals, _exportData, _importData, _reset, _loadDemo,
     _editHabit, _saveEdit, _closeModal, _addHabit, _startAddHabit, _confirmAddHabit,
     _toggleSpiritual, _setHairTreatment, _toggleNotifications,
     _addMed, _saveMed, _editMed, _removeMed, _toggleMed,
