@@ -1,5 +1,5 @@
 'use strict';
-const CACHE = 'discipline-v5';
+const CACHE = 'discipline-v6';
 const ASSETS = [
   './',
   './index.html',
@@ -27,6 +27,9 @@ const ASSETS = [
   './js/modules/knowledge.js',
   './js/modules/profile.js',
   './js/modules/journal.js',
+  './landing.html',
+  './presentation.html',
+  './pitch.html',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
 ];

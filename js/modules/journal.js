@@ -6,11 +6,13 @@ const Journal = (() => {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; }
   }
 
-  function saveEntry(text, mood) {
+  const TRIGGERS = ['Stress', 'Boredom', 'Loneliness', 'Night', 'Anxiety', 'Social', 'Work', 'Habit'];
+
+  function saveEntry(text, mood, triggers) {
     const entries = getEntries();
     const today = new Date().toISOString().split('T')[0];
     const existing = entries.findIndex(e => e.date === today);
-    const entry = { date: today, text: text.trim(), mood: mood || null, ts: Date.now() };
+    const entry = { date: today, text: text.trim(), mood: mood || null, triggers: triggers || [], ts: Date.now() };
     if (existing >= 0) entries[existing] = entry;
     else entries.unshift(entry);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries.slice(0, 365)));
@@ -68,6 +70,13 @@ const Journal = (() => {
             </div>
           `).join('')}
         </div>
+        <div class="t-label t-dim" style="margin:14px 0 8px;">Triggers today (optional)</div>
+        <div id="journal-triggers" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
+          ${TRIGGERS.map(t => {
+            const on = (todayEntry?.triggers || []).includes(t);
+            return `<button type="button" class="trigger-chip${on ? ' on' : ''}" data-trigger="${t}" style="padding:6px 10px;border-radius:99px;border:1px solid ${on ? 'var(--orange)' : 'var(--border)'};background:${on ? 'rgba(255,107,53,0.12)' : 'var(--glass2)'};color:${on ? 'var(--orange)' : 'var(--text3)'};font-size:0.68rem;font-weight:600;cursor:pointer;">${t}</button>`;
+          }).join('')}
+        </div>
         <textarea id="journal-input" placeholder="One sentence about today..." style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font:0.9rem/1.6 var(--font);resize:none;outline:none;padding:8px 0;min-height:60px;box-sizing:border-box;">${todayEntry?.text || ''}</textarea>
         <button id="journal-save" class="btn btn-primary" style="margin-top:14px;width:100%;">Save Entry</button>
       </div>
@@ -91,6 +100,21 @@ const Journal = (() => {
     </div>`;
 
     let selectedMood = todayEntry?.mood || null;
+    let selectedTriggers = [...(todayEntry?.triggers || [])];
+
+    screen.querySelectorAll('.trigger-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const t = btn.dataset.trigger;
+        if (selectedTriggers.includes(t)) selectedTriggers = selectedTriggers.filter(x => x !== t);
+        else selectedTriggers.push(t);
+        screen.querySelectorAll('.trigger-chip').forEach(b => {
+          const on = selectedTriggers.includes(b.dataset.trigger);
+          b.style.borderColor = on ? 'var(--orange)' : 'var(--border)';
+          b.style.background = on ? 'rgba(255,107,53,0.12)' : 'var(--glass2)';
+          b.style.color = on ? 'var(--orange)' : 'var(--text3)';
+        });
+      });
+    });
 
     screen.querySelectorAll('.mood-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -106,7 +130,7 @@ const Journal = (() => {
     document.getElementById('journal-save')?.addEventListener('click', () => {
       const text = document.getElementById('journal-input')?.value?.trim();
       if (!text) { App.showToast('Write something first', 'error'); return; }
-      saveEntry(text, selectedMood);
+      saveEntry(text, selectedMood, selectedTriggers);
       App.showToast('Entry saved', 'success');
       render();
     });

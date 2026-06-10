@@ -169,7 +169,7 @@ const Emergency = (() => {
               <div style="font-size:0.75rem;color:var(--text2)">${m.body.substring(0,70)}…</div>
             </div>
           </div>
-        `).join('') : '<div style="color:var(--text3);font-size:0.85rem;text-align:center">Keep going — milestones coming soon.</div>'}
+        `).join('') : `<div style="color:var(--text3);font-size:0.85rem;text-align:center;margin-bottom:12px">${days} day${days === 1 ? '' : 's'} clean — healing milestones unlock as you progress.</div>`}
         ${systems.map(s=>`
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
             <span>${s.icon}</span>

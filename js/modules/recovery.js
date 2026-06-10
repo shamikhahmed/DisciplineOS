@@ -36,7 +36,8 @@ const Recovery = (() => {
     const cravingLog = State.get('cravingLog') || [];
     let triggerHtml = '';
     if (window.TriggerEngine) {
-      const forecast = TriggerEngine.forecastCard(cravingLog, habits, habit);
+      const journalEntries = (window.Journal && Journal.getEntries) ? Journal.getEntries() : [];
+      const forecast = TriggerEngine.forecastCard(cravingLog, habits, habit, journalEntries);
       const { risk, withdrawalWarning, analysis } = forecast;
       const parts = [];
       if (withdrawalWarning) {

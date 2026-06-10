@@ -1,14 +1,20 @@
 'use strict';
 const TriggerEngine = (() => {
 
-  function analysePatterns(cravingLog, habits) {
+  function analysePatterns(cravingLog, habits, journalEntries) {
     const relapses = [];
     (habits || []).forEach(h => {
       (h.relapses || []).forEach(r => relapses.push({ ...r, habitId: h.id }));
     });
+    const journalEvents = (journalEntries || []).flatMap(e => {
+      const at = new Date((e.date || '') + 'T12:00:00').getTime();
+      const tags = e.triggers?.length ? e.triggers : (e.mood === 'hard' || e.mood === 'relapsed' ? ['Journal'] : []);
+      return tags.map(trigger => ({ at, type: 'journal', trigger }));
+    });
     const events = [
       ...(cravingLog || []).map(c => ({ ...c, type: 'craving' })),
-      ...relapses.map(r => ({ at: r.at, type: 'relapse' }))
+      ...relapses.map(r => ({ at: r.at, type: 'relapse' })),
+      ...journalEvents
     ];
     if (events.length < 3) return null;
 
@@ -70,11 +76,23 @@ const TriggerEngine = (() => {
       });
     }
 
+    const triggerCounts = {};
+    journalEvents.forEach(e => { if (e.trigger) triggerCounts[e.trigger] = (triggerCounts[e.trigger] || 0) + 1; });
+    const topTrigger = Object.entries(triggerCounts).sort((a, b) => b[1] - a[1])[0];
+    if (topTrigger && topTrigger[1] >= 2) {
+      insights.push({
+        type: 'journal_trigger',
+        message: `Journal tags "${topTrigger[0]}" appear ${topTrigger[1]} times — plan ahead for this cue`,
+        severity: topTrigger[1] >= 4 ? 'high' : 'medium',
+        icon: '📝'
+      });
+    }
+
     return { insights, riskNow, peakHour, peakDay, peakBucket, total, hourCounts, dayCounts };
   }
 
-  function currentRiskLevel(cravingLog, habits) {
-    const analysis = analysePatterns(cravingLog, habits);
+  function currentRiskLevel(cravingLog, habits, journalEntries) {
+    const analysis = analysePatterns(cravingLog, habits, journalEntries);
     if (!analysis) return { level: 'unknown', label: null };
     const risk = analysis.riskNow;
     if (risk > 0.25) return { level: 'high', label: 'High Risk Window', color: '#FF3B30', analysis };
@@ -82,8 +100,8 @@ const TriggerEngine = (() => {
     return { level: 'low', label: null, analysis };
   }
 
-  function forecastCard(cravingLog, habits, primaryHabit) {
-    const risk = currentRiskLevel(cravingLog, habits);
+  function forecastCard(cravingLog, habits, primaryHabit, journalEntries) {
+    const risk = currentRiskLevel(cravingLog, habits, journalEntries);
     const analysis = risk.analysis;
 
     let withdrawalWarning = null;
