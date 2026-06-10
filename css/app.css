@@ -1513,3 +1513,26 @@ input, select, textarea {
   @keyframes dos-toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   @keyframes dos-screen-in { from { opacity: .94; } to { opacity: 1; } }
 }
+
+/* ── Cross-device shell & safe-area ── */
+#screens { min-height: 0; }
+.screen { overscroll-behavior: contain; }
+.nav-tab { min-height: 44px; }
+
+@media (min-width: 768px) and (max-width: 899px) {
+  #app { max-width: min(480px, 100vw); }
+}
+
+@media (min-width: 769px) and (hover: hover) and (pointer: fine) {
+  .screen { padding-bottom: 24px !important; }
+  #nav { height: 64px; padding-bottom: 0; }
+  .score-ring-wrap { padding-top: 32px; }
+  .sos-footer { padding-bottom: 20px; }
+  .ob-screen { padding: 40px 24px; }
+  .reader-overlay { padding-bottom: 0; }
+  .reader-header { padding: 12px 20px 16px; }
+  .profile-header { padding: 20px 20px 20px; }
+  #toast-wrap { top: 16px; }
+  .safe-top { padding-top: 0; }
+  .today-header { padding: 16px 20px 12px; }
+}
