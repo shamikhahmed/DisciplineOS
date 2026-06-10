@@ -1,134 +1,208 @@
 # DisciplineOS — Product Presentation
 
-> Slide-style deck. Present section-by-section or export to slides.
+**Interactive deck:** [presentation.html](../presentation.html) (21 slides) · **Pitch:** [pitch.html](../pitch.html)
 
 ---
 
-## Slide 1 — Title
+## Slide 0 — Title
 
 # DisciplineOS
-### Personal Recovery Operating System
+### Personal Recovery OS
 
-*Habits · Recovery Score · Emergency SOS · Journal*
+*Today · Recovery · SOS · Journal · Trigger Forecast · Offline PWA*
 
-**Shamikh Ahmed** · shamikhahmed.github.io/DisciplineOS
+**Live:** shamikhahmed.github.io/DisciplineOS
 
 ---
 
-## Slide 2 — The problem
+## Slide 1 — Problem
 
-Recovery tools are fragmented:
+Recovery tools are **fragmented.**
 
 - Habit apps don't understand cravings
 - Journals don't connect to triggers
-- Crisis moments need *one tap*, not five apps
-
-People in recovery deserve a single, private command centre.
-
----
-
-## Slide 3 — The solution
-
-**DisciplineOS** unifies recovery into one offline PWA:
-
-| Pillar | What it does |
-|--------|--------------|
-| Score | 0–100 recovery compass from real behaviour |
-| Habits | Streaks + timelines, not guilt |
-| Emergency | Phased SOS for high-risk moments |
-| Intelligence | Craving forecast from journal patterns |
+- Crisis moments need one tap, not five apps
+- Medicines and routines live in separate apps
+- Body-healing progress is invisible hour-by-hour
 
 ---
 
-## Slide 4 — Dashboard
+## Slide 2 — Solution
 
-- Recovery score hero metric
-- Daily pulse check-in
-- Habit completion row
-- One-tap Emergency shortcut
+**Score · SOS · Private** — one offline PWA.
 
-*Designed for glances, not scrolling.*
-
----
-
-## Slide 5 — Recovery engine
-
-- Per-habit recovery timelines
-- Body engine (physical recovery tracking)
-- Craving forecast from trigger history
-- Knowledge-linked protocols
-
-Science-informed. Human-centred.
+- Recovery Score 0–100 from real behaviour
+- 12+ habits with hourly timelines
+- Emergency SOS phased protocol
+- Journal with trigger chips → craving forecast
 
 ---
 
-## Slide 6 — Emergency SOS
+## Slide 3 — Navigation
 
-Phased flow: **Pause → Ground → Breathe → Decide**
+Six tabs: **Today · Recovery · SOS · Learn · Journal · You**
 
-- 5-4-3-2-1 grounding
-- Breathing timer
-- Crisis contacts
-- One-thumb, full-screen, no distractions
-
-Built for the moment you can't think straight.
+Bottom nav mirrors the live app. SOS tab always one thumb away.
 
 ---
 
-## Slide 7 — Privacy by design
+## Slide 4 — Today
 
-- **Zero servers** — localStorage only
-- **Offline-first** PWA
-- **No accounts** — your data never leaves your phone
-- Orange-on-obsidian UI — calm, not clinical
+Daily command centre.
 
----
-
-## Slide 8 — Tech stack
-
-| Layer | Choice |
-|-------|--------|
-| Frontend | Vanilla JS PWA |
-| Storage | localStorage |
-| Offline | Service Worker |
-| Design | `#FF6B35` accent · dark glass UI |
-
-No framework. No build step. Ship from `index.html`.
+- Greeting + `4/7 tasks` progress pill
+- Medicines, skincare AM/PM, hair routines checklist
+- Habit progress row
+- One-tap SOS button
+- Gentle nudges for overdue items
 
 ---
 
-## Slide 9 — iPhone-native feel
+## Slide 5 — Recovery Score
 
-- Safe area aware (notch + home indicator)
-- Add to Home Screen → full-screen
-- `touch-action: manipulation` on all controls
-- Works offline after first load
+0–100 compass with orange/teal conic gradient.
 
----
-
-## Slide 10 — Roadmap
-
-- Deeper trigger intelligence
-- Prayer anchor integrations
-- Hair recovery tracking expansion
-- Export to therapist-friendly PDF
+- Mini rings: Lungs, Heart, Brain, Dopamine
+- Fed by streaks, check-ins, routine completion
+- Visible on Today + Recovery tabs
 
 ---
 
-## Slide 11 — Try it now
+## Slide 6 — Hourly Timeline
 
-🔗 **https://shamikhahmed.github.io/DisciplineOS/**
+72-hour body healing per habit type.
 
-📱 Safari → Share → Add to Home Screen
-
-📁 github.com/shamikhahmed/DisciplineOS
+- 20m heart rate · 8h oxygen · 24h nicotine cleared · 72h breathing eases
+- Extends to daily and weekly milestones
+- All 12 built-in habits + custom
 
 ---
 
-## Slide 12 — Close
+## Slide 7 — SOS
 
-> *Recovery is not a streak. It's a system.*
+Phased emergency protocol when cravings hit.
 
-**DisciplineOS** — your recovery OS.
+1. Pause → 2. Ground (5-4-3-2-1) → 3. Breathe → 4. Remember Why → 5. Decide
 
-*Built by Shamikh Ahmed*
+Animated breathe ring. Logs craving on completion.
+
+---
+
+## Slide 8 — Medicines
+
+Fixed schedules + as-needed (PRN).
+
+- Bupropion 8:00 AM · Melatonin 10:00 PM
+- Push + in-app reminders
+- Profile editor: add, edit, enable/disable
+
+---
+
+## Slide 9 — Skincare & Hair
+
+AM/PM + weekly chips on Today.
+
+- AM: cleanser → vitamin C → SPF
+- PM: double cleanse → retinol → moisturiser
+- Weekly mask on due day only
+
+---
+
+## Slide 10 — Habits
+
+12 built-in + custom.
+
+Smoking · Vape · Weed · Porn · Social media · Gaming · Sugar · Alcohol · Caffeine · + custom
+
+---
+
+## Slide 11 — Trigger Forecast
+
+Journal + craving logs → risk card.
+
+- Top triggers from journal chips
+- Colour-coded risk windows (evening peaks)
+- Withdrawal alerts when physical symptoms likely
+
+---
+
+## Slide 12 — Journal
+
+Log mood, text, and **trigger chips**.
+
+- Chips: stress, boredom, alone, coffee, evening, etc.
+- Feeds TriggerEngine forecasts
+- Export bundled in JSON backup
+
+---
+
+## Slide 13 — Recovery Tab
+
+Per-habit selector, money saved counter, spiritual mode.
+
+- Switch between vape, smoking, social media timelines
+- Trigger forecast card on Recovery + Today
+
+---
+
+## Slide 14 — Learn
+
+Recovery knowledge library by topic.
+
+- Dopamine, withdrawal, relapse prevention
+- Linked to active habit type
+
+---
+
+## Slide 15 — Profile (You)
+
+Medicines editor, spiritual mode, hair treatment, export/import.
+
+- JSON export — you own the file
+- Import restores full state + journal
+
+---
+
+## Slide 16 — Privacy
+
+**Zero cloud.** localStorage only.
+
+- No account · no server · no tracking
+- Works offline after first PWA load
+
+---
+
+## Slide 17 — Tech
+
+Vanilla HTML/CSS/JS · modular `js/modules/` · service worker v6
+
+- `RecoveryEngine` · `TriggerEngine` · `BodyEngine` · `DopamineEngine`
+- No build step · GitHub Pages
+
+---
+
+## Slide 18 — iPhone PWA
+
+Safari → Share → Add to Home Screen
+
+- Orange theme · standalone · portrait
+- Medicine reminders: in-tab polling (honest iOS PWA limits in GUIDE)
+
+---
+
+## Slide 19 — Metrics
+
+| Stat | Value |
+|------|-------|
+| Habits | 12+ |
+| Hourly DB | 72h |
+| Nav tabs | 6 |
+| Servers | 0 |
+
+---
+
+## Slide 20 — CTA
+
+📱 shamikhahmed.github.io/DisciplineOS → Add to Home Screen
+
+*Built by Shamikh Ahmed · © 2026*
