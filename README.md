@@ -2,8 +2,8 @@
 
 **Personal Recovery Operating System — by Capricorn Systems.** Habits, daily routines, medicines, recovery timelines, emergency SOS, journal, and trigger intelligence.
 
-🔗 **Live:** https://shamikhahmed.github.io/DisciplineOS/  
-📁 **Repo:** https://github.com/shamikhahmed/DisciplineOS
+🔗 **Live:** https://shamikhahmed.github.io/SteadyCap/  
+📁 **Repo:** https://github.com/shamikhahmed/SteadyCap
 
 ---
 

@@ -24,4 +24,4 @@
 
 ## Reporting
 
-Open a private security issue on the [DisciplineOS GitHub repo](https://github.com/shamikhahmed/DisciplineOS) for vulnerabilities.
+Open a private security issue on the [DisciplineOS GitHub repo](https://github.com/shamikhahmed/SteadyCap) for vulnerabilities.

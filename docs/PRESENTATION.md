@@ -11,7 +11,7 @@
 
 *Today · Recovery · SOS · Journal · Trigger Forecast · Offline PWA*
 
-**Live:** shamikhahmed.github.io/DisciplineOS
+**Live:** shamikhahmed.github.io/SteadyCap
 
 ---
 
@@ -203,6 +203,6 @@ Safari → Share → Add to Home Screen
 
 ## Slide 20 — CTA
 
-📱 shamikhahmed.github.io/DisciplineOS → Add to Home Screen
+📱 shamikhahmed.github.io/SteadyCap → Add to Home Screen
 
 *Built by Shamikh Ahmed · © 2026*

@@ -2,7 +2,7 @@
 
 DisciplineOS is your **Personal Recovery Operating System** — habits, daily routines, medicines, recovery timelines, emergency SOS, journal, and trigger intelligence.
 
-**Live app:** https://shamikhahmed.github.io/DisciplineOS/
+**Live app:** https://shamikhahmed.github.io/SteadyCap/
 
 ---
 
