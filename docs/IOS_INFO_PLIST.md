@@ -1,8 +1,8 @@
-# DisciplineOS — iOS Info.plist notes
+# SteadyCap — iOS Info.plist notes
 
 After `npm run cap:init`, edit `ios/App/App/Info.plist`:
 
-- `CFBundleDisplayName`: DisciplineOS
+- `CFBundleDisplayName`: SteadyCap
 - `NSPhotoLibraryUsageDescription`: Not required for this app.
 - `ITSAppUsesNonExemptEncryption`: false (standard HTTPS only)
 

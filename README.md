@@ -56,7 +56,7 @@
 ## Local dev
 
 ```bash
-cd DisciplineOS
+cd SteadyCap
 python3 -m http.server 8765
 # → http://localhost:8765
 ```

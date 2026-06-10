@@ -143,6 +143,10 @@ input, select, textarea {
    App Shell
    ============================================================ */
 
+@media (min-width: 900px) {
+  html { background: #030508; }
+}
+
 #app {
   height: 100dvh;
   display: flex;
@@ -152,6 +156,8 @@ input, select, textarea {
   margin: 0 auto;
   position: relative;
   z-index: 1;
+  width: 100%;
+  box-shadow: 0 0 60px rgba(0,0,0,.4);
 }
 
 #screens {

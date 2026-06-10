@@ -1,4 +1,4 @@
-# DisciplineOS — Security Notes
+# SteadyCap — Security Notes
 
 ## Local-only data
 
@@ -8,7 +8,7 @@
 
 ## Medical disclaimer
 
-- DisciplineOS is **not a medical device** and does not provide diagnosis or treatment.
+- SteadyCap is **not a medical device** and does not provide diagnosis or treatment.
 - SOS tools support self-directed recovery; **seek professional help** for crisis, withdrawal, or mental health emergencies.
 - Medicine reminders are convenience features — verify doses with your clinician.
 
@@ -24,4 +24,4 @@
 
 ## Reporting
 
-Open a private security issue on the [DisciplineOS GitHub repo](https://github.com/shamikhahmed/SteadyCap) for vulnerabilities.
+Open a private security issue on the [SteadyCap GitHub repo](https://github.com/shamikhahmed/SteadyCap) for vulnerabilities.

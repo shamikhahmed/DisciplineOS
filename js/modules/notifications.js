@@ -130,7 +130,7 @@ const Notifications = (() => {
       if (mins >= item.tMins && mins < item.tMins + 5) {
         fired[key][fireKey] = true;
         sessionStorage.setItem('dos_fired', JSON.stringify(fired));
-        showPush('DisciplineOS', `${item.label} — ${item.sub}`, fireKey);
+        showPush('SteadyCap', `${item.label} — ${item.sub}`, fireKey);
         if (window.App) App.showToast(`Reminder: ${item.label}`, 'info');
       }
     });

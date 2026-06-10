@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>DisciplineOS — Presentation</title>
+<title>SteadyCap — Presentation</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -215,7 +215,7 @@ h2{font-size:clamp(26px,4vw,48px);font-weight:700;letter-spacing:-.025em;line-he
 
 </div>
 </div>
-<div class="credit anim">Built by Shamikh Ahmed<br>DisciplineOS © 2026
+<div class="credit anim">Built by Shamikh Ahmed<br>SteadyCap © 2026
 
 </div>
 </div>
@@ -274,7 +274,7 @@ h2{font-size:clamp(26px,4vw,48px);font-weight:700;letter-spacing:-.025em;line-he
 </div>
 </div>
 
-<div class="anim tagline" style="margin-top:20px;margin-bottom:24px"><strong style="color:var(--text)">DisciplineOS</strong> unifies recovery into one offline PWA on your phone.
+<div class="anim tagline" style="margin-top:20px;margin-bottom:24px"><strong style="color:var(--text)">SteadyCap</strong> unifies recovery into one offline PWA on your phone.
 </div>
 
 <div class="anim grid2">
@@ -1448,7 +1448,7 @@ h2{font-size:clamp(26px,4vw,48px);font-weight:700;letter-spacing:-.025em;line-he
 </div>
 
 <div class="anim terminal">
-<div><span class="path">DisciplineOS/</span>
+<div><span class="path">SteadyCap/</span>
 </div>
 <div><span class="dim">├──</span> index.html <span class="dim">· PWA shell + safe areas</span>
 </div>
@@ -1532,7 +1532,7 @@ h2{font-size:clamp(26px,4vw,48px);font-weight:700;letter-spacing:-.025em;line-he
 
 </div>
 </div>
-<div class="credit anim"><strong style="color:var(--text)">DisciplineOS</strong> — your recovery OS.<br>Built by Shamikh Ahmed · June 2026
+<div class="credit anim"><strong style="color:var(--text)">SteadyCap</strong> — your recovery OS.<br>Built by Shamikh Ahmed · June 2026
 
 </div>
 </div>
@@ -1562,7 +1562,7 @@ function resetSlideAnims(idx){if(idx===1)slides[1].querySelectorAll('.pain-item'
 if(idx===2)['w-score','w-sos','w-private'].forEach(id=>document.getElementById(id)?.classList.remove('show'));
 if(idx===14)stopBreath();}
 function go(n){if(n===cur||n<0||n>=total)return;const old=slides[cur];old.classList.remove('active');old.classList.add('out');setTimeout(()=>old.classList.remove('out'),450);resetSlideAnims(cur);cur=n;slides[cur].classList.add('active');triggerSlideAnims(cur);progress.style.width=((cur+1)/total*100)+'%';counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');updateDots();if(cur===0)initTitleLetters();}
-function initTitleLetters(){const el=document.getElementById('titleLetters');if(!el||el.dataset.built)return;el.dataset.built='1';'DisciplineOS'.split('').forEach((ch,i)=>{const sp=document.createElement('span');sp.className='letter';sp.style.cssText='font-size:clamp(44px,7vw,80px);font-weight:800;letter-spacing:-.04em;line-height:1;animation-delay:'+(i*55)+'ms';if(ch==='O'&&i>0)sp.style.color='var(--orange)';sp.textContent=ch;el.appendChild(sp);});}
+function initTitleLetters(){const el=document.getElementById('titleLetters');if(!el||el.dataset.built)return;el.dataset.built='1';'SteadyCap'.split('').forEach((ch,i)=>{const sp=document.createElement('span');sp.className='letter';sp.style.cssText='font-size:clamp(44px,7vw,80px);font-weight:800;letter-spacing:-.04em;line-height:1;animation-delay:'+(i*55)+'ms';if(ch==='O'&&i>0)sp.style.color='var(--orange)';sp.textContent=ch;el.appendChild(sp);});}
 let tx=0;document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
 document.addEventListener('touchend',e=>{const dx=tx-e.changedTouches[0].clientX;if(Math.abs(dx)>50)go(dx>0?cur+1:cur-1);});
 document.addEventListener('click',e=>{const t=e.target.tagName.toLowerCase();if(['button','a','input','select'].includes(t))return;if(e.target.closest('.dot'))return;if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});

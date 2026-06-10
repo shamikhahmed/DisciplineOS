@@ -223,7 +223,7 @@ const Profile = (() => {
       </div>
 
       <div style="padding:0 20px 8px">
-        <div class="t-caption t-dim" style="text-align:center;margin-bottom:12px">DisciplineOS v2.0.0 · Local-only · Not a medical device</div>
+        <div class="t-caption t-dim" style="text-align:center;margin-bottom:12px">SteadyCap v2.0.0 · Local-only · Not a medical device</div>
       </div>
       <div style="padding:0 20px 20px">
         <button class="btn btn-danger" onclick="Profile._reset()">Reset All Data</button>
@@ -253,7 +253,7 @@ const Profile = (() => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'disciplineos-backup.json';
+    a.download = 'SteadyCap-backup.json';
     a.click();
     URL.revokeObjectURL(url);
   }

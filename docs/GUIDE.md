@@ -1,6 +1,6 @@
-# DisciplineOS — User Guide
+# SteadyCap — User Guide
 
-DisciplineOS is your **Personal Recovery Operating System** — habits, daily routines, medicines, recovery timelines, emergency SOS, journal, and trigger intelligence.
+SteadyCap is your **Personal Recovery Operating System** — habits, daily routines, medicines, recovery timelines, emergency SOS, journal, and trigger intelligence.
 
 **Live app:** https://shamikhahmed.github.io/SteadyCap/
 
@@ -122,4 +122,4 @@ All data stays in `localStorage` on your device.
 
 ---
 
-*DisciplineOS © 2026 Shamikh Ahmed*
+*SteadyCap © 2026 Shamikh Ahmed*

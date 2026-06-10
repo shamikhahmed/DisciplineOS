@@ -1,4 +1,4 @@
-# DisciplineOS — Product Presentation
+# SteadyCap — Product Presentation
 
 **Interactive deck:** [presentation.html](../presentation.html) (21 slides) · **Pitch:** [pitch.html](../pitch.html)
 
@@ -6,7 +6,7 @@
 
 ## Slide 0 — Title
 
-# DisciplineOS
+# SteadyCap
 ### Personal Recovery OS
 
 *Today · Recovery · SOS · Journal · Trigger Forecast · Offline PWA*
