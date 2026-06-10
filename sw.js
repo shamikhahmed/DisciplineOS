@@ -1,5 +1,5 @@
 'use strict';
-const CACHE = 'steadycap-v23';
+const CACHE = 'steadycap-v24';
 const ASSETS = [
   './',
   './index.html',
