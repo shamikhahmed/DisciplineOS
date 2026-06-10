@@ -273,8 +273,9 @@ const Profile = (() => {
     reader.readAsText(file);
   }
 
-  function _loadDemo() {
-    if (!confirm('Load demo recovery profile? Replaces current data with anonymized sample habits, journal entries, and craving log.')) return;
+  function loadDemoData(opts) {
+    const silent = opts && opts.silent;
+    if (!silent && !confirm('Load demo recovery profile? Replaces current data with anonymized sample habits, journal entries, and craving log.')) return;
     const day = 86400000;
     const now = Date.now();
     const quitTime = new Date(now - 47 * day).toISOString();
@@ -332,10 +333,15 @@ const Profile = (() => {
       });
     }
     localStorage.setItem('dos_journal_v1', JSON.stringify(journalEntries));
-    App.showToast('Demo recovery profile loaded', 'success');
+    if (!silent) App.showToast('Demo recovery profile loaded', 'success');
     render();
     if (window.Recovery) Recovery.render();
     if (window.Dashboard) Dashboard.render();
+    return true;
+  }
+
+  function _loadDemo() {
+    loadDemoData();
   }
 
   function _reset() {
@@ -672,7 +678,7 @@ const Profile = (() => {
   }
 
   return {
-    render, _saveName, _saveCurrency, _saveGoals, _exportData, _importData, _reset, _loadDemo,
+    render, loadDemoData, _saveName, _saveCurrency, _saveGoals, _exportData, _importData, _reset, _loadDemo,
     _editHabit, _saveEdit, _closeModal, _addHabit, _startAddHabit, _confirmAddHabit,
     _toggleSpiritual, _setHairTreatment, _toggleNotifications,
     _addMed, _saveMed, _editMed, _removeMed, _toggleMed,

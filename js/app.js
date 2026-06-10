@@ -1,6 +1,13 @@
 'use strict';
 const App = (() => {
   function init() {
+    const demo = new URLSearchParams(location.search).get('demo') === '1';
+    if (demo && window.Profile && Profile.loadDemoData) {
+      Profile.loadDemoData({ silent: true });
+      launch();
+      Navigation.go('dashboard');
+      return;
+    }
     if (State.get('onboardingComplete')) {
       launch();
     } else {
@@ -9,7 +16,7 @@ const App = (() => {
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=6').catch(() => {});
+        navigator.serviceWorker.register('./sw.js?v=25').catch(() => {});
       });
     }
 
