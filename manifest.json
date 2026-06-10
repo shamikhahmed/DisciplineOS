@@ -1,7 +1,7 @@
 {
-  "name": "DisciplineOS",
-  "short_name": "DisciplineOS",
-  "description": "Personal Recovery Operating System",
+  "name": "SteadyCap",
+  "short_name": "SteadyCap",
+  "description": "SteadyCap by Capricorn Systems — Personal Recovery Operating System",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -1,6 +1,6 @@
-# DisciplineOS
+# SteadyCap
 
-**Personal Recovery Operating System** — habits, daily routines, medicines, recovery timelines, emergency SOS, journal, and trigger intelligence.
+**Personal Recovery Operating System — by Capricorn Systems.** Habits, daily routines, medicines, recovery timelines, emergency SOS, journal, and trigger intelligence.
 
 🔗 **Live:** https://shamikhahmed.github.io/DisciplineOS/  
 📁 **Repo:** https://github.com/shamikhahmed/DisciplineOS
