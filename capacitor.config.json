@@ -1,0 +1,12 @@
+{
+  "appId": "com.shamikhahmed.disciplineos",
+  "appName": "DisciplineOS",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "scrollEnabled": true
+  }
+}
