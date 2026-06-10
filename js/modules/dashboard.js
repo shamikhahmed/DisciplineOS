@@ -169,7 +169,7 @@ const Dashboard = (() => {
     screen.innerHTML = `
       <div class="today-header">
         <div class="t-caption">${formatDate()}</div>
-        <div class="t-display" style="font-size:1.6rem">${greeting()}${user.name ? ', ' + user.name.split(' ')[0] : ''}</div>
+        <div class="t-display t-display--compact">${greeting()}${user.name ? ', ' + user.name.split(' ')[0] : ''}</div>
         ${checklistTotal > 0 ? `<div class="today-progress-pill">${checklistDone}/${checklistTotal} today&apos;s tasks done</div>` : ''}
       </div>
 

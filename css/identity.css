@@ -1,0 +1,55 @@
+/* DisciplineOS — Recovery Clinic Warmth */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #0f0e0d;
+  --bg2: #161412;
+  --bg3: #1e1b18;
+  --bg4: #262220;
+  --orange: #e85d26;
+  --teal: #3dbdb4;
+  --green: #2dd4a0;
+  --r: 26px;
+  --r-sm: 18px;
+  --r-lg: 34px;
+  --font: 'Source Sans 3', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background:
+    radial-gradient(ellipse 70% 50% at 0% 0%, rgba(232, 93, 38, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 45% at 100% 100%, rgba(61, 189, 180, 0.1), transparent 50%),
+    var(--bg) !important;
+}
+
+.t-hero, .t-display, h1, h2, .section-title {
+  font-family: 'Fraunces', Georgia, serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+#nav, .nav-tab {
+  border-radius: 0 !important;
+  background: rgba(15, 14, 13, 0.94) !important;
+  border-top: 2px solid rgba(232, 93, 38, 0.35) !important;
+}
+
+.nav-tab.active {
+  color: var(--teal) !important;
+}
+
+.card, .card-press, .habit-card, .milestone-card, .glass {
+  border-radius: var(--r) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25) !important;
+}
+
+.btn-primary {
+  border-radius: var(--r-lg) !important;
+  background: linear-gradient(135deg, var(--orange), #c44a18) !important;
+  font-weight: 700 !important;
+}
+
+.habit-summary-val {
+  font-family: 'Fraunces', serif !important;
+}

@@ -25,13 +25,17 @@ const Navigation = (() => {
 
   function go(screenId, p) {
     params = p || {};
+    const sameScreen = screenId === current;
+    const preserveScroll = sameScreen && !!(p && p.preserveScroll);
     current = screenId;
 
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const screen = document.getElementById('screen-' + screenId);
     if (screen) {
+      const scrollY = preserveScroll ? screen.scrollTop : 0;
       screen.classList.add('active');
-      screen.scrollTop = 0;
+      if (preserveScroll) screen.scrollTop = scrollY;
+      else screen.scrollTop = 0;
     }
 
     renderNav();
