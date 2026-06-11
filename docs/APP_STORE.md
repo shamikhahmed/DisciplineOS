@@ -6,12 +6,12 @@
 
 ## Capacitor plan
 1. `npm init` + `@capacitor/cli` in repo root (webDir: `.`)
-2. `npx cap add ios` — copy `index.html` entry, icons from `icon-512.png`
+2. `npx cap add ios` — copy `index.html` entry, icons from `assets/icons/icon-512.png`
 3. Configure `Info.plist`: `NSPhotoLibraryUsageDescription` if photos (DeePonyCap)
 4. Disable third-party cookies; keep localStorage/IndexedDB
 
 ## TestFlight checklist
-- [ ] App icons 1024×1024 from `icon-512.png`
+- [ ] App icons 1024×1024 from `assets/icons/icon-512.png`
 - [ ] Privacy nutrition labels: **Data Not Collected** (local-only)
 - [ ] Screenshots: iPhone 6.7" + 6.1"
 - [ ] Review notes: offline PWA, no account required
@@ -28,7 +28,7 @@ See `VERSION.json` — current `2.0.0`.
 - [x] `capacitor.config.json` — appId configured
 - [x] `package.json` — `@capacitor/core`, `@capacitor/ios`, `@capacitor/cli`
 - [x] Scripts: `npm run cap:sync`, `npm run cap:ios`
-- [x] `icon-1024.png` for App Store Connect (from `icon-512.png` upscale or generate-icons)
+- [x] `assets/icons/icon-1024.png` for App Store Connect (from `assets/icons/icon-512.png` upscale or generate-icons)
 - [ ] `npx cap add ios` — run after Xcode installed (`npm run cap:init`)
 - [ ] TestFlight upload — requires Apple Developer account
 
