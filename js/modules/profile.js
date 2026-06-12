@@ -213,6 +213,12 @@ const Profile = (() => {
         </div>
       </div>
 
+      <div class="section-header"><span class="section-title">Clinician Summary</span></div>
+      <div style="padding:0 20px 12px">
+        <p class="t-caption t-dim" style="margin-bottom:10px;line-height:1.5">Generate a printable summary of habits, milestones, and recovery score — no raw journal text included.</p>
+        <button class="btn btn-ghost" style="width:100%" onclick="Profile._exportClinicianSummary()">🖨 Export Clinician Summary</button>
+      </div>
+
       <div class="section-header"><span class="section-title">Enterprise Demo</span></div>
       <div style="padding:0 20px 12px">
         <p class="t-caption t-dim" style="margin-bottom:10px;line-height:1.5">Load anonymized sample habits, journal triggers, and craving history for investor demos — no code edits required.</p>
@@ -685,6 +691,65 @@ const Profile = (() => {
     render();
   }
 
+  function _exportClinicianSummary() {
+    const habits = State.getAllHabits();
+    const user = State.get('user') || {};
+    const settings = State.get('settings') || {};
+    const currency = settings.currency || 'USD';
+    const sym = FinanceEngine.CURRENCY_SYMBOLS[currency] || '$';
+    const cravingLog = State.get('cravingLog') || [];
+    const cravingsSurvived = cravingLog.filter(c => c.survived).length;
+    const longest = State.longestStreak ? State.longestStreak() : 0;
+    const score = window.RecoveryEngine && habits.length
+      ? RecoveryEngine.recoveryScore(habits)
+      : null;
+
+    const habitRows = habits.map(h => {
+      const cfg = State.habitConfig(h.type, h.isCustom, h);
+      const days = RecoveryEngine.daysClean(h.quitTime);
+      const fin = FinanceEngine.calculate(h, currency);
+      const milestone = RecoveryEngine.currentMilestone(h.type, h.quitTime);
+      return `<tr>
+        <td>${cfg.name || h.type}</td>
+        <td>${days} days</td>
+        <td>${(h.relapses || []).length}</td>
+        <td>${fin.hasCost ? sym + fin.savedTotal.toFixed(0) : '—'}</td>
+        <td>${milestone ? milestone.title : '—'}</td>
+      </tr>`;
+    }).join('');
+
+    const html = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>SteadyCap Clinician Summary</title>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#111;max-width:720px;margin:32px auto;padding:0 24px;line-height:1.5}
+  h1{font-size:22px;margin-bottom:4px} .sub{color:#555;font-size:13px;margin-bottom:24px}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+  th,td{border:1px solid #ddd;padding:8px 10px;text-align:left}
+  th{background:#f5f5f5;font-weight:600}
+  .metric{display:inline-block;margin-right:24px;margin-bottom:8px}
+  .metric strong{display:block;font-size:20px}
+  @media print{body{margin:16px}}
+</style></head><body>
+<h1>Recovery Summary</h1>
+<p class="sub">${user.name || 'Patient'} · Generated ${new Date().toLocaleDateString()} · SteadyCap (local data only)</p>
+<div>
+  <div class="metric"><span>Recovery Score</span><strong>${score != null ? score + '/100' : '—'}</strong></div>
+  <div class="metric"><span>Longest Streak</span><strong>${longest} days</strong></div>
+  <div class="metric"><span>Cravings Survived</span><strong>${cravingsSurvived}</strong></div>
+</div>
+<h2>Habits & Milestones</h2>
+<table><thead><tr><th>Habit</th><th>Days Clean</th><th>Relapses</th><th>Saved</th><th>Current Milestone</th></tr></thead>
+<tbody>${habitRows || '<tr><td colspan="5">No habits tracked</td></tr>'}</tbody></table>
+<p style="font-size:11px;color:#888;margin-top:32px">Anonymized export — journal entries and SOS content excluded. For clinical use only with patient consent.</p>
+<script>window.onload=function(){window.print();}</script>
+</body></html>`;
+
+    const w = window.open('', '_blank', 'noopener,noreferrer');
+    if (!w) { App.showToast('Allow pop-ups to print summary', 'error'); return; }
+    w.document.write(html);
+    w.document.close();
+  }
+
   function _removeCustom(id) {
     if (confirm('Remove this custom habit?')) {
       State.removeCustomHabit(id);
@@ -700,6 +765,7 @@ const Profile = (() => {
     _addMed, _saveMed, _editMed, _removeMed, _toggleMed,
     _addRoutine, _saveRoutine, _removeRoutine,
     _addCustomHabit, _pickIcon, _saveCustomHabit, _editCustomHabit, _saveCustomEdit, _removeCustom,
+    _exportClinicianSummary,
   };
 })();
 window.Profile = Profile;

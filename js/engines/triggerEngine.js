@@ -91,18 +91,60 @@ const TriggerEngine = (() => {
     return { insights, riskNow, peakHour, peakDay, peakBucket, total, hourCounts, dayCounts };
   }
 
+  function recentMoodSignal(journalEntries) {
+    const recent = (journalEntries || []).slice(0, 7);
+    if (!recent.length) return null;
+    const hard = recent.filter(e => e.mood === 'hard' || e.mood === 'relapsed').length;
+    const strong = recent.filter(e => e.mood === 'strong').length;
+    const today = recent[0];
+    const insights = [];
+
+    if (today && (today.mood === 'hard' || today.mood === 'relapsed')) {
+      insights.push({
+        type: 'mood_today',
+        message: today.mood === 'relapsed'
+          ? 'You logged a slip today — be extra gentle and reach out if needed'
+          : 'Today feels hard in your journal — cravings may spike; use your SOS tools',
+        severity: 'high',
+        icon: '📝',
+      });
+    } else if (hard >= 2) {
+      insights.push({
+        type: 'mood_streak',
+        message: `${hard} of your last ${recent.length} journal entries were tough days — plan extra support`,
+        severity: hard >= 3 ? 'high' : 'medium',
+        icon: '📉',
+      });
+    }
+
+    if (strong >= 3 && hard === 0) {
+      insights.push({
+        type: 'mood_positive',
+        message: `${strong} strong days logged recently — momentum is on your side`,
+        severity: 'low',
+        icon: '💪',
+      });
+    }
+
+    const moodRiskBoost = today?.mood === 'relapsed' ? 0.15 : today?.mood === 'hard' ? 0.1 : hard >= 2 ? 0.08 : 0;
+    return { insights, moodRiskBoost, hardCount: hard };
+  }
+
   function currentRiskLevel(cravingLog, habits, journalEntries) {
     const analysis = analysePatterns(cravingLog, habits, journalEntries);
-    if (!analysis) return { level: 'unknown', label: null };
-    const risk = analysis.riskNow;
-    if (risk > 0.25) return { level: 'high', label: 'High Risk Window', color: '#FF3B30', analysis };
-    if (risk > 0.12) return { level: 'medium', label: 'Moderate Risk', color: '#FFD60A', analysis };
-    return { level: 'low', label: null, analysis };
+    const mood = recentMoodSignal(journalEntries);
+    if (!analysis && !mood?.moodRiskBoost) return { level: 'unknown', label: null };
+    const risk = (analysis?.riskNow || 0) + (mood?.moodRiskBoost || 0);
+    const merged = analysis ? { ...analysis, insights: [...(analysis.insights || []), ...(mood?.insights || [])] } : { insights: mood?.insights || [] };
+    if (risk > 0.25) return { level: 'high', label: 'High Risk Window', color: '#FF3B30', analysis: merged };
+    if (risk > 0.12) return { level: 'medium', label: 'Moderate Risk', color: '#FFD60A', analysis: merged };
+    return { level: 'low', label: null, analysis: merged };
   }
 
   function forecastCard(cravingLog, habits, primaryHabit, journalEntries) {
     const risk = currentRiskLevel(cravingLog, habits, journalEntries);
     const analysis = risk.analysis;
+    const mood = recentMoodSignal(journalEntries);
 
     let withdrawalWarning = null;
     if (primaryHabit) {
@@ -119,7 +161,7 @@ const TriggerEngine = (() => {
       }
     }
 
-    return { risk, withdrawalWarning, analysis };
+    return { risk, withdrawalWarning, analysis, moodSignal: mood };
   }
 
   function formatHour(h) {
@@ -129,6 +171,6 @@ const TriggerEngine = (() => {
     return `${h - 12}pm`;
   }
 
-  return { analysePatterns, currentRiskLevel, forecastCard, formatHour };
+  return { analysePatterns, currentRiskLevel, forecastCard, formatHour, recentMoodSignal };
 })();
 window.TriggerEngine = TriggerEngine;
