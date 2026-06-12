@@ -24,7 +24,7 @@ const Navigation = (() => {
   }
 
   function go(screenId, p) {
-    params = p || {};
+    if (p !== undefined) params = p || {};
     const sameScreen = screenId === current;
     const preserveScroll = sameScreen && !!(p && p.preserveScroll);
     current = screenId;

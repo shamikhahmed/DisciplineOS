@@ -133,12 +133,13 @@ const Dashboard = (() => {
         </div>
       </div>
       <div class="habit-minis">${cards}</div>
-      ${habits.length > 4 ? `<button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:0.78rem" onclick="Navigation.go('recovery')">View all habits →</button>` : ''}
+      ${habits.length > 4 ? `<button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:0.78rem" onclick="Navigation.go('recovery',{habitId:Recovery.getSelectedHabitId()})">View all habits →</button>` : ''}
     `;
   }
 
   function buildHourlyMilestone(habits) {
-    const primary = habits[0];
+    const selectedId = window.Recovery && Recovery.getSelectedHabitId ? Recovery.getSelectedHabitId() : null;
+    const primary = habits.find(h => h.id === selectedId) || habits[0];
     if (!primary) return '';
     const type = primary.isCustom ? 'custom' : primary.type;
     const curr = RecoveryEngine.currentMilestone(type, primary.quitTime);
@@ -182,7 +183,7 @@ const Dashboard = (() => {
       <div class="today-checklist">${buildChecklist()}</div>
 
       <div class="section-header"><span class="section-title">Habit Progress</span>
-        <button class="section-link" onclick="Navigation.go('recovery')">Details</button>
+        <button class="section-link" onclick="Navigation.go('recovery',{habitId:Recovery.getSelectedHabitId()})">Details</button>
       </div>
       <div style="padding:0 20px 8px">${buildHabitProgress(habits)}</div>
 

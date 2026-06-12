@@ -28,7 +28,7 @@ const Onboarding = (() => {
   function buildStep1() {
     const habits = window.HABITS_CONFIG || {};
     return `<div class="ob-screen">
-      <div class="ob-logo">DISCIPLINEOS</div>
+      <div class="ob-logo">SteadyCap</div>
       ${buildDots(1)}
       <div class="ob-title">What are you quitting?</div>
       <div class="ob-sub">Select all that apply. You can add more later.</div>
@@ -61,8 +61,8 @@ const Onboarding = (() => {
         <div class="ob-field">
           <div class="ob-label">When did you last use it?</div>
           <input class="ob-input" type="datetime-local" id="quit_${key}"
-            value="${cfg.quitTime || new Date(Date.now() - 3600000).toISOString().slice(0,16)}"
-            oninput="Onboarding._setQuit('${key}', this.value)">
+            value="${cfg.quitTime || DateTimeLocal.toInputValue(new Date(Date.now() - 3600000))}"
+            oninput="Onboarding._setQuit('${key}', this.value)" onchange="Onboarding._setQuit('${key}', this.value)">
         </div>
         ${fields.map(f => {
           const shouldShow = !f.showIf || (cfg[f.showIf.field] === f.showIf.value);
@@ -90,7 +90,7 @@ const Onboarding = (() => {
     }).join('');
 
     return `<div class="ob-screen" style="overflow-y:auto;-webkit-overflow-scrolling:touch">
-      <div class="ob-logo">DISCIPLINEOS</div>
+      <div class="ob-logo">SteadyCap</div>
       ${buildDots(2)}
       <div class="ob-title">Set your start date</div>
       <div class="ob-sub">When did you last use each habit?</div>
@@ -107,7 +107,7 @@ const Onboarding = (() => {
     const name = (state.user && state.user.name) || '';
     const currency = (state.settings && state.settings.currency) || 'USD';
     return `<div class="ob-screen">
-      <div class="ob-logo">DISCIPLINEOS</div>
+      <div class="ob-logo">SteadyCap</div>
       ${buildDots(3)}
       <div class="ob-title">Almost done</div>
       <div class="ob-sub">A few quick details to personalise your recovery.</div>
@@ -169,6 +169,10 @@ const Onboarding = (() => {
   }
 
   function _nextStep2() {
+    selectedHabits.forEach(key => {
+      const el = document.getElementById('quit_' + key);
+      if (el && el.value) _setQuit(key, el.value);
+    });
     step = 3;
     renderStep();
   }
@@ -191,7 +195,7 @@ const Onboarding = (() => {
     selectedHabits.forEach(key => {
       const cfg = habitConfigs[key] || {};
       const quitTime = cfg.quitTime
-        ? new Date(cfg.quitTime).toISOString()
+        ? DateTimeLocal.fromInputValue(cfg.quitTime)
         : new Date(Date.now() - 3600000).toISOString();
       const config = { ...cfg };
       delete config.quitTime;

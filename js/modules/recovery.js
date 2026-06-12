@@ -1,9 +1,23 @@
 'use strict';
 const Recovery = (() => {
   let currentHabitId = null;
+  const STORAGE_KEY = 'dos_recovery_habit';
 
   function habitType(habit) {
     return habit.isCustom ? 'custom' : habit.type;
+  }
+
+  function resolveHabitId(habitId, habits) {
+    const ids = new Set(habits.map(h => h.id));
+    if (habitId && ids.has(habitId)) return habitId;
+    if (currentHabitId && ids.has(currentHabitId)) return currentHabitId;
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved && ids.has(saved)) return saved;
+    return habits[0] ? habits[0].id : null;
+  }
+
+  function getSelectedHabitId() {
+    return currentHabitId || sessionStorage.getItem(STORAGE_KEY);
   }
 
   function render(habitId) {
@@ -17,7 +31,8 @@ const Recovery = (() => {
       return;
     }
 
-    currentHabitId = habitId || (habits[0] && habits[0].id);
+    currentHabitId = resolveHabitId(habitId, habits);
+    if (currentHabitId) sessionStorage.setItem(STORAGE_KEY, currentHabitId);
     const habit = habits.find(h => h.id === currentHabitId) || habits[0];
     if (!habit) return;
 
@@ -65,7 +80,7 @@ const Recovery = (() => {
       <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:0 20px 16px">
         ${habits.map(h => {
           const hc = State.habitConfig(h.type, h.isCustom, h);
-          return `<button onclick="Recovery.render('${h.id}')" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid ${h.id===currentHabitId?'var(--orange)':'var(--border)'};background:${h.id===currentHabitId?'rgba(255,107,53,0.1)':'transparent'};color:${h.id===currentHabitId?'var(--orange)':'var(--text3)'};font-size:0.78rem;font-weight:600;cursor:pointer">${hc.icon||''} ${hc.name||h.type}</button>`;
+          return `<button type="button" onclick="Recovery.selectHabit('${h.id}')" style="flex-shrink:0;padding:6px 14px;border-radius:99px;border:1px solid ${h.id===currentHabitId?'var(--orange)':'var(--border)'};background:${h.id===currentHabitId?'rgba(255,107,53,0.1)':'transparent'};color:${h.id===currentHabitId?'var(--orange)':'var(--text3)'};font-size:0.78rem;font-weight:600;cursor:pointer;touch-action:manipulation">${hc.icon||''} ${hc.name||h.type}</button>`;
         }).join('')}
       </div>` : '';
 
@@ -163,6 +178,10 @@ const Recovery = (() => {
     `;
   }
 
+  function selectHabit(id) {
+    render(id);
+  }
+
   function _confirmRelapse(id, isCustom) {
     if (confirm('Log a relapse? This will reset your clean time for this habit.')) {
       State.logRelapse(id, isCustom);
@@ -171,6 +190,6 @@ const Recovery = (() => {
     }
   }
 
-  return { render, _confirmRelapse };
+  return { render, selectHabit, getSelectedHabitId, _confirmRelapse };
 })();
 window.Recovery = Recovery;

@@ -34,8 +34,9 @@ const Emergency = (() => {
   function renderPhase() {
     const screen = document.getElementById('screen-emergency');
     if (!screen) return;
-    const habits = State.get('habits') || [];
-    const primary = habits[0];
+    const habits = State.getAllHabits();
+    const selectedId = sessionStorage.getItem('dos_recovery_habit');
+    const primary = habits.find(h => h.id === selectedId) || habits[0];
 
     const dots = [0,1,2,3,4].map(i =>
       `<div class="sos-dot${i<phase?' done':i===phase?' active':''}"></div>`
@@ -152,10 +153,10 @@ const Emergency = (() => {
     if (!habit) return `<div class="t-display">Look How Far</div>`;
     const hrs = RecoveryEngine.hoursClean(habit.quitTime);
     const days = RecoveryEngine.daysClean(habit.quitTime);
-    const hCfg = (window.HABITS_CONFIG||{})[habit.type]||{};
-    const tl = (window.RECOVERY_TIMELINES||{})[habit.type]||[];
+    const type = habit.isCustom ? 'custom' : habit.type;
+    const tl = (window.RECOVERY_TIMELINES || {})[type] || [];
     const reached = tl.filter(m => hrs >= m.hours).slice(-3);
-    const systems = BodyEngine.getBodySystems(habit.type, hrs).slice(0, 3);
+    const systems = BodyEngine.getBodySystems(type, hrs).slice(0, 3);
     return `
       <div style="width:100%">
         <div class="t-label" style="text-align:center;margin-bottom:8px">Phase 3 · Evidence</div>

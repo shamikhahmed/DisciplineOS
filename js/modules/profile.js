@@ -375,7 +375,7 @@ const Profile = (() => {
           </div>
           <div class="ob-field">
             <div class="ob-label">Quit date</div>
-            <input class="ob-input" type="datetime-local" id="edit-quit" value="${new Date(habit.quitTime).toISOString().slice(0,16)}">
+            <input class="ob-input" type="datetime-local" id="edit-quit" value="${DateTimeLocal.toInputValue(habit.quitTime)}">
           </div>
           ${hCfg.configFields.filter(f=>f.type!=='hidden').map(f=>{
             if(f.type==='select') return `<div class="ob-field"><div class="ob-label">${f.label}</div><select class="ob-select" id="edit_${f.id}" name="${f.id}">${(f.options||[]).map(o=>`<option value="${o}" ${cfg[f.id]===o?'selected':''}>${o}</option>`).join('')}</select></div>`;
@@ -393,7 +393,7 @@ const Profile = (() => {
     if (!habit) return;
     const hCfg = (window.HABITS_CONFIG || {})[habit.type];
     const quitEl = document.getElementById('edit-quit');
-    const newQuit = quitEl ? new Date(quitEl.value).toISOString() : habit.quitTime;
+    const newQuit = quitEl ? DateTimeLocal.fromInputValue(quitEl.value) : habit.quitTime;
     const newCfg = {};
     if (hCfg) {
       hCfg.configFields.forEach(f => {
@@ -442,7 +442,7 @@ const Profile = (() => {
     if (!hCfg) return;
     const modal = document.getElementById('profile-modal');
     if (!modal) return;
-    const now = new Date().toISOString().slice(0, 16);
+    const now = DateTimeLocal.nowInputValue();
     modal.style.display = 'block';
     modal.innerHTML = `
       <div style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);display:flex;align-items:flex-end" onclick="if(event.target===this)Profile._closeModal()">
@@ -465,7 +465,7 @@ const Profile = (() => {
   function _confirmAddHabit(type) {
     const hCfg = (window.HABITS_CONFIG || {})[type];
     const quitEl = document.getElementById('add-quit');
-    const quitTime = quitEl ? new Date(quitEl.value).toISOString() : new Date().toISOString();
+    const quitTime = quitEl ? DateTimeLocal.fromInputValue(quitEl.value) : new Date().toISOString();
     const cfg = {};
     if (hCfg) {
       hCfg.configFields.forEach(f => {
@@ -617,7 +617,7 @@ const Profile = (() => {
             <div style="display:flex;gap:8px;flex-wrap:wrap">${icons.map(i => `<span onclick="Profile._pickIcon('${i}')" class="habit-chip" style="padding:8px 12px;cursor:pointer" id="icon-${i}">${i}</span>`).join('')}</div>
             <input type="hidden" id="custom-icon" value="✨">
           </div>
-          <div class="ob-field"><div class="ob-label">Quit date</div><input class="ob-input" type="datetime-local" id="custom-quit" value="${new Date().toISOString().slice(0,16)}"></div>
+          <div class="ob-field"><div class="ob-label">Quit date</div><input class="ob-input" type="datetime-local" id="custom-quit" value="${DateTimeLocal.nowInputValue()}"></div>
           <button class="btn btn-primary" onclick="Profile._saveCustomHabit()">Add Custom Habit</button>
         </div>
       </div>`;
@@ -633,7 +633,7 @@ const Profile = (() => {
   function _saveCustomHabit() {
     const name = document.getElementById('custom-name')?.value?.trim();
     const icon = document.getElementById('custom-icon')?.value || '✨';
-    const quitTime = new Date(document.getElementById('custom-quit')?.value || Date.now()).toISOString();
+    const quitTime = DateTimeLocal.fromInputValue(document.getElementById('custom-quit')?.value);
     if (!name) { App.showToast('Name required', 'error'); return; }
     State.addCustomHabit({ name, icon, quitTime });
     _closeModal();
@@ -652,7 +652,7 @@ const Profile = (() => {
         <div style="background:var(--bg3);border-radius:var(--r-lg) var(--r-lg) 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom));width:100%">
           <div class="t-heading" style="margin-bottom:16px">${habit.icon} ${habit.name}</div>
           <div class="ob-field"><div class="ob-label">Name</div><input class="ob-input" id="edit-custom-name" value="${habit.name}"></div>
-          <div class="ob-field"><div class="ob-label">Quit date</div><input class="ob-input" type="datetime-local" id="edit-custom-quit" value="${new Date(habit.quitTime).toISOString().slice(0,16)}"></div>
+          <div class="ob-field"><div class="ob-label">Quit date</div><input class="ob-input" type="datetime-local" id="edit-custom-quit" value="${DateTimeLocal.toInputValue(habit.quitTime)}"></div>
           <button class="btn btn-primary" onclick="Profile._saveCustomEdit('${id}')">Save</button>
           <button class="btn btn-danger" style="margin-top:8px" onclick="Profile._removeCustom('${id}')">Remove Habit</button>
         </div>
@@ -661,7 +661,7 @@ const Profile = (() => {
 
   function _saveCustomEdit(id) {
     const name = document.getElementById('edit-custom-name')?.value?.trim();
-    const quitTime = new Date(document.getElementById('edit-custom-quit')?.value).toISOString();
+    const quitTime = DateTimeLocal.fromInputValue(document.getElementById('edit-custom-quit')?.value);
     if (!name) return;
     State.updateHabit(id, { name, quitTime }, true);
     _closeModal();
