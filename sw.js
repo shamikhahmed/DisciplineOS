@@ -1,5 +1,5 @@
 'use strict';
-const CACHE = 'steadycap-v29';
+const CACHE = 'steadycap-v31';
 const ASSETS = [
   './css/capricorn-core.css',
   './',
@@ -13,8 +13,10 @@ const ASSETS = [
   './js/data/timelines-hourly.js',
   './js/data/insights.js',
   './js/data/knowledge.js',
+  './js/data/habit-links.js',
   './js/engines/recoveryEngine.js',
   './js/engines/bodyEngine.js',
+  './js/engines/linkedRecoveryEngine.js',
   './js/engines/dopamineEngine.js',
   './js/engines/financeEngine.js',
   './js/engines/triggerEngine.js',

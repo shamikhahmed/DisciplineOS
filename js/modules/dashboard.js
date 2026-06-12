@@ -95,6 +95,24 @@ const Dashboard = (() => {
     `;
   }
 
+  function buildSmartInsights(habits) {
+    const linked = window.LinkedRecoveryEngine;
+    if (!linked || habits.length < 2) return '';
+    const insights = linked.getSmartInsights(habits);
+    if (!insights.length) return '';
+    const top = insights[0];
+    return `<div class="card" style="margin-bottom:12px;border-left:3px solid var(--teal)">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <span style="font-size:1.3rem">${top.icon}</span>
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Linked recovery</div>
+          <div style="font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px">${top.title}</div>
+          <div style="font-size:0.78rem;color:var(--text2);line-height:1.5">${top.body}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+
   function buildHabitProgress(habits) {
     if (!habits.length) {
       return `<div class="today-empty"><div class="t-caption">No habits tracked yet.</div></div>`;
@@ -185,7 +203,7 @@ const Dashboard = (() => {
       <div class="section-header"><span class="section-title">Habit Progress</span>
         <button class="section-link" onclick="Navigation.go('recovery',{habitId:Recovery.getSelectedHabitId()})">Details</button>
       </div>
-      <div style="padding:0 20px 8px">${buildHabitProgress(habits)}</div>
+      <div style="padding:0 20px 8px">${buildSmartInsights(habits)}${buildHabitProgress(habits)}</div>
 
       ${buildHourlyMilestone(habits)}
 

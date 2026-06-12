@@ -26,6 +26,11 @@ const Profile = (() => {
       const hrs = RecoveryEngine.hoursClean(h.quitTime);
       const relapses = (h.relapses || []).length;
       const fin = FinanceEngine.calculate(h, currency);
+      let bodyScore = BodyEngine.overallBodyScore(h.type, hrs);
+      if (window.LinkedRecoveryEngine) {
+        const linkedSys = LinkedRecoveryEngine.getLinkedBodySystems(h, habits);
+        if (linkedSys.length) bodyScore = Math.round(linkedSys.reduce((a, x) => a + x.pct, 0) / linkedSys.length);
+      }
       return `<div class="card" style="margin-bottom:10px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <span style="font-size:1.4rem">${hCfg.icon||'✨'}</span>
@@ -35,7 +40,7 @@ const Profile = (() => {
           <div><div class="t-label">Days Clean</div><div style="font-size:1.3rem;font-weight:800;color:var(--text)">${days}</div></div>
           <div><div class="t-label">Relapses</div><div style="font-size:1.3rem;font-weight:800;color:var(--text)">${relapses}</div></div>
           ${fin.hasCost?`<div><div class="t-label">Saved</div><div style="font-size:1.3rem;font-weight:800;color:var(--green)">${sym}${fin.savedTotal.toFixed(2)}</div></div>`:''}
-          <div><div class="t-label">Body Score</div><div style="font-size:1.3rem;font-weight:800;color:var(--teal)">${BodyEngine.overallBodyScore(h.type, hrs)}%</div></div>
+          <div><div class="t-label">Body Score</div><div style="font-size:1.3rem;font-weight:800;color:var(--teal)">${bodyScore}%</div></div>
         </div>
         <button class="btn btn-ghost" style="font-size:0.78rem;padding:10px 16px;width:100%" onclick="Profile._editHabit('${h.id}',${h.isCustom})">Edit Habit Config</button>
       </div>`;

@@ -57,6 +57,9 @@ const RecoveryEngine = (() => {
 
   function recoveryScore(habits) {
     if (!habits || habits.length === 0) return 0;
+    if (window.LinkedRecoveryEngine) {
+      return LinkedRecoveryEngine.linkedRecoveryScore(habits);
+    }
     let total = 0;
     for (const habit of habits) {
       const h = hoursClean(habit.quitTime);

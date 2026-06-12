@@ -156,7 +156,11 @@ const Emergency = (() => {
     const type = habit.isCustom ? 'custom' : habit.type;
     const tl = (window.RECOVERY_TIMELINES || {})[type] || [];
     const reached = tl.filter(m => hrs >= m.hours).slice(-3);
-    const systems = BodyEngine.getBodySystems(type, hrs).slice(0, 3);
+    const habits = State.getAllHabits();
+    const linked = window.LinkedRecoveryEngine;
+    const systems = (linked
+      ? linked.getLinkedBodySystems(habit, habits)
+      : BodyEngine.getBodySystems(type, hrs)).slice(0, 3);
     return `
       <div style="width:100%">
         <div class="t-label" style="text-align:center;margin-bottom:8px">Phase 3 · Evidence</div>
