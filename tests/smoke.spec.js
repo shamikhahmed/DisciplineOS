@@ -17,4 +17,13 @@ test.describe('SteadyCap smoke', () => {
     await page.goto('/');
     await expect(page.locator('link[rel="manifest"]')).toHaveCount(1);
   });
+
+  test('demo mode shows linked recovery insight on dashboard', async ({ page }) => {
+    await page.goto('/?demo=1');
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForFunction(() => typeof window.Navigation !== 'undefined');
+    await page.waitForTimeout(800);
+    await expect(page.locator('#screen-dashboard.active')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Linked recovery', { exact: true }).first()).toBeVisible({ timeout: 10000 });
+  });
 });
