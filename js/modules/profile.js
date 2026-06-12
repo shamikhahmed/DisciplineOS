@@ -283,7 +283,8 @@ const Profile = (() => {
     if (!silent && !confirm('Load demo recovery profile? Replaces current data with anonymized sample habits, journal entries, and craving log.')) return;
     const day = 86400000;
     const now = Date.now();
-    const quitTime = new Date(now - 47 * day).toISOString();
+    const smokingQuit = new Date(now - 90 * day).toISOString();
+    const vapeQuit = new Date(now - 2 * day).toISOString();
     State.update(d => {
       d.user = {
         name: 'Alex (Demo)',
@@ -294,14 +295,24 @@ const Profile = (() => {
         hairTreatment: 'minoxidil',
       };
       d.settings = { currency: 'USD', notificationsEnabled: false };
-      d.habits = [{
-        id: 'demo-smoking',
-        type: 'smoking',
-        quitTime,
-        config: { cigarettesPerDay: 12, yearsSmoked: 8, costPerPack: 9.5, cigarettesPerPack: 20 },
-        relapses: [{ at: new Date(now - 90 * day).toISOString(), note: 'Social event' }],
-        createdAt: quitTime,
-      }];
+      d.habits = [
+        {
+          id: 'demo-smoking',
+          type: 'smoking',
+          quitTime: smokingQuit,
+          config: { cigarettesPerDay: 12, yearsSmoked: 8, costPerPack: 9.5, cigarettesPerPack: 20 },
+          relapses: [],
+          createdAt: smokingQuit,
+        },
+        {
+          id: 'demo-vape',
+          type: 'vape',
+          quitTime: vapeQuit,
+          config: { deviceType: 'Pod System', nicType: 'Nicotine Salt (Nic Salt)', podsPerWeek: 2, costPerPod: 6, yearsVaping: 3 },
+          relapses: [],
+          createdAt: vapeQuit,
+        },
+      ];
       d.customHabits = [];
       d.medicines = [{
         id: 'demo-med-1', name: 'Nicotine patch', dose: '21mg', schedule: 'fixed',

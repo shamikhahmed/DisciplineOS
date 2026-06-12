@@ -22,7 +22,7 @@ const App = (() => {
 
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden && State.get('onboardingComplete')) {
-        const tab = sessionStorage.getItem('dos_tab') || 'dashboard';
+        const tab = (window.Navigation && Navigation.readStoredTab) ? Navigation.readStoredTab() : (sessionStorage.getItem('steadycap_tab') || sessionStorage.getItem('dos_tab') || 'dashboard');
         if (tab === 'dashboard' && window.Dashboard) Dashboard.render();
       }
     });

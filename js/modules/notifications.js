@@ -141,7 +141,7 @@ const Notifications = (() => {
     checkInterval = setInterval(() => {
       if (!State.get('onboardingComplete')) return;
       fireDueNotifications();
-      const tab = sessionStorage.getItem('dos_tab') || 'dashboard';
+      const tab = (window.Navigation && Navigation.readStoredTab) ? Navigation.readStoredTab() : (sessionStorage.getItem('steadycap_tab') || sessionStorage.getItem('dos_tab') || 'dashboard');
       if (tab === 'dashboard' && window.Dashboard) Dashboard.render();
     }, 60000);
     fireDueNotifications();

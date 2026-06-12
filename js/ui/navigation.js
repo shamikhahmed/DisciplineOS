@@ -12,6 +12,24 @@ const Navigation = (() => {
   let current = 'dashboard';
   let params = {};
 
+  const TAB_KEY = 'steadycap_tab';
+  const LEGACY_TAB_KEY = 'dos_tab';
+
+  function readStoredTab() {
+    const current = sessionStorage.getItem(TAB_KEY);
+    if (current) return current;
+    const legacy = sessionStorage.getItem(LEGACY_TAB_KEY);
+    if (legacy) {
+      sessionStorage.setItem(TAB_KEY, legacy);
+      return legacy;
+    }
+    return 'dashboard';
+  }
+
+  function storeTab(screenId) {
+    sessionStorage.setItem(TAB_KEY, screenId);
+  }
+
   function renderNav() {
     const nav = document.getElementById('nav');
     if (!nav) return;
@@ -55,16 +73,16 @@ const Navigation = (() => {
     }
 
     if (screenId !== 'onboarding') {
-      sessionStorage.setItem('dos_tab', screenId);
+      storeTab(screenId);
     }
   }
 
   function init() {
-    const last = sessionStorage.getItem('dos_tab') || 'dashboard';
+    const last = readStoredTab();
     renderNav();
     go(last);
   }
 
-  return { go, init, renderNav, getParams: () => params };
+  return { go, init, renderNav, getParams: () => params, readStoredTab };
 })();
 window.Navigation = Navigation;
