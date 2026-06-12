@@ -53,6 +53,9 @@ const Recovery = (() => {
     const wholeBody = linked && habits.length > 1 ? linked.wholeBodySummary(habits) : null;
     const relapses = (habit.relapses || []).length;
     const integrityPct = relapses === 0 ? 100 : Math.max(0, Math.round(100 - (relapses / (days + 1)) * 100 * 7));
+    const program = window.ProgramData ? ProgramData.getProgram(type) : null;
+    const programWeek = window.ProgramData ? ProgramData.currentWeek(days) : 1;
+    const weekData = program ? program.weeks.find(w => w.week === programWeek) : null;
     const currentM = RecoveryEngine.currentMilestone(type, habit.quitTime);
     const cravingLog = State.get('cravingLog') || [];
     let triggerHtml = '';
@@ -195,6 +198,17 @@ const Recovery = (() => {
           ${dopStage.tips.map(t=>`<div style="font-size:0.78rem;color:var(--text2);margin-bottom:4px">· ${t}</div>`).join('')}
         </div>
       </div>
+
+      ${weekData ? `
+      <div class="section-header"><span class="section-title">30-Day Program · Week ${programWeek}</span></div>
+      <div style="padding:0 20px;margin-bottom:12px">
+        <div class="card" style="border-left:3px solid var(--teal)">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">${program.title}</div>
+          <div style="font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:8px">${weekData.label}</div>
+          ${weekData.tips.map(t => `<div style="font-size:0.78rem;color:var(--text2);margin-bottom:6px;line-height:1.5">· ${t}</div>`).join('')}
+          <div style="margin-top:10px;font-size:0.68rem;color:var(--text3)">Day ${Math.min(days, 30)} of 30 · advances weekly</div>
+        </div>
+      </div>` : ''}
 
       <div class="section-header"><span class="section-title">Body Healing Timeline</span></div>
       <div style="padding:0 20px 8px"><div class="t-caption">${hourlyCount} hourly milestones in first 72h, then daily & weekly</div></div>

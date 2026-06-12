@@ -113,6 +113,29 @@ const Dashboard = (() => {
     </div>`;
   }
 
+  function buildFinanceSaved(habits) {
+    if (!habits.length || !window.FinanceEngine) return '';
+    const settings = State.get('settings') || {};
+    const currency = settings.currency || 'USD';
+    const sym = FinanceEngine.CURRENCY_SYMBOLS[currency] || '$';
+    const totalSaved = FinanceEngine.totalSaved(habits, currency);
+    const hasCost = habits.some(h => FinanceEngine.calculate(h, currency).hasCost);
+    if (!hasCost || totalSaved < 0.01) return '';
+    const formatted = totalSaved >= 1000
+      ? sym + (totalSaved / 1000).toFixed(1) + 'k'
+      : sym + totalSaved.toFixed(2);
+    return `<div class="card" style="margin-bottom:12px;background:linear-gradient(135deg,rgba(6,214,160,0.12),transparent);border-left:3px solid var(--green)">
+      <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px">Money saved</div>
+          <div style="font-size:1.6rem;font-weight:800;color:var(--green)">${formatted}</div>
+          <div class="t-caption" style="margin-top:4px">Total across all habits since quit</div>
+        </div>
+        <span style="font-size:1.8rem">💰</span>
+      </div>
+    </div>`;
+  }
+
   function buildHabitProgress(habits) {
     if (!habits.length) {
       return `<div class="today-empty"><div class="t-caption">No habits tracked yet.</div></div>`;
@@ -136,6 +159,7 @@ const Dashboard = (() => {
     }).join('');
 
     return `
+      ${buildFinanceSaved(habits)}
       <div class="habit-summary">
         <div class="habit-summary-stat">
           <div class="habit-summary-val" style="color:var(--orange)">${score}</div>
